@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string;
+  items: Array<{
+    question: string;
+    answer: string;
+  }>;
+}
+
+const { title, items } = Astro.props;
+---
+
+<section class="py-12 px-4 bg-gray-50">
+  <div class="container mx-auto max-w-4xl">
+    {title && (
+      <h2 class="text-3xl font-bold mb-8 text-center">{title}</h2>
+    )}
+    <dl class="space-y-6">
+      {items.map((item) => (
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <dt class="text-lg font-semibold mb-2">{item.question}</dt>
+          <dd class="text-gray-700">{item.answer}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+

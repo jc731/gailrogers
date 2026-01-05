@@ -1,0 +1,13 @@
+---
+interface Props {
+  content: string;
+  className?: string;
+}
+
+const { content, className = '' } = Astro.props;
+---
+
+<section class={`prose prose-lg max-w-none py-8 px-4 ${className}`}>
+  <div set:html={content} />
+</section>
+

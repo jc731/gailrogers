@@ -1,0 +1,89 @@
+---
+import Hero from './sections/Hero.astro';
+import RichText from './sections/RichText.astro';
+import FAQ from './sections/FAQ.astro';
+import CTABand from './sections/CTABand.astro';
+import CardGrid from './sections/CardGrid.astro';
+import Slider from './sections/Slider.astro';
+import LinkButtons from './sections/LinkButtons.astro';
+import IconBanner from './sections/IconBanner.astro';
+
+interface Props {
+  section: {
+    type: 'hero' | 'richText' | 'faq' | 'ctaBand' | 'cardGrid' | 'slider' | 'linkButtons' | 'iconBanner';
+    [key: string]: any;
+  };
+}
+
+const { section } = Astro.props;
+---
+
+{section.type === 'hero' && (
+  <Hero 
+    heading={section.heading}
+    subheading={section.subheading}
+    ctaText={section.ctaText}
+    ctaLink={section.ctaLink}
+    backgroundImage={section.backgroundImage}
+  />
+)}
+
+{section.type === 'richText' && (
+  <RichText 
+    content={section.content}
+    className={section.className}
+  />
+)}
+
+{section.type === 'faq' && (
+  <FAQ 
+    title={section.title}
+    items={section.items}
+  />
+)}
+
+{section.type === 'ctaBand' && (
+  <CTABand 
+    heading={section.heading}
+    text={section.text}
+    primaryCTA={section.primaryCTA}
+    secondaryCTA={section.secondaryCTA}
+    className={section.className}
+  />
+)}
+
+{section.type === 'cardGrid' && (
+  <CardGrid 
+    title={section.title}
+    cards={section.cards}
+    columns={section.columns}
+  />
+)}
+
+{section.type === 'slider' && (
+  <Slider 
+    slides={section.slides}
+    autoplay={section.autoplay}
+    autoplayInterval={section.autoplayInterval}
+    showIndicators={section.showIndicators}
+    showControls={section.showControls}
+  />
+)}
+
+{section.type === 'linkButtons' && (
+  <LinkButtons 
+    title={section.title}
+    buttons={section.buttons}
+    layout={section.layout}
+    className={section.className}
+  />
+)}
+
+{section.type === 'iconBanner' && (
+  <IconBanner 
+    items={section.items}
+    backgroundColor={section.backgroundColor}
+    className={section.className}
+  />
+)}
+
