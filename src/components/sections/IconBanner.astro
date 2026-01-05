@@ -11,9 +11,17 @@ interface Props {
 
 const { items, backgroundColor = 'gray-800', className = '' } = Astro.props;
 
+// Map common background colors to Tailwind classes
+const bgColorMap: Record<string, string> = {
+  'gray-800': 'bg-gray-800',
+  'gray-900': 'bg-gray-900',
+  'brand-primary': 'bg-brand-primary',
+  'brand-primaryDark': 'bg-brand-primaryDark',
+};
+
 const bgColorClass = backgroundColor.startsWith('#') 
   ? '' 
-  : `bg-${backgroundColor}`;
+  : bgColorMap[backgroundColor] || 'bg-gray-800';
 const bgColorStyle = backgroundColor.startsWith('#') 
   ? `background-color: ${backgroundColor};` 
   : '';
