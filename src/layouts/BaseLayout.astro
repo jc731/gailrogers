@@ -114,6 +114,21 @@ const footerNavigation = siteSettings?.footerNavigation || [];
           <div>
             <h3 class="text-xl font-bold mb-4">Quick Links</h3>
             <ul class="space-y-2 text-gray-300">
+              {navigation.map((item) => {
+                // Skip items with children (like Practice Areas dropdown) - just show the main link
+                if (item.children && item.children.length > 0) {
+                  return (
+                    <li>
+                      <a href={item.href} class="hover:text-white">{item.label}</a>
+                    </li>
+                  );
+                }
+                return (
+                  <li>
+                    <a href={item.href} class="hover:text-white">{item.label}</a>
+                  </li>
+                );
+              })}
               {footerNavigation.map((item) => (
                 <li>
                   <a href={item.href} class="hover:text-white">{item.label}</a>
