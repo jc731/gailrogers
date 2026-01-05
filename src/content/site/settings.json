@@ -1,0 +1,94 @@
+{
+  "brandName": "Rogers Law Office",
+  "primaryPhone": "217-318-0677",
+  "phones": ["217-318-0677", "217-531-1124"],
+  "address": {
+    "street": "301 North Neil Street, Suite 400",
+    "city": "Champaign",
+    "state": "Illinois",
+    "zip": "61820"
+  },
+  "hours": "Monday - Friday: 9:00 AM - 5:00 PM",
+  "legalDisclaimer": "Attorney Advertising. This website is designed for general information only. The information presented at this site should not be construed to be formal legal advice nor the formation of a lawyer/client relationship.",
+  "primaryCTA": {
+    "text": "Call For Consultation",
+    "link": "tel:217-318-0677"
+  },
+  "secondaryCTA": {
+    "text": "Contact Us",
+    "link": "/contact"
+  },
+  "navigation": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Attorney Profile",
+      "href": "/attorney-profile"
+    },
+    {
+      "label": "Practice Areas",
+      "href": "/practice",
+      "children": [
+        {
+          "label": "Family Law",
+          "href": "/practice/family-law"
+        },
+        {
+          "label": "Divorce",
+          "href": "/practice/divorce"
+        },
+        {
+          "label": "Spousal Support",
+          "href": "/practice/spousal-support"
+        },
+        {
+          "label": "Child Custody",
+          "href": "/practice/child-custody"
+        },
+        {
+          "label": "Child Support",
+          "href": "/practice/child-support"
+        },
+        {
+          "label": "Child Support Modification",
+          "href": "/practice/child-support-modification"
+        },
+        {
+          "label": "Divorce Mediation Services",
+          "href": "/practice/divorce-mediation-services"
+        },
+        {
+          "label": "Mediation Representation",
+          "href": "/practice/mediation-representation"
+        },
+        {
+          "label": "Domestic Violence",
+          "href": "/practice/domestic-violence"
+        },
+        {
+          "label": "Real Estate",
+          "href": "/practice/real-estate"
+        }
+      ]
+    },
+    {
+      "label": "Blog",
+      "href": "/blog"
+    },
+    {
+      "label": "Reviews and Ratings",
+      "href": "/reviews-and-ratings"
+    },
+    {
+      "label": "Contact Us",
+      "href": "/contact"
+    },
+    {
+      "label": "Map & Directions",
+      "href": "/map-and-directions"
+    }
+  ]
+}
+
