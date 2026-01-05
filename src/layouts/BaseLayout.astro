@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Logo from '../components/Logo.astro';
+import { getSiteSettings } from '../utils/content';
 
 interface Props {
   title: string;
@@ -10,16 +11,11 @@ interface Props {
 
 const { title, description } = Astro.props;
 
-// Load site settings
-let siteSettings;
-try {
-  const siteEntries = await getCollection('site');
-  siteSettings = siteEntries.find(entry => entry.id === 'settings')?.data;
-} catch (e) {
-  // Fallback if collection doesn't exist yet
-  siteSettings = null;
-}
-const siteTitle = siteSettings?.brandName || 'Rogers Law Office';
+// Load site settings (cached by Astro during build)
+const siteEntries = await getCollection('site');
+const siteSettings = getSiteSettings(siteEntries);
+
+const siteTitle = siteSettings?.brandName || 'Site';
 const primaryPhone = siteSettings?.primaryPhone || '';
 const phones = siteSettings?.phones || [];
 const address = siteSettings?.address;
@@ -46,7 +42,10 @@ const footerNavigation = siteSettings?.footerNavigation || [];
     <title>{title} | {siteTitle}</title>
   </head>
   <body>
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand-primary focus:text-white focus:rounded">
+    <a 
+      href="#main-content" 
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:py-3 focus:bg-brand-primary focus:text-white focus:rounded focus:font-semibold focus:shadow-lg focus-ring-dark min-h-[44px]"
+    >
       Skip to content
     </a>
     
@@ -59,32 +58,141 @@ const footerNavigation = siteSettings?.footerNavigation || [];
             href="/"
           />
           <div class="hidden md:flex gap-6 items-center">
-            {navigation.map((item) => (
-              <div class="relative group">
-                <a href={item.href} class="text-gray-700 hover:text-brand-primary">
-                  {item.label}
-                </a>
-                {item.children && item.children.length > 0 && (
-                  <div class="absolute left-0 top-full mt-1 w-64 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <ul class="py-2">
-                      {item.children.map((child) => (
-                        <li>
-                          <a href={child.href} class="block px-4 py-2 text-gray-700 hover:bg-brand-light hover:text-brand-primary">
-                            {child.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            ))}
+            {navigation.map((item, index) => {
+              const menuId = `menu-${index}`;
+              const buttonId = `menu-button-${index}`;
+              return (
+                <div class="relative group" data-nav-item={index}>
+                  {item.children && item.children.length > 0 ? (
+                    <>
+                      <button
+                        id={buttonId}
+                        type="button"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        aria-controls={menuId}
+                        class="text-gray-700 hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px]"
+                        data-nav-button={index}
+                      >
+                        {item.label}
+                        <span aria-hidden="true" class="ml-1">▼</span>
+                      </button>
+                      <div
+                        id={menuId}
+                        role="menu"
+                        aria-labelledby={buttonId}
+                        class="absolute left-0 top-full mt-1 w-64 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50"
+                        data-nav-menu={index}
+                      >
+                        <ul class="py-2">
+                          {item.children.map((child, childIndex) => (
+                            <li role="none">
+                              <a
+                                href={child.href}
+                                role="menuitem"
+                                class="block px-4 py-2 text-gray-700 hover:bg-brand-light hover:text-brand-primary focus-ring rounded mx-2 min-h-[44px] flex items-center"
+                                data-nav-child={`${index}-${childIndex}`}
+                              >
+                                {child.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  ) : (
+                    <a
+                      href={item.href}
+                      class="text-gray-700 hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
+                    >
+                      {item.label}
+                    </a>
+                  )}
+                </div>
+              );
+            })}
             {primaryPhone && (
-              <a href={`tel:${primaryPhone}`} class="text-brand-primary font-semibold">
+              <a
+                href={`tel:${primaryPhone}`}
+                class="text-brand-primary font-semibold focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
+              >
                 {primaryPhone}
               </a>
             )}
           </div>
+          
+          <script>
+            // Keyboard navigation for dropdown menus
+            document.addEventListener('DOMContentLoaded', () => {
+              const navButtons = document.querySelectorAll('[data-nav-button]');
+              
+              navButtons.forEach((button) => {
+                const buttonIndex = button.getAttribute('data-nav-button');
+                const menu = document.querySelector(`[data-nav-menu="${buttonIndex}"]`);
+                const menuItems = menu?.querySelectorAll('[data-nav-child]');
+                
+                if (!menu || !menuItems) return;
+                
+                // Toggle menu on button click/Enter/Space
+                button.addEventListener('click', () => {
+                  const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                  button.setAttribute('aria-expanded', (!isExpanded).toString());
+                  menu.classList.toggle('opacity-0');
+                  menu.classList.toggle('invisible');
+                });
+                
+                button.addEventListener('keydown', (e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
+                    // Focus first menu item
+                    if (menuItems.length > 0) {
+                      (menuItems[0] as HTMLElement).focus();
+                    }
+                  } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    button.setAttribute('aria-expanded', 'true');
+                    menu.classList.remove('opacity-0', 'invisible');
+                    if (menuItems.length > 0) {
+                      (menuItems[0] as HTMLElement).focus();
+                    }
+                  }
+                });
+                
+                // Keyboard navigation within menu
+                menuItems.forEach((item, index) => {
+                  item.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault();
+                      const next = index < menuItems.length - 1 ? menuItems[index + 1] : menuItems[0];
+                      (next as HTMLElement).focus();
+                    } else if (e.key === 'ArrowUp') {
+                      e.preventDefault();
+                      const prev = index > 0 ? menuItems[index - 1] : menuItems[menuItems.length - 1];
+                      (prev as HTMLElement).focus();
+                    } else if (e.key === 'Escape') {
+                      e.preventDefault();
+                      button.setAttribute('aria-expanded', 'false');
+                      menu.classList.add('opacity-0', 'invisible');
+                      button.focus();
+                    }
+                  });
+                });
+                
+                // Close menu when focus leaves
+                const navItem = button.closest('[data-nav-item]');
+                navItem?.addEventListener('focusout', (e) => {
+                  // Only close if focus is moving outside the menu
+                  setTimeout(() => {
+                    if (!navItem?.contains(document.activeElement)) {
+                      button.setAttribute('aria-expanded', 'false');
+                      menu.classList.add('opacity-0', 'invisible');
+                    }
+                  }, 100);
+                });
+              });
+            });
+          </script>
         </div>
       </nav>
     </header>
@@ -93,38 +201,38 @@ const footerNavigation = siteSettings?.footerNavigation || [];
       <slot />
     </main>
 
-    <footer class="bg-brand-primary text-white py-8 px-4 mt-16">
+    <footer class="bg-brand-primary text-white py-8 px-4 md:px-6 lg:px-8 mt-16">
       <div class="container mx-auto max-w-6xl">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 class="text-xl font-bold mb-4">Office Location</h3>
             {address && (
-              <div class="text-brand-light">
+              <div class="text-white">
                 <p class="font-semibold mb-2">{siteTitle}</p>
                 <p class="mb-2">
                   {address.street}<br />
                   {address.city}, {address.state} {address.zip}
                 </p>
                 {hours && (
-                  <p class="text-sm mt-3">{hours}</p>
+                  <p class="text-sm mt-3 opacity-90">{hours}</p>
                 )}
               </div>
             )}
           </div>
           <div>
             <h3 class="text-xl font-bold mb-4">Contact</h3>
-            <div class="text-brand-light space-y-2">
+            <div class="text-white space-y-2">
               {phones.length > 0 && phones.map((phone) => (
                 <p>
                   {phone === primaryPhone ? (
                     <>
                       <span class="font-semibold">Call For Consultation:</span><br />
-                      <a href={`tel:${phone}`} class="hover:text-white transition-colors">{phone}</a>
+                      <a href={`tel:${phone}`} class="hover:underline focus-ring-dark transition-colors">{phone}</a>
                     </>
                   ) : (
                     <>
                       <span class="font-semibold">Phone:</span><br />
-                      <a href={`tel:${phone}`} class="hover:text-white transition-colors">{phone}</a>
+                      <a href={`tel:${phone}`} class="hover:underline focus-ring-dark transition-colors">{phone}</a>
                     </>
                   )}
                 </p>
@@ -133,32 +241,32 @@ const footerNavigation = siteSettings?.footerNavigation || [];
           </div>
           <div>
             <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-            <ul class="space-y-2 text-brand-light">
+            <ul class="space-y-2 text-white">
               {navigation.map((item) => {
                 // Skip items with children (like Practice Areas dropdown) - just show the main link
                 if (item.children && item.children.length > 0) {
                   return (
                     <li>
-                      <a href={item.href} class="hover:text-white transition-colors">{item.label}</a>
+                      <a href={item.href} class="hover:underline focus-ring-dark transition-colors">{item.label}</a>
                     </li>
                   );
                 }
                 return (
                   <li>
-                    <a href={item.href} class="hover:text-white transition-colors">{item.label}</a>
+                    <a href={item.href} class="hover:underline focus-ring-dark transition-colors">{item.label}</a>
                   </li>
                 );
               })}
               {footerNavigation.map((item) => (
                 <li>
-                  <a href={item.href} class="hover:text-white transition-colors">{item.label}</a>
+                  <a href={item.href} class="hover:underline focus-ring-dark transition-colors">{item.label}</a>
                 </li>
               ))}
             </ul>
           </div>
         </div>
         <div class="border-t border-brand-primaryDark pt-8">
-          <p class="text-sm text-brand-light">{legalDisclaimer}</p>
+          <p class="text-sm text-white opacity-90">{legalDisclaimer}</p>
         </div>
       </div>
     </footer>

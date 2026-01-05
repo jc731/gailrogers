@@ -35,7 +35,7 @@ const iconMap: Record<string, string> = {
 ---
 
 <section 
-  class={`py-12 px-4 ${bgColorClass} ${className}`}
+  class={`py-12 px-4 md:px-6 lg:px-8 ${bgColorClass} ${className}`}
   style={bgColorStyle}
 >
   <div class="container mx-auto max-w-6xl">
@@ -60,7 +60,7 @@ const iconMap: Record<string, string> = {
         return item.link ? (
           <a 
             href={item.link}
-            class="block hover:opacity-80 transition-opacity"
+            class="block hover:opacity-80 focus-ring-dark min-h-[44px] transition-opacity"
             aria-label={`${item.text} - Learn more`}
           >
             {content}

@@ -11,7 +11,7 @@ const { heading, subheading, ctaText, ctaLink, backgroundImage } = Astro.props;
 ---
 
 <section 
-  class="relative bg-gradient-to-r from-brand-primary to-brand-primaryDark text-white py-20 px-4"
+  class="relative bg-gradient-to-r from-brand-primary to-brand-primaryDark text-white py-20 px-4 md:px-6 lg:px-8"
   style={backgroundImage ? `background-image: url(${backgroundImage}); background-size: cover; background-position: center;` : ''}
 >
   {backgroundImage && (
@@ -25,7 +25,7 @@ const { heading, subheading, ctaText, ctaLink, backgroundImage } = Astro.props;
     {ctaText && ctaLink && (
       <a 
         href={ctaLink}
-        class="inline-block bg-white text-brand-primary px-6 py-3 rounded-lg font-semibold hover:bg-brand-light transition-colors"
+        class="inline-block bg-white text-brand-primary px-6 py-3 rounded-lg font-semibold hover:bg-brand-light focus-ring min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors"
       >
         {ctaText}
       </a>

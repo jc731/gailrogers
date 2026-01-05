@@ -27,7 +27,7 @@ const {
 <div class={`form-field ${className}`}>
   <label for={id} class="block text-sm font-medium text-gray-900 mb-1">
     {label}
-    {required && <span class="text-red-600" aria-label="required">*</span>}
+    {required && <span class="text-red-600" aria-hidden="true">*</span>}
   </label>
   <textarea
     id={id}
@@ -38,7 +38,8 @@ const {
     aria-required={required}
     aria-invalid={error ? 'true' : 'false'}
     aria-describedby={error ? `${id}-error` : undefined}
-    class={`w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-heading-subheading focus:border-heading-subheading transition-colors resize-y ${
+    autocomplete={name === 'message' ? 'off' : 'off'}
+    class={`w-full px-4 py-2 border border-gray-300 rounded-md focus-ring min-h-[44px] transition-colors resize-y ${
       error ? 'border-red-500' : ''
     }`}
   >{value || ''}</textarea>

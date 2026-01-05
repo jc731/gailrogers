@@ -33,6 +33,11 @@ export default {
           main: '#6B2B1F',        // Reddish-brown for main headlines (h2)
           subheading: '#A88B4A',  // Golden-brown for subheadings (h3)
         },
+        // Accessible focus colors - high contrast for visibility
+        focus: {
+          ring: '#7f1d1d',        // brand-primary for focus rings (high contrast)
+          ringLight: '#ffffff',   // White for focus rings on dark backgrounds
+        },
       },
     },
   },

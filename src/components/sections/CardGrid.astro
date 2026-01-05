@@ -14,7 +14,7 @@ const { title, cards, columns = 3 } = Astro.props;
 const gridCols = columns === 2 ? 'md:grid-cols-2' : columns === 3 ? 'md:grid-cols-3' : 'md:grid-cols-4';
 ---
 
-<section class="py-12 px-4">
+<section class="py-12 px-4 md:px-6 lg:px-8">
   <div class="container mx-auto max-w-6xl">
     {title && (
       <h2 class="text-3xl font-bold mb-8 text-center">{title}</h2>
@@ -36,7 +36,7 @@ const gridCols = columns === 2 ? 'md:grid-cols-2' : columns === 3 ? 'md:grid-col
         return card.link ? (
           <a 
             href={card.link}
-            class="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            class="block bg-white rounded-lg shadow-md hover:shadow-lg focus-ring transition-shadow"
           >
             {CardContent}
           </a>
