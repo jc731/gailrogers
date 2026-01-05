@@ -74,20 +74,22 @@
       ]
     },
     {
-      "label": "Blog",
-      "href": "/blog"
-    },
-    {
-      "label": "Reviews and Ratings",
-      "href": "/reviews-and-ratings"
-    },
-    {
       "label": "Contact Us",
       "href": "/contact"
     },
     {
       "label": "Map & Directions",
       "href": "/map-and-directions"
+    }
+  ],
+  "footerNavigation": [
+    {
+      "label": "Blog",
+      "href": "/blog"
+    },
+    {
+      "label": "Reviews and Ratings",
+      "href": "/reviews-and-ratings"
     }
   ]
 }

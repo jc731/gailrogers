@@ -141,6 +141,10 @@ const siteCollection = defineCollection({
         href: z.string(),
       })).optional(),
     })).optional(),
+    footerNavigation: z.array(z.object({
+      label: z.string(),
+      href: z.string(),
+    })).optional(),
   }),
 });
 
