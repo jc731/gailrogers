@@ -1,0 +1,59 @@
+---
+interface Props {
+  brandName?: string;
+  tagline?: string;
+  href?: string;
+  className?: string;
+}
+
+const { 
+  brandName = 'ROGERS', 
+  tagline = 'LAW OFFICE',
+  href = '/',
+  className = ''
+} = Astro.props;
+
+// Classical courthouse/temple building icon SVG path
+// Features: triangular pediment at top, horizontal entablature, four columns, solid base
+// NOTE: This is a custom SVG path. If you find a better match in Material Design Icons,
+// you can replace this path. Suggested icons to check: mdi:bank, mdi:home-city, mdi:domain
+const buildingIconPath = 'M12,2L2,7V9H4V20H8V14H16V20H20V9H22V7L12,2M12,4.5L18,7.5V9H16V18H8V9H6V7.5L12,4.5M7,11H9V13H7V11M11,11H13V13H11V11M15,11H17V13H15V11M7,14H9V16H7V14M11,14H13V16H11V14M15,14H17V16H15V14Z';
+---
+
+<a 
+  href={href}
+  class={`flex items-center gap-0 no-underline ${className}`}
+  aria-label={`${brandName} ${tagline} - Home`}
+>
+  <!-- Gold-brown panel with building icon -->
+  <div 
+    class="flex items-center justify-center w-16 h-16 flex-shrink-0"
+    style="background-color: #A88B4A;"
+  >
+    <svg 
+      class="w-10 h-10 text-white"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d={buildingIconPath} />
+    </svg>
+  </div>
+  
+  <!-- Text section -->
+  <div class="flex flex-col ml-3 justify-center">
+    <span 
+      class="text-2xl md:text-3xl lg:text-4xl font-bold uppercase leading-none"
+      style="color: #6B2B1F; font-family: 'Times New Roman', Times, serif;"
+    >
+      {brandName}
+    </span>
+    <span 
+      class="text-xs md:text-sm lg:text-base font-normal uppercase leading-tight mt-0.5"
+      style="color: #6B2B1F; font-family: 'Times New Roman', Times, serif; letter-spacing: 0.15em;"
+    >
+      {tagline}
+    </span>
+  </div>
+</a>
+

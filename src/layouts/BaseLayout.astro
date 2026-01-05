@@ -1,0 +1,132 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+import Logo from '../components/Logo.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+// Load site settings
+let siteSettings;
+try {
+  const siteEntries = await getCollection('site');
+  siteSettings = siteEntries.find(entry => entry.id === 'settings')?.data;
+} catch (e) {
+  // Fallback if collection doesn't exist yet
+  siteSettings = null;
+}
+const siteTitle = siteSettings?.brandName || 'Rogers Law Office';
+const primaryPhone = siteSettings?.primaryPhone || '';
+const address = siteSettings?.address;
+const legalDisclaimer = siteSettings?.legalDisclaimer || '';
+const navigation = siteSettings?.navigation || [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description || ''} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | {siteTitle}</title>
+  </head>
+  <body>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand-primary focus:text-white focus:rounded">
+      Skip to content
+    </a>
+    
+    <header class="bg-white shadow-md">
+      <nav class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+          <Logo 
+            brandName="ROGERS"
+            tagline="LAW OFFICE"
+            href="/"
+          />
+          <div class="hidden md:flex gap-6 items-center">
+            {navigation.map((item) => (
+              <div class="relative group">
+                <a href={item.href} class="text-gray-700 hover:text-brand-primary">
+                  {item.label}
+                </a>
+                {item.children && item.children.length > 0 && (
+                  <div class="absolute left-0 top-full mt-1 w-64 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <ul class="py-2">
+                      {item.children.map((child) => (
+                        <li>
+                          <a href={child.href} class="block px-4 py-2 text-gray-700 hover:bg-brand-light hover:text-brand-primary">
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+            {primaryPhone && (
+              <a href={`tel:${primaryPhone}`} class="text-brand-primary font-semibold">
+                {primaryPhone}
+              </a>
+            )}
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer class="bg-gray-900 text-white py-8 px-4 mt-16">
+      <div class="container mx-auto max-w-6xl">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">{siteTitle}</h3>
+            {address && (
+              <p class="text-gray-300">
+                {address.street}<br />
+                {address.city}, {address.state} {address.zip}
+              </p>
+            )}
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-4">Contact</h3>
+            {primaryPhone && (
+              <p class="text-gray-300 mb-2">
+                <a href={`tel:${primaryPhone}`} class="hover:text-white">{primaryPhone}</a>
+              </p>
+            )}
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-gray-300">
+              {navigation.slice(0, 5).map((item) => (
+                <li>
+                  <a href={item.href} class="hover:text-white">{item.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8">
+          <p class="text-sm text-gray-400">{legalDisclaimer}</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
