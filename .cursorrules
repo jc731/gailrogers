@@ -1,0 +1,168 @@
+# Org-Control Workflow Rules
+
+This project follows an MCP-driven organizational workflow system that coordinates work through well-defined teams with explicit acceptance criteria, escalation rules, and recorded decisions.
+
+## Workflow Principles
+
+### 1. Explicit Acceptance Criteria
+- **REQUIRED**: Every request MUST have clear, testable acceptance criteria
+- If acceptance criteria are missing, ask the user to provide them before proceeding
+- Acceptance criteria should be specific, measurable, and verifiable
+
+### 2. Workflow Phases
+Work progresses through these teams in order:
+
+1. **Orchestrator** - Normalizes requests, applies escalation rules, routes work
+2. **Dev Team** - Implements the work (code + tests)
+3. **QA Team** - Verifies acceptance criteria are met
+4. **Docs Team** - Documents the changes (use `org_run_docs` after Dev + QA sign-off)
+5. **Architecture & Risk** - Reviews decisions and escalations
+
+### 3. Escalation Rules
+**ALWAYS flag and require approval for:**
+- Breaking changes (API changes, behavior changes that affect existing functionality)
+- Security-sensitive work (authentication, authorization, data handling, secrets)
+- Schema migrations (database changes, data structure changes)
+- Unknown requirements (ambiguous or unclear requirements)
+
+**Before proceeding with escalated items:**
+- Clearly explain the risk or impact
+- Ask for explicit approval
+- Document the decision in the project repository
+
+### 4. Decision Records
+**IMPORTANT**: Decision records MUST be stored in the project repository, NOT in the MCP server.
+
+- Create decision records in `docs/decisions/` or `docs/adr/` (Architecture Decision Records)
+- Document: context, decision, rationale, alternatives considered, consequences
+- Reference decisions in code comments or documentation when relevant
+- The MCP tracks that a decision was made, but the actual record lives in the project
+
+### 5. Artifacts from Each Phase
+
+**Dev Team produces:**
+- Code that works
+- Unit tests
+- Integration tests (as needed)
+
+**QA Team produces:**
+- Test results verifying acceptance criteria
+- Edge case testing
+- Regression testing
+
+**Docs Team produces:**
+- Updated documentation
+- API documentation (if applicable)
+- User-facing documentation (if applicable)
+- Migration guides (if applicable)
+
+**Architecture & Risk produces:**
+- Decision records (stored in project repo)
+- Risk assessments
+- Architecture reviews
+
+## Using Org-Control Tools
+
+### Starting Work
+Use `org_run` MCP tool to initiate work:
+- Provide request type (feature, bugfix, refactor, question)
+- Include clear title and details
+- **MUST include explicit acceptance criteria**
+- Set preferences (strictness level, ask_before items)
+
+### Documentation
+Use `org_run_docs` MCP tool after Dev + QA sign-off:
+- Mode: "post_dev_qa" for new features/bugfixes
+- Mode: "audit" for documentation reviews
+- Provide context about what changed
+
+### Code Review
+Use `org_review_patch` MCP tool for code reviews:
+- Provide git diff
+- Specify intent (feature, bugfix, refactor)
+- Set strictness level
+
+## Project-Specific Rules
+
+### Content Management
+- This is a **markdown-first** Astro build
+- All page/practice content is stored in Markdown files
+- **NO hard-coded marketing copy** inside Astro pages/components (only labels like "Skip to content" are acceptable)
+- Content updates should be made in `src/content/` markdown files
+- Templates are in `src/components/sections/` and should remain props-driven
+
+### Code Standards
+- Use TypeScript with strict mode
+- Follow Astro best practices
+- Ensure accessibility (WCAG compliance)
+- Use Tailwind CSS for styling
+- Minimal JavaScript (prefer server-side rendering)
+
+### Testing
+- Acceptance criteria must be testable
+- Write tests that verify acceptance criteria
+- Include edge cases and error handling
+
+## Best Practices
+
+1. **Always provide explicit acceptance criteria** - Don't proceed without them
+2. **Respond to questions before proceeding** - Address uncertainties first
+3. **Address stop conditions** - Don't ignore escalation flags
+4. **Follow handoff instructions** - Respect the workflow phases
+5. **Create decision records in project** - Store in `docs/decisions/` or `docs/adr/`
+6. **Use org_run_docs after Dev + QA** - Don't skip documentation
+7. **Document as you go** - Update README, comments, and inline docs
+
+## When to Use Org-Control Tools
+
+- **Starting new work**: Use `org_run` to get structured plan
+- **Reviewing code**: Use `org_review_patch` for senior dev review
+- **Documenting changes**: Use `org_run_docs` after implementation
+- **Making decisions**: Create decision records in project repo
+- **Checking preferences**: Use `org_get_preferences` to see current settings
+
+## Escalation Checklist
+
+Before implementing, check:
+- [ ] Is this a breaking change? → Flag and get approval
+- [ ] Is this security-sensitive? → Flag and get approval
+- [ ] Does this change data structures? → Flag and get approval
+- [ ] Are requirements unclear? → Ask for clarification
+- [ ] Are acceptance criteria explicit? → Request if missing
+
+## Decision Record Template
+
+When creating decision records in `docs/decisions/`:
+
+```markdown
+# Decision: [Title]
+
+**Date**: [Date]
+**Status**: [Proposed | Accepted | Rejected | Superseded]
+
+## Context
+[What is the issue we're addressing?]
+
+## Decision
+[What decision was made?]
+
+## Rationale
+[Why was this decision made?]
+
+## Alternatives Considered
+- [Alternative 1]: [Why it was rejected]
+- [Alternative 2]: [Why it was rejected]
+
+## Consequences
+- [Positive consequence]
+- [Negative consequence]
+- [Risk or mitigation]
+```
+
+## Remember
+
+- The MCP provides structure and coordination
+- You (and the AI) interpret the output and execute the work
+- Decision records live in the project repository, not in the MCP server
+- Always prioritize explicit acceptance criteria and clear communication
+
