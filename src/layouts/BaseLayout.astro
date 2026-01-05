@@ -21,7 +21,9 @@ try {
 }
 const siteTitle = siteSettings?.brandName || 'Rogers Law Office';
 const primaryPhone = siteSettings?.primaryPhone || '';
+const phones = siteSettings?.phones || [];
 const address = siteSettings?.address;
+const hours = siteSettings?.hours || '';
 const legalDisclaimer = siteSettings?.legalDisclaimer || '';
 const navigation = siteSettings?.navigation || [];
 const footerNavigation = siteSettings?.footerNavigation || [];
@@ -95,21 +97,39 @@ const footerNavigation = siteSettings?.footerNavigation || [];
       <div class="container mx-auto max-w-6xl">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 class="text-xl font-bold mb-4">{siteTitle}</h3>
+            <h3 class="text-xl font-bold mb-4">Office Location</h3>
             {address && (
-              <p class="text-brand-light">
-                {address.street}<br />
-                {address.city}, {address.state} {address.zip}
-              </p>
+              <div class="text-brand-light">
+                <p class="font-semibold mb-2">{siteTitle}</p>
+                <p class="mb-2">
+                  {address.street}<br />
+                  {address.city}, {address.state} {address.zip}
+                </p>
+                {hours && (
+                  <p class="text-sm mt-3">{hours}</p>
+                )}
+              </div>
             )}
           </div>
           <div>
             <h3 class="text-xl font-bold mb-4">Contact</h3>
-            {primaryPhone && (
-              <p class="text-brand-light mb-2">
-                <a href={`tel:${primaryPhone}`} class="hover:text-white transition-colors">{primaryPhone}</a>
-              </p>
-            )}
+            <div class="text-brand-light space-y-2">
+              {phones.length > 0 && phones.map((phone) => (
+                <p>
+                  {phone === primaryPhone ? (
+                    <>
+                      <span class="font-semibold">Call For Consultation:</span><br />
+                      <a href={`tel:${phone}`} class="hover:text-white transition-colors">{phone}</a>
+                    </>
+                  ) : (
+                    <>
+                      <span class="font-semibold">Phone:</span><br />
+                      <a href={`tel:${phone}`} class="hover:text-white transition-colors">{phone}</a>
+                    </>
+                  )}
+                </p>
+              ))}
+            </div>
           </div>
           <div>
             <h3 class="text-xl font-bold mb-4">Quick Links</h3>
