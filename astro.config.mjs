@@ -17,6 +17,8 @@ export default defineConfig({
     sitemap()
   ],
   output: 'static',
-  site: 'https://www.gailrogerslaw.com'
+  // Site URL can be set via environment variable PUBLIC_SITE_URL
+  // Falls back to site settings or localhost for development
+  site: import.meta.env.PUBLIC_SITE_URL || import.meta.env.SITE || 'http://localhost:4321'
 });
 

@@ -98,7 +98,7 @@ const contactFormSection = z.object({
   className: z.string().optional(),
 });
 
-const sectionSchema = z.discriminatedUnion('type', [
+export const sectionSchema = z.discriminatedUnion('type', [
   heroSection,
   richTextSection,
   faqSection,
@@ -156,7 +156,11 @@ const pagesCollection = defineCollection({
     slug: z.string().optional().default(slug),
     seoTitle: z.string().optional(),
     seoDescription: z.string().optional(),
-    layout: z.string().optional().default('default'),
+    // Optional: Custom layout configuration (e.g., 'two-column' for contact page)
+    layoutConfig: z.object({
+      type: z.enum(['default', 'two-column']).optional().default('default'),
+      // Additional layout-specific options can be added here
+    }).optional(),
     sections: z.array(sectionSchema),
   }),
 });

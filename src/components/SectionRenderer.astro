@@ -7,13 +7,15 @@ import CardGrid from './sections/CardGrid.astro';
 import Slider from './sections/Slider.astro';
 import LinkButtons from './sections/LinkButtons.astro';
 import IconBanner from './sections/IconBanner.astro';
-import ContactForm from './sections/ContactForm.astro';
+import ContactForm from './forms/ContactForm.astro';
+import type { z } from 'zod';
+import type { sectionSchema } from '../../content/config';
+
+// Infer section type from schema
+type Section = z.infer<typeof sectionSchema>;
 
 interface Props {
-  section: {
-    type: 'hero' | 'richText' | 'faq' | 'ctaBand' | 'cardGrid' | 'slider' | 'linkButtons' | 'iconBanner' | 'contactForm';
-    [key: string]: any;
-  };
+  section: Section;
 }
 
 const { section } = Astro.props;

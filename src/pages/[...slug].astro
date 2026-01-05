@@ -1,17 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionRenderer from '../components/SectionRenderer.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getSlugFromEntry } from '../utils/content';
+
+type PageEntry = CollectionEntry<'pages'>;
+type PracticeAreaEntry = CollectionEntry<'practiceAreas'>;
 
 export async function getStaticPaths() {
   const pages = await getCollection('pages');
   const practiceAreas = await getCollection('practiceAreas');
 
-  const paths: Array<{ params: { slug: string }; props: any }> = [];
+  const paths: Array<{
+    params: { slug: string };
+    props: {
+      page: PageEntry | PracticeAreaEntry;
+      type: 'page' | 'practiceArea';
+    };
+  }> = [];
 
   // Regular pages (excluding home, which is handled by index.astro)
   for (const page of pages) {
-    const pageSlug = page.data.slug || page.id.replace(/\.mdx?$/, '');
+    const pageSlug = getSlugFromEntry(page);
     if (pageSlug !== 'home') {
       paths.push({
         params: { slug: pageSlug },
@@ -25,7 +35,7 @@ export async function getStaticPaths() {
 
   // Practice areas
   for (const practiceArea of practiceAreas) {
-    const areaSlug = practiceArea.data.slug || practiceArea.id.replace(/\.mdx?$/, '');
+    const areaSlug = getSlugFromEntry(practiceArea);
     paths.push({
       params: { slug: `practice/${areaSlug}` },
       props: {
@@ -39,25 +49,31 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  page: any;
+  page: PageEntry | PracticeAreaEntry;
   type: 'page' | 'practiceArea';
 }
 
 const { page, type } = Astro.props;
+
+// Handle missing page gracefully
+if (!page) {
+  return Astro.redirect('/404');
+}
+
 const { Content } = await page.render();
 
 const title = page.data.seoTitle || page.data.title;
 const description = page.data.seoDescription || '';
 
-// Check if this is the contact page
-const isContactPage = page.data.slug === 'contact' || page.id.replace(/\.mdx?$/, '') === 'contact';
+// Check if page uses two-column layout (configurable via frontmatter)
+const usesTwoColumnLayout = page.data.layoutConfig?.type === 'two-column';
 
-// For contact page, find contactForm and richText sections for 2-column layout
-let contactFormSection: any = null;
-let officeLocationSection: any = null;
-let otherSections: any[] = [];
+// For two-column layout, find contactForm and richText sections
+let contactFormSection: PageEntry['data']['sections'][number] | null = null;
+let officeLocationSection: PageEntry['data']['sections'][number] | null = null;
+let otherSections: PageEntry['data']['sections'] = [];
 
-if (isContactPage) {
+if (usesTwoColumnLayout && type === 'page') {
   for (const section of page.data.sections) {
     if (section.type === 'contactForm') {
       contactFormSection = section;
@@ -67,19 +83,21 @@ if (isContactPage) {
       otherSections.push(section);
     }
   }
+} else {
+  otherSections = page.data.sections;
 }
 ---
 
 <BaseLayout title={title} description={description}>
-  {isContactPage && contactFormSection && officeLocationSection ? (
+  {usesTwoColumnLayout && contactFormSection && officeLocationSection ? (
     <>
       {/* Render other sections (hero, ctaBand, etc.) */}
-      {otherSections.map((section: any) => (
+      {otherSections.map((section) => (
         <SectionRenderer section={section} />
       ))}
       
       {/* 2-column layout for contact form and office location on lg+ screens */}
-      <div class="container mx-auto max-w-7xl px-4 py-8">
+      <div class="container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           <div class="lg:sticky lg:top-8 lg:self-start">
             <SectionRenderer section={contactFormSection} />
@@ -92,7 +110,7 @@ if (isContactPage) {
     </>
   ) : (
     <>
-      {page.data.sections.map((section: any) => (
+      {page.data.sections.map((section) => (
         <SectionRenderer section={section} />
       ))}
     </>
@@ -100,13 +118,13 @@ if (isContactPage) {
   
   {/* Render MDX content if present */}
   {Content && (
-    <div class="container mx-auto max-w-4xl px-4 py-8">
+    <div class="container mx-auto max-w-4xl px-4 md:px-6 lg:px-8 py-8">
       <Content />
     </div>
   )}
 
   {/* Add FAQ section if practice area has FAQs */}
-  {type === 'practiceArea' && page.data.faqs && page.data.faqs.length > 0 && (
+  {type === 'practiceArea' && 'faqs' in page.data && page.data.faqs && page.data.faqs.length > 0 && (
     <SectionRenderer 
       section={{
         type: 'faq',
