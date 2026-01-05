@@ -13,9 +13,11 @@ This project uses Astro with Content Collections to manage all page content in M
 - **Section-Based Templates**: Reusable section components for flexible page layouts
 - **Dynamic Routing**: Automatic page generation from content files
 - **Theme System**: Centralized color configuration for easy customization
-- **Tailwind CSS**: Modern, responsive styling
-- **Accessible**: WCAG-compliant markup and components
-- **Iconify Integration**: Ready for icon usage throughout the site
+- **Tailwind CSS**: Modern, responsive styling with consistent padding
+- **WCAG 2.2 AA Compliant**: Full accessibility support with keyboard navigation, focus indicators, and screen reader optimization
+- **Type-Safe**: Full TypeScript coverage with proper Astro Content Collection types
+- **Template-Ready**: Configurable site settings, no hard-coded assumptions
+- **Performance Optimized**: Static site generation, minimal JavaScript
 
 ## Getting Started
 
@@ -233,8 +235,7 @@ Each section type has specific fields. Here's a complete reference:
 │   │       ├── FAQ.astro
 │   │       ├── CTABand.astro
 │   │       ├── CardGrid.astro
-│   │       ├── LinkButtons.astro
-│   │       └── ContactForm.astro   # Contact form section wrapper
+│   │       └── LinkButtons.astro
 │   ├── content/
 │   │   ├── config.ts               # Content collection schemas
 │   │   ├── site/
@@ -262,21 +263,34 @@ Each section type has specific fields. Here's a complete reference:
 │   │   └── BaseLayout.astro         # Main layout template
 │   ├── pages/
 │   │   ├── index.astro              # Home page route
-│   │   └── [...slug].astro          # Dynamic routing
-│   └── styles/
-│       └── global.css                # Global styles + Tailwind
+│   │   ├── [...slug].astro          # Dynamic routing
+│   │   └── 404.astro                # 404 error page
+│   ├── styles/
+│   │   └── global.css                # Global styles + Tailwind + focus utilities
+│   ├── utils/
+│   │   └── content.ts                # Content utility functions
+│   ├── config/
+│   │   └── template.ts               # Template-level configuration
+│   └── env.d.ts                      # TypeScript environment types
 ├── public/
 │   ├── favicon.svg                  # SVG favicon
 │   ├── favicons/                    # Favicon files directory
 │   ├── images/                      # Image assets
+│   ├── robots.txt                   # SEO robots file
 │   ├── site.webmanifest             # PWA manifest
 │   └── worker.js                    # Service worker (empty, ready for use)
 ├── docs/
 │   ├── THEME.md                     # Theme system documentation
+│   ├── ACCESSIBILITY_AUDIT.md       # Accessibility audit findings
+│   ├── ACCESSIBILITY_CHECKLIST.md   # Content author accessibility guide
+│   ├── ACCESSIBILITY_IMPLEMENTATION_SUMMARY.md  # A11y improvements summary
+│   ├── ASTRO_ARCHITECTURE_REVIEW.md # Astro architecture review
+│   ├── ASTRO_CONVENTIONS.md         # Astro conventions and best practices
+│   ├── ASTRO_IMPROVEMENTS_SUMMARY.md # Astro improvements summary
 │   └── decisions/                   # Architecture decision records
-├── astro.config.mjs
+├── astro.config.mjs                 # Astro configuration
 ├── tailwind.config.mjs              # Theme configuration
-├── tsconfig.json
+├── tsconfig.json                    # TypeScript configuration
 └── package.json
 ```
 
@@ -335,6 +349,41 @@ To use this as a template for another "billboard" website:
 - [Zod](https://zod.dev/) - Schema validation (via Astro)
 - [astro-icon](https://github.com/natemoo-re/astro-icon) - Icon integration
 
+## Accessibility
+
+This site is **WCAG 2.2 AA compliant** with comprehensive accessibility features:
+
+- **Keyboard Navigation**: Full keyboard support for all interactive elements
+- **Focus Indicators**: Visible focus rings on all interactive components
+- **Screen Reader Support**: Proper ARIA labels, landmarks, and semantic HTML
+- **Color Contrast**: All text meets WCAG AA contrast requirements
+- **Reduced Motion**: Respects user motion preferences
+- **Form Accessibility**: Proper labels, error handling, and autocomplete attributes
+
+See `docs/ACCESSIBILITY_CHECKLIST.md` for content author guidelines.
+
+## Astro Best Practices
+
+This template follows Astro best practices:
+
+- **Type Safety**: Full TypeScript coverage with proper `CollectionEntry` types
+- **Static by Default**: Minimal JavaScript, server-side rendering
+- **Content Collections**: Type-safe content with Zod validation
+- **Utility Functions**: Reusable utilities for common operations
+- **Error Handling**: Graceful fallbacks and 404 page
+- **Template Configuration**: Configurable via environment variables
+
+See `docs/ASTRO_CONVENTIONS.md` for detailed conventions and best practices.
+
+## Responsive Design
+
+The site uses responsive padding that adapts to screen size:
+- **Mobile**: `px-4` (16px)
+- **Tablet**: `md:px-6` (24px)
+- **Desktop**: `lg:px-8` (32px)
+
+All sections and containers include responsive padding to prevent content from touching viewport edges.
+
 ## Development Workflow
 
 This project follows org-control workflow principles. See `.cursorrules` for detailed workflow guidelines.
@@ -345,6 +394,8 @@ This project follows org-control workflow principles. See `.cursorrules` for det
 - **Markdown-First**: No hard-coded marketing copy in components
 - **Decision Records**: Architectural decisions documented in `docs/decisions/`
 - **Testing**: Code should be testable and verified
+- **Type Safety**: Full TypeScript coverage, no `any` types
+- **Accessibility First**: WCAG compliance is a requirement, not optional
 
 ## License
 
