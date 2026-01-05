@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionRenderer from '../components/SectionRenderer.astro';
+import { getCollection } from 'astro:content';
+
+const pages = await getCollection('pages');
+const homePage = pages.find(p => p.id.replace(/\.mdx?$/, '') === 'home' || p.data.slug === 'home');
+
+if (!homePage) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await homePage.render();
+const title = homePage.data.seoTitle || homePage.data.title;
+const description = homePage.data.seoDescription || '';
+---
+
+<BaseLayout title={title} description={description}>
+  {homePage.data.sections.map((section: any) => (
+    <SectionRenderer section={section} />
+  ))}
+  
+  {/* Render MDX content if present */}
+  {Content && (
+    <div class="container mx-auto max-w-4xl px-4 py-8">
+      <Content />
+    </div>
+  )}
+</BaseLayout>
+

@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionRenderer from '../components/SectionRenderer.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  const practiceAreas = await getCollection('practiceAreas');
+
+  const paths: Array<{ params: { slug: string }; props: any }> = [];
+
+  // Regular pages (excluding home, which is handled by index.astro)
+  for (const page of pages) {
+    const pageSlug = page.data.slug || page.id.replace(/\.mdx?$/, '');
+    if (pageSlug !== 'home') {
+      paths.push({
+        params: { slug: pageSlug },
+        props: {
+          page,
+          type: 'page',
+        },
+      });
+    }
+  }
+
+  // Practice areas
+  for (const practiceArea of practiceAreas) {
+    const areaSlug = practiceArea.data.slug || practiceArea.id.replace(/\.mdx?$/, '');
+    paths.push({
+      params: { slug: `practice/${areaSlug}` },
+      props: {
+        page: practiceArea,
+        type: 'practiceArea',
+      },
+    });
+  }
+
+  return paths;
+}
+
+interface Props {
+  page: any;
+  type: 'page' | 'practiceArea';
+}
+
+const { page, type } = Astro.props;
+const { Content } = await page.render();
+
+const title = page.data.seoTitle || page.data.title;
+const description = page.data.seoDescription || '';
+---
+
+<BaseLayout title={title} description={description}>
+  {page.data.sections.map((section: any) => (
+    <SectionRenderer section={section} />
+  ))}
+  
+  {/* Render MDX content if present */}
+  {Content && (
+    <div class="container mx-auto max-w-4xl px-4 py-8">
+      <Content />
+    </div>
+  )}
+
+  {/* Add FAQ section if practice area has FAQs */}
+  {type === 'practiceArea' && page.data.faqs && page.data.faqs.length > 0 && (
+    <SectionRenderer 
+      section={{
+        type: 'faq',
+        title: 'Frequently Asked Questions',
+        items: page.data.faqs,
+      }}
+    />
+  )}
+</BaseLayout>
+
