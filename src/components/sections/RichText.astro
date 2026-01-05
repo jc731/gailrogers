@@ -7,7 +7,7 @@ interface Props {
 const { content, className = '' } = Astro.props;
 ---
 
-<section class={`prose prose-lg max-w-none py-8 px-4 ${className}`}>
+<section class={`prose prose-lg max-w-none ${className}`}>
   <div 
     set:html={content}
     class="rich-text-content"

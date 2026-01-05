@@ -48,12 +48,55 @@ const { Content } = await page.render();
 
 const title = page.data.seoTitle || page.data.title;
 const description = page.data.seoDescription || '';
+
+// Check if this is the contact page
+const isContactPage = page.data.slug === 'contact' || page.id.replace(/\.mdx?$/, '') === 'contact';
+
+// For contact page, find contactForm and richText sections for 2-column layout
+let contactFormSection: any = null;
+let officeLocationSection: any = null;
+let otherSections: any[] = [];
+
+if (isContactPage) {
+  for (const section of page.data.sections) {
+    if (section.type === 'contactForm') {
+      contactFormSection = section;
+    } else if (section.type === 'richText' && section.content?.includes('Office Location')) {
+      officeLocationSection = section;
+    } else {
+      otherSections.push(section);
+    }
+  }
+}
 ---
 
 <BaseLayout title={title} description={description}>
-  {page.data.sections.map((section: any) => (
-    <SectionRenderer section={section} />
-  ))}
+  {isContactPage && contactFormSection && officeLocationSection ? (
+    <>
+      {/* Render other sections (hero, ctaBand, etc.) */}
+      {otherSections.map((section: any) => (
+        <SectionRenderer section={section} />
+      ))}
+      
+      {/* 2-column layout for contact form and office location on lg+ screens */}
+      <div class="container mx-auto max-w-7xl px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div class="lg:sticky lg:top-8 lg:self-start">
+            <SectionRenderer section={contactFormSection} />
+          </div>
+          <div class="py-8 lg:py-0">
+            <SectionRenderer section={officeLocationSection} />
+          </div>
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      {page.data.sections.map((section: any) => (
+        <SectionRenderer section={section} />
+      ))}
+    </>
+  )}
   
   {/* Render MDX content if present */}
   {Content && (
