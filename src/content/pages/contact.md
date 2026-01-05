@@ -7,10 +7,11 @@ sections:
   - type: hero
     heading: Contact Us
     subheading: Schedule a confidential consultation
+  - type: contactForm
+    title: Contact us
+    introText: Please fill out the form below and I will contact you.
   - type: richText
     content: |
-      <h2>Get in Touch</h2>
-      <p>Please fill out the form below and I will contact you.</p>
       <h3>Office Location</h3>
       <p><strong>Champaign Office</strong><br />
       301 North Neil Street<br />

@@ -91,6 +91,13 @@ const iconBannerSection = z.object({
   className: z.string().optional(),
 });
 
+const contactFormSection = z.object({
+  type: z.literal('contactForm'),
+  title: z.string().optional(),
+  introText: z.string().optional(),
+  className: z.string().optional(),
+});
+
 const sectionSchema = z.discriminatedUnion('type', [
   heroSection,
   richTextSection,
@@ -100,6 +107,7 @@ const sectionSchema = z.discriminatedUnion('type', [
   sliderSection,
   linkButtonsSection,
   iconBannerSection,
+  contactFormSection,
 ]);
 
 // Site settings collection

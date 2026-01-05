@@ -1,0 +1,18 @@
+---
+import ContactForm from '../forms/ContactForm.astro';
+
+interface Props {
+  title?: string;
+  introText?: string;
+  className?: string;
+}
+
+const { title, introText, className } = Astro.props;
+---
+
+<ContactForm 
+  title={title}
+  introText={introText}
+  className={className}
+/>
+

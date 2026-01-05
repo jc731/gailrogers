@@ -1,0 +1,87 @@
+---
+import FormInput from './FormInput.astro';
+import FormTextarea from './FormTextarea.astro';
+
+interface Props {
+  title?: string;
+  introText?: string;
+  className?: string;
+}
+
+const {
+  title = 'Contact us',
+  introText = 'Please fill out the form below and I will contact you.',
+  className = '',
+} = Astro.props;
+---
+
+<section class={`contact-form-section py-8 px-4 ${className}`}>
+  <div class="container mx-auto max-w-2xl">
+    <div class="bg-white border-l-4 border-r-4 border-heading-subheading px-6 py-8 shadow-sm">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">{title}</h2>
+      {introText && (
+        <p class="text-gray-700 mb-6">{introText}</p>
+      )}
+      
+      <form
+        id="contact-form"
+        method="POST"
+        action="#"
+        class="space-y-6"
+        novalidate
+      >
+        <FormInput
+          id="contact-name"
+          name="name"
+          label="Name"
+          type="text"
+          required={true}
+        />
+        
+        <FormInput
+          id="contact-email"
+          name="email"
+          label="Email"
+          type="email"
+          required={true}
+        />
+        
+        <FormInput
+          id="contact-phone"
+          name="phone"
+          label="Phone"
+          type="tel"
+          required={true}
+        />
+        
+        <FormTextarea
+          id="contact-message"
+          name="message"
+          label="Message"
+          rows={6}
+          required={true}
+        />
+        
+        <div class="pt-4">
+          <button
+            type="submit"
+            class="w-full md:w-auto px-8 py-3 bg-heading-subheading text-white font-semibold rounded-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-heading-subheading focus:ring-offset-2 transition-colors"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-form-section {
+    background-color: #ffffff;
+  }
+  
+  .contact-form-section .border-heading-subheading {
+    border-color: #A88B4A;
+  }
+</style>
+

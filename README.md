@@ -88,6 +88,7 @@ Pages are stored in `src/content/pages/`. Each page is a Markdown file with fron
 - `ctaBand`: Call-to-action band with primary/secondary buttons
 - `cardGrid`: Grid of cards (e.g., practice areas)
 - `linkButtons`: Section with multiple buttons/links in various layouts
+- `contactForm`: Contact form with Name, Email, Phone, and Message fields
 
 #### Practice Areas
 
@@ -203,6 +204,16 @@ Each section type has specific fields. Here's a complete reference:
   layout: "horizontal"  # Optional: horizontal, vertical, or grid
 ```
 
+**Contact Form:**
+```yaml
+- type: contactForm
+  title: "Contact us"  # Optional, defaults to "Contact us"
+  introText: "Please fill out the form below..."  # Optional
+  className: "optional-css-class"  # Optional
+```
+
+**Note:** The contact form includes Name, Email, Phone, and Message fields. Form submission handling will be implemented in a future update. The form features gold-brown borders matching the original design and is fully accessible with proper ARIA attributes.
+
 ## Project Structure
 
 ```
@@ -210,6 +221,10 @@ Each section type has specific fields. Here's a complete reference:
 │   ├── components/
 │   │   ├── Logo.astro              # Logo component
 │   │   ├── SectionRenderer.astro   # Renders sections based on type
+│   │   ├── forms/                   # Reusable form components
+│   │   │   ├── FormInput.astro     # Reusable input field
+│   │   │   ├── FormTextarea.astro  # Reusable textarea field
+│   │   │   └── ContactForm.astro   # Contact form component
 │   │   └── sections/               # Reusable section components
 │   │       ├── Hero.astro
 │   │       ├── Slider.astro
@@ -218,7 +233,8 @@ Each section type has specific fields. Here's a complete reference:
 │   │       ├── FAQ.astro
 │   │       ├── CTABand.astro
 │   │       ├── CardGrid.astro
-│   │       └── LinkButtons.astro
+│   │       ├── LinkButtons.astro
+│   │       └── ContactForm.astro   # Contact form section wrapper
 │   ├── content/
 │   │   ├── config.ts               # Content collection schemas
 │   │   ├── site/

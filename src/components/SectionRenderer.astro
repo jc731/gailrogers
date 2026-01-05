@@ -7,10 +7,11 @@ import CardGrid from './sections/CardGrid.astro';
 import Slider from './sections/Slider.astro';
 import LinkButtons from './sections/LinkButtons.astro';
 import IconBanner from './sections/IconBanner.astro';
+import ContactForm from './sections/ContactForm.astro';
 
 interface Props {
   section: {
-    type: 'hero' | 'richText' | 'faq' | 'ctaBand' | 'cardGrid' | 'slider' | 'linkButtons' | 'iconBanner';
+    type: 'hero' | 'richText' | 'faq' | 'ctaBand' | 'cardGrid' | 'slider' | 'linkButtons' | 'iconBanner' | 'contactForm';
     [key: string]: any;
   };
 }
@@ -83,6 +84,14 @@ const { section } = Astro.props;
   <IconBanner 
     items={section.items}
     backgroundColor={section.backgroundColor}
+    className={section.className}
+  />
+)}
+
+{section.type === 'contactForm' && (
+  <ContactForm 
+    title={section.title}
+    introText={section.introText}
     className={section.className}
   />
 )}
