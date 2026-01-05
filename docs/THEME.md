@@ -28,6 +28,17 @@ brand: {
 }
 ```
 
+### Heading Colors
+
+```javascript
+heading: {
+  main: '#6B2B1F',        // Reddish-brown for main headlines (h2)
+  subheading: '#A88B4A',  // Golden-brown for subheadings (h3)
+}
+```
+
+These colors match the original website design and are automatically applied to headings in `richText` sections.
+
 ## Usage in Components
 
 Components use semantic brand color names instead of hard-coded color values:
@@ -90,6 +101,11 @@ maroon: {
 - `bg-brand-primary`: Section background
 - `text-brand-primary`: Primary CTA button text
 - `hover:bg-brand-light`: Primary CTA button hover
+
+### RichText.astro
+- `heading-main` (#6B2B1F): Applied to `<h2>` elements - large, reddish-brown main headlines
+- `heading-subheading` (#A88B4A): Applied to `<h3>` elements - golden-brown, all-caps subheadings
+- Body text: Black (#000000) for paragraphs
 
 ## Color Palette Reference
 

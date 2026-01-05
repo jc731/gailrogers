@@ -147,10 +147,16 @@ Each section type has specific fields. Here's a complete reference:
 ```yaml
 - type: richText
   content: |
-    <h2>Heading</h2>
+    <h2>Main Headline</h2>
+    <h3>Subheading in All Caps</h3>
     <p>Your HTML content here</p>
   className: "optional-css-class"  # Optional
 ```
+
+**Note:** The RichText component automatically styles headings:
+- `<h2>`: Large, reddish-brown (#6B2B1F) main headlines
+- `<h3>`: Golden-brown (#A88B4A), all-caps subheadings
+- `<p>`: Regular black body text
 
 **FAQ Section:**
 ```yaml

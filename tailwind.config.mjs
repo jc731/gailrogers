@@ -28,6 +28,11 @@ export default {
           hover: '#991b1b',        // maroon-800
           light: '#fecaca',        // maroon-200
         },
+        // Heading colors matching original design
+        heading: {
+          main: '#6B2B1F',        // Reddish-brown for main headlines (h2)
+          subheading: '#A88B4A',  // Golden-brown for subheadings (h3)
+        },
       },
     },
   },
