@@ -12,9 +12,10 @@ interface Props {
     }>;
   }>;
   primaryPhone?: string;
+  currentPath?: string;
 }
 
-const { navigation, primaryPhone } = Astro.props;
+const { navigation, primaryPhone, currentPath = '' } = Astro.props;
 const menuId = 'mobile-menu';
 const buttonId = 'mobile-menu-button';
 ---
@@ -25,7 +26,7 @@ const buttonId = 'mobile-menu-button';
   aria-expanded="false"
   aria-controls={menuId}
   aria-label="Toggle navigation menu"
-  class="md:hidden focus-ring p-2 rounded min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
+  class="lg:hidden focus-ring p-2 rounded min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
   data-mobile-menu-button
 >
   <Icon 
@@ -42,7 +43,7 @@ const buttonId = 'mobile-menu-button';
 
 <div
   id={menuId}
-  class="md:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto"
+  class="lg:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto"
   data-mobile-menu
 >
   <nav class="container mx-auto px-4 py-6">
@@ -55,39 +56,69 @@ const buttonId = 'mobile-menu-button';
           <li>
             {item.children && item.children.length > 0 ? (
               <>
-                <button
-                  id={submenuButtonId}
-                  type="button"
-                  aria-expanded="false"
-                  aria-controls={submenuId}
-                  class="w-full text-left text-gray-700 hover:text-brand-primary focus-ring px-4 py-3 rounded min-h-[44px] flex items-center justify-between"
-                  data-mobile-submenu-button={index}
-                >
-                  <span>{item.label}</span>
-                  <DropdownIndicator size="sm" className="text-current" />
-                </button>
-                <ul
-                  id={submenuId}
-                  class="hidden pl-4 space-y-1 mt-1"
-                  data-mobile-submenu={index}
-                >
-                  {item.children.map((child) => (
-                    <li>
-                      <a
-                        href={child.href}
-                        class="block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-2 rounded min-h-[44px] flex items-center"
-                        data-mobile-menu-link
+                {(() => {
+                  const isParentActive = currentPath === item.href || item.children?.some(child => currentPath === child.href);
+                  const linkClasses = isParentActive
+                    ? "flex-1 text-left text-brand-primary font-semibold hover:text-brand-primary focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
+                    : "flex-1 text-left text-gray-700 hover:text-brand-primary focus-ring px-4 py-3 rounded min-h-[44px] flex items-center";
+                  const buttonClasses = "flex items-center justify-center min-h-[44px] min-w-[44px] focus-ring px-2 rounded";
+                  
+                  return (
+                    <>
+                      <div class="flex items-center">
+                        <a
+                          href={item.href}
+                          class={linkClasses}
+                          data-mobile-menu-link
+                        >
+                          {item.label}
+                        </a>
+                        <button
+                          id={submenuButtonId}
+                          type="button"
+                          aria-expanded="false"
+                          aria-controls={submenuId}
+                          aria-label={`Toggle ${item.label} submenu`}
+                          class={buttonClasses}
+                          data-mobile-submenu-button={index}
+                        >
+                          <DropdownIndicator size="sm" className="text-current" />
+                        </button>
+                      </div>
+                      <ul
+                        id={submenuId}
+                        class="hidden pl-4 space-y-1 mt-1"
+                        data-mobile-submenu={index}
                       >
-                        {child.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                        {item.children.map((child) => {
+                          const isChildActive = currentPath === child.href;
+                          const childClasses = isChildActive
+                            ? "block text-brand-primary font-semibold bg-brand-light focus-ring px-4 py-2 rounded min-h-[44px] flex items-center"
+                            : "block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-2 rounded min-h-[44px] flex items-center";
+                          
+                          return (
+                            <li>
+                              <a
+                                href={child.href}
+                                class={childClasses}
+                                data-mobile-menu-link
+                              >
+                                {child.label}
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
+                  );
+                })()}
               </>
             ) : (
               <a
                 href={item.href}
-                class="block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
+                class={currentPath === item.href
+                  ? "block text-brand-primary font-semibold hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
+                  : "block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"}
                 data-mobile-menu-link
               >
                 {item.label}
@@ -219,7 +250,7 @@ const buttonId = 'mobile-menu-button';
     
     // Handle window resize - close menu if switching to desktop
     window.addEventListener('resize', function() {
-      if (window.innerWidth >= 768 && isOpen) {
+      if (window.innerWidth >= 1024 && isOpen) {
         closeMenu();
       }
     });
