@@ -10,3 +10,5 @@
 // Service worker registration would typically be done in BaseLayout.astro
 // when ready to implement service worker features
 
+
+

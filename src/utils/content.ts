@@ -54,3 +54,5 @@ export function getSiteSettings<T extends CollectionEntry<'site'>>(
   return settingsEntry?.data || null;
 }
 
+
+

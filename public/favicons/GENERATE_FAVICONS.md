@@ -57,3 +57,5 @@ The SVG favicon will work for modern browsers, but PNG/ICO formats are needed fo
 - Android devices (android-chrome-*.png)
 - Better cross-platform support
 
+
+

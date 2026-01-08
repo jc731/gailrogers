@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Logo from '../components/Logo.astro';
+import DropdownIndicator from '../components/DropdownIndicator.astro';
+import MobileMenu from '../components/MobileMenu.astro';
 import { getSiteSettings } from '../utils/content';
 
 interface Props {
@@ -57,7 +59,9 @@ const footerNavigation = siteSettings?.footerNavigation || [];
             tagline="LAW OFFICE"
             href="/"
           />
-          <div class="hidden md:flex gap-6 items-center">
+          <div class="flex gap-6 items-center">
+            {/* Desktop Navigation */}
+            <div class="hidden md:flex gap-6 items-center">
             {navigation.map((item, index) => {
               const menuId = `menu-${index}`;
               const buttonId = `menu-button-${index}`;
@@ -71,11 +75,11 @@ const footerNavigation = siteSettings?.footerNavigation || [];
                         aria-expanded="false"
                         aria-haspopup="true"
                         aria-controls={menuId}
-                        class="text-gray-700 hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px]"
+                        class="text-gray-700 hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center gap-1"
                         data-nav-button={index}
                       >
-                        {item.label}
-                        <span aria-hidden="true" class="ml-1">▼</span>
+                        <span>{item.label}</span>
+                        <DropdownIndicator size="sm" className="text-current" />
                       </button>
                       <div
                         id={menuId}
@@ -119,6 +123,10 @@ const footerNavigation = siteSettings?.footerNavigation || [];
                 {primaryPhone}
               </a>
             )}
+            </div>
+            
+            {/* Mobile Menu Button */}
+            <MobileMenu navigation={navigation} primaryPhone={primaryPhone} />
           </div>
           
           <script>
@@ -266,7 +274,7 @@ const footerNavigation = siteSettings?.footerNavigation || [];
           </div>
         </div>
         <div class="border-t border-brand-primaryDark pt-8">
-          <p class="text-sm text-white opacity-90">{legalDisclaimer}</p>
+          <p class="text-base sm:text-sm text-white opacity-90 break-words">{legalDisclaimer}</p>
         </div>
       </div>
     </footer>

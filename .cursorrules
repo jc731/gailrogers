@@ -166,3 +166,5 @@ When creating decision records in `docs/decisions/`:
 - Decision records live in the project repository, not in the MCP server
 - Always prioritize explicit acceptance criteria and clear communication
 
+
+

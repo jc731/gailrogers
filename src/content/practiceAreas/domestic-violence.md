@@ -57,3 +57,5 @@ faqs:
     answer: Yes, domestic violence is a significant factor in child custody determinations. The court will consider the safety of the child and may restrict or supervise visitation with an abusive parent.
 ---
 
+
+

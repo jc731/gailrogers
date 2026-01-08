@@ -1,0 +1,236 @@
+---
+import { Icon } from 'astro-icon/components';
+import DropdownIndicator from './DropdownIndicator.astro';
+
+interface Props {
+  navigation: Array<{
+    label: string;
+    href: string;
+    children?: Array<{
+      label: string;
+      href: string;
+    }>;
+  }>;
+  primaryPhone?: string;
+}
+
+const { navigation, primaryPhone } = Astro.props;
+const menuId = 'mobile-menu';
+const buttonId = 'mobile-menu-button';
+---
+
+<button
+  id={buttonId}
+  type="button"
+  aria-expanded="false"
+  aria-controls={menuId}
+  aria-label="Toggle navigation menu"
+  class="md:hidden focus-ring p-2 rounded min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
+  data-mobile-menu-button
+>
+  <Icon 
+    name="mdi:menu"
+    class="w-6 h-6 menu-icon-open"
+    aria-hidden="true"
+  />
+  <Icon 
+    name="mdi:close"
+    class="w-6 h-6 menu-icon-close hidden"
+    aria-hidden="true"
+  />
+</button>
+
+<div
+  id={menuId}
+  class="md:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto"
+  data-mobile-menu
+>
+  <nav class="container mx-auto px-4 py-6">
+    <ul class="space-y-2">
+      {navigation.map((item, index) => {
+        const submenuId = `mobile-submenu-${index}`;
+        const submenuButtonId = `mobile-submenu-button-${index}`;
+        
+        return (
+          <li>
+            {item.children && item.children.length > 0 ? (
+              <>
+                <button
+                  id={submenuButtonId}
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls={submenuId}
+                  class="w-full text-left text-gray-700 hover:text-brand-primary focus-ring px-4 py-3 rounded min-h-[44px] flex items-center justify-between"
+                  data-mobile-submenu-button={index}
+                >
+                  <span>{item.label}</span>
+                  <DropdownIndicator size="sm" className="text-current" />
+                </button>
+                <ul
+                  id={submenuId}
+                  class="hidden pl-4 space-y-1 mt-1"
+                  data-mobile-submenu={index}
+                >
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-2 rounded min-h-[44px] flex items-center"
+                        data-mobile-menu-link
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <a
+                href={item.href}
+                class="block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
+                data-mobile-menu-link
+              >
+                {item.label}
+              </a>
+            )}
+          </li>
+        );
+      })}
+      {primaryPhone && (
+        <li class="pt-4 border-t border-gray-200">
+          <a
+            href={`tel:${primaryPhone}`}
+            class="block text-brand-primary font-semibold focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
+            data-mobile-menu-link
+          >
+            {primaryPhone}
+          </a>
+        </li>
+      )}
+    </ul>
+  </nav>
+</div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.querySelector('[data-mobile-menu-button]');
+    const mobileMenu = document.querySelector('[data-mobile-menu]');
+    const menuIconOpen = menuButton ? menuButton.querySelector('.menu-icon-open') : null;
+    const menuIconClose = menuButton ? menuButton.querySelector('.menu-icon-close') : null;
+    const submenuButtons = document.querySelectorAll('[data-mobile-submenu-button]');
+    const menuLinks = document.querySelectorAll('[data-mobile-menu-link]');
+    
+    if (!menuButton || !mobileMenu) return;
+    
+    let isOpen = false;
+    
+    function openMenu() {
+      isOpen = true;
+      menuButton.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.remove('translate-x-full');
+      if (menuIconOpen) menuIconOpen.classList.add('hidden');
+      if (menuIconClose) menuIconClose.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeMenu() {
+      isOpen = false;
+      menuButton.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.add('translate-x-full');
+      if (menuIconOpen) menuIconOpen.classList.remove('hidden');
+      if (menuIconClose) menuIconClose.classList.add('hidden');
+      document.body.style.overflow = '';
+      
+      // Close all submenus
+      document.querySelectorAll('[data-mobile-submenu]').forEach(function(submenu) {
+        submenu.classList.add('hidden');
+        const button = document.querySelector('[aria-controls="' + submenu.id + '"]');
+        if (button) button.setAttribute('aria-expanded', 'false');
+      });
+    }
+    
+    function toggleMenu() {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    }
+    
+    // Toggle menu on button click
+    menuButton.addEventListener('click', toggleMenu);
+    
+    // Keyboard support for menu button
+    menuButton.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMenu();
+      } else if (e.key === 'Escape' && isOpen) {
+        e.preventDefault();
+        closeMenu();
+      }
+    });
+    
+    // Handle submenu toggles
+    submenuButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        const buttonIndex = button.getAttribute('data-mobile-submenu-button');
+        const submenu = document.querySelector('[data-mobile-submenu="' + buttonIndex + '"]');
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+        
+        if (submenu) {
+          if (isExpanded) {
+            submenu.classList.add('hidden');
+            button.setAttribute('aria-expanded', 'false');
+          } else {
+            submenu.classList.remove('hidden');
+            button.setAttribute('aria-expanded', 'true');
+          }
+        }
+      });
+      
+      button.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          button.click();
+        }
+      });
+    });
+    
+    // Close menu when clicking a link
+    menuLinks.forEach(function(link) {
+      link.addEventListener('click', closeMenu);
+    });
+    
+    // Close menu on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isOpen) {
+        closeMenu();
+        menuButton.focus();
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (isOpen && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+        closeMenu();
+      }
+    });
+    
+    // Handle window resize - close menu if switching to desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768 && isOpen) {
+        closeMenu();
+      }
+    });
+  });
+</script>
+
+<style>
+  /* Smooth icon transition */
+  .menu-icon-open,
+  .menu-icon-close {
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+</style>
+

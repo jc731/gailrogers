@@ -98,3 +98,5 @@ Initial Astro website build for Rogers Law Office with markdown-first content ar
    - Section-based template system
    - Content collection schema design
 
+
+

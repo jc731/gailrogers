@@ -38,15 +38,15 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
             <img 
               src={slide.image} 
               alt={slide.alt || slide.heading}
-              class="w-full h-[500px] md:h-[600px] object-cover"
+              class="w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] object-cover"
               loading={index === 0 ? 'eager' : 'lazy'}
             />
             <div class="absolute inset-0 bg-brand-primary/70"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="container mx-auto px-4 md:px-6 lg:px-8 text-center relative z-10">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">{slide.heading}</h1>
+            <div class="absolute inset-0 flex items-center justify-center py-8">
+              <div class="container mx-auto px-12 sm:px-16 md:px-6 lg:px-8 text-center relative z-10">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 break-words">{slide.heading}</h1>
                 {slide.subheading && (
-                  <p class="text-xl md:text-2xl lg:text-3xl mb-8">{slide.subheading}</p>
+                  <p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-8 break-words px-2">{slide.subheading}</p>
                 )}
                 {slide.ctaText && slide.ctaLink && (
                   <a 
@@ -65,8 +65,9 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
 
     {showControls && slides.length > 1 && (
       <>
+        {/* Mobile: Full-height edge buttons */}
         <button 
-          class="slider-prev absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-brand-primary p-3 rounded-full focus-ring min-h-[44px] min-w-[44px] transition-colors z-20"
+          class="slider-prev absolute left-2 top-0 bottom-0 w-12 md:hidden bg-black/20 hover:bg-black/30 text-white flex items-center justify-center focus-ring transition-colors z-20 rounded-r"
           aria-label="Previous slide"
           data-slider-prev
         >
@@ -75,7 +76,27 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
           </svg>
         </button>
         <button 
-          class="slider-next absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-brand-primary p-3 rounded-full focus-ring min-h-[44px] min-w-[44px] transition-colors z-20"
+          class="slider-next absolute right-2 top-0 bottom-0 w-12 md:hidden bg-black/20 hover:bg-black/30 text-white flex items-center justify-center focus-ring transition-colors z-20 rounded-l"
+          aria-label="Next slide"
+          data-slider-next
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        
+        {/* Desktop: Circular buttons */}
+        <button 
+          class="slider-prev hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-brand-primary p-3 rounded-full focus-ring min-h-[44px] min-w-[44px] items-center justify-center transition-colors z-20"
+          aria-label="Previous slide"
+          data-slider-prev
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button 
+          class="slider-next hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-brand-primary p-3 rounded-full focus-ring min-h-[44px] min-w-[44px] items-center justify-center transition-colors z-20"
           aria-label="Next slide"
           data-slider-next
         >
@@ -87,7 +108,7 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
     )}
 
     {showIndicators && slides.length > 1 && (
-      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20" role="tablist" aria-label="Slide indicators">
+      <div class="hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 gap-2 z-20" role="tablist" aria-label="Slide indicators">
         {slides.map((_, index) => (
           <button
             class={`slider-indicator w-3 h-3 rounded-full transition-all focus-ring min-h-[44px] min-w-[44px] flex items-center justify-center ${
@@ -144,14 +165,14 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
 
   const container = slider.querySelector('.slider-container');
   const slideElements = container.querySelectorAll('.slide');
-  const prevBtn = slider.querySelector('[data-slider-prev]');
-  const nextBtn = slider.querySelector('[data-slider-next]');
+  const prevBtns = slider.querySelectorAll('[data-slider-prev]');
+  const nextBtns = slider.querySelectorAll('[data-slider-next]');
   const indicators = slider.querySelectorAll('.slider-indicator');
   
   let currentSlide = 0;
-  let autoplayTimer: ReturnType<typeof setInterval> | null = null;
+  let autoplayTimer = null;
 
-  function showSlide(index: number) {
+  function showSlide(index) {
     // Hide all slides
     slideElements.forEach((slide, i) => {
       slide.classList.remove('active');
@@ -200,22 +221,22 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
     }
   }
 
-  // Event listeners
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
+  // Event listeners - handle both mobile and desktop buttons
+  nextBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
       stopAutoplay();
       nextSlide();
       startAutoplay();
     });
-  }
+  });
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
+  prevBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
       stopAutoplay();
       prevSlide();
       startAutoplay();
     });
-  }
+  });
 
   indicators.forEach((indicator, index) => {
     indicator.addEventListener('click', () => {
@@ -230,7 +251,7 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
   slider.addEventListener('mouseleave', startAutoplay);
 
   // Keyboard navigation - only when slider is focused
-  slider.addEventListener('keydown', (e) => {
+  slider.addEventListener('keydown', function(e) {
     // Only handle if slider container is focused (not a child element)
     if (document.activeElement === slider || container.contains(document.activeElement)) {
       if (e.key === 'ArrowLeft') {
@@ -255,7 +276,7 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
         startAutoplay();
       }
     }
-  });
+  }.bind(slider));
 
   // Start autoplay
   startAutoplay();

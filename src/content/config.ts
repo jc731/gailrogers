@@ -87,7 +87,7 @@ const iconBannerSection = z.object({
     text: z.string(),
     link: z.string().optional(),
   })),
-  backgroundColor: z.string().optional().default('gray-800'),
+  backgroundColor: z.string().optional().default('slate-dark'),
   className: z.string().optional(),
 });
 

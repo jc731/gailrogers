@@ -45,3 +45,5 @@ faqs:
     answer: Agreements reached in mediation are not automatically binding, but once they are incorporated into a court order (with court approval), they become legally enforceable.
 ---
 
+
+

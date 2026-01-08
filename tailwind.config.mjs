@@ -20,13 +20,14 @@ export default {
           950: '#450a0a',
         },
         // Brand colors - easily customizable for template reuse
+        // Using Tailwind red-900 (#991b1b) for warmer, darker reds
         brand: {
-          primary: '#7f1d1d',    // maroon-900
-          primaryDark: '#991b1b', // maroon-800
-          primaryLight: '#b91c1c', // maroon-700
-          accent: '#dc2626',      // maroon-600
-          hover: '#991b1b',        // maroon-800
-          light: '#fecaca',        // maroon-200
+          primary: '#991b1b',    // red-900 - warmer, darker primary
+          primaryDark: '#7f1d1d', // darker than red-900 for depth
+          primaryLight: '#dc2626', // red-600 - lighter variant
+          accent: '#dc2626',      // red-600
+          hover: '#7f1d1d',        // darker hover state
+          light: '#fecaca',        // red-200 - light variant
         },
         // Heading colors matching original design
         heading: {
@@ -35,8 +36,13 @@ export default {
         },
         // Accessible focus colors - high contrast for visibility
         focus: {
-          ring: '#7f1d1d',        // brand-primary for focus rings (high contrast)
+          ring: '#991b1b',        // brand-primary (red-900) for focus rings (high contrast)
           ringLight: '#ffffff',   // White for focus rings on dark backgrounds
+        },
+        // Dark slate for icon banners and dark sections
+        slate: {
+          dark: '#1e293b',        // slate-800 - dark slate without blue tones
+          darker: '#0f172a',     // slate-900 - very dark slate
         },
       },
     },

@@ -23,3 +23,5 @@ The SVG favicon is the source. Other formats can be generated from it using tool
 
 The favicon uses a simplified version of the logo's classical courthouse building icon, maintaining brand consistency.
 
+
+

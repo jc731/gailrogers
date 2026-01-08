@@ -30,16 +30,16 @@ sections:
     showControls: true
   - type: iconBanner
     items:
-      - icon: account-group
+      - icon: mdi:family
         text: Family Law
         link: /practice/family-law
-      - icon: account-heart
+      - icon: mdi:human-male-female-child
         text: Child Support
         link: /practice/child-support
-      - icon: home
+      - icon: mdi:home
         text: Real Estate
         link: /practice/real-estate
-    backgroundColor: gray-800
+    backgroundColor: slate-dark
   - type: richText
     content: |
       <h2>Experienced Champaign Lawyer Helps Resolve Family Law and Real Estate Matters</h2>

@@ -21,3 +21,5 @@ faqs:
     answer: Yes, I handle both residential and commercial real estate transactions.
 ---
 
+
+

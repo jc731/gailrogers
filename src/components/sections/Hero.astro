@@ -18,9 +18,9 @@ const { heading, subheading, ctaText, ctaLink, backgroundImage } = Astro.props;
     <div class="absolute inset-0 bg-brand-primary/70"></div>
   )}
   <div class="container mx-auto max-w-4xl relative z-10">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h1>
+    <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-words">{heading}</h1>
     {subheading && (
-      <p class="text-xl md:text-2xl mb-8">{subheading}</p>
+      <p class="text-lg sm:text-xl md:text-2xl mb-8 break-words">{subheading}</p>
     )}
     {ctaText && ctaLink && (
       <a 

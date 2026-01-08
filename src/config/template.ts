@@ -27,3 +27,5 @@ export const TEMPLATE_INFO = {
   description: 'A reusable Astro template for billboard-style websites',
 } as const;
 
+
+
