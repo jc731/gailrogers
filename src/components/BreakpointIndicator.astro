@@ -1,0 +1,73 @@
+---
+// Development-only breakpoint indicator
+// Shows the current Tailwind breakpoint at the top of the screen
+// Only visible in development mode, removed in production builds
+
+// Tailwind default breakpoints:
+// sm: 640px
+// md: 768px
+// lg: 1024px
+// xl: 1280px
+// 2xl: 1536px
+---
+
+{import.meta.env.DEV && (
+  <div
+    id="breakpoint-indicator"
+    class="fixed top-0 left-0 right-0 z-[9999] bg-gray-900 text-white text-xs font-mono py-1 px-4 text-center border-b border-gray-700"
+    style="display: none;"
+  >
+    <span id="breakpoint-text">xs</span>
+    <span class="text-gray-500 ml-2">
+      (<span id="breakpoint-width">0</span>px)
+    </span>
+  </div>
+)}
+
+{import.meta.env.DEV && (
+  <script>
+    (function () {
+      const indicator = document.getElementById('breakpoint-indicator');
+      const breakpointText = document.getElementById('breakpoint-text');
+      const breakpointWidth = document.getElementById('breakpoint-width');
+      
+      if (!indicator || !breakpointText || !breakpointWidth) return;
+      
+      // Tailwind default breakpoints (matches tailwind.config.mjs)
+      const breakpoints = {
+        'xs': 0,
+        'sm': 640,
+        'md': 768,
+        'lg': 1024,
+        'xl': 1280,
+        '2xl': 1536,
+      };
+      
+      function updateBreakpoint() {
+        const width = window.innerWidth;
+        breakpointWidth.textContent = width.toString();
+        
+        // Determine current breakpoint
+        let currentBreakpoint = 'xs';
+        if (width >= breakpoints['2xl']) {
+          currentBreakpoint = '2xl';
+        } else if (width >= breakpoints['xl']) {
+          currentBreakpoint = 'xl';
+        } else if (width >= breakpoints['lg']) {
+          currentBreakpoint = 'lg';
+        } else if (width >= breakpoints['md']) {
+          currentBreakpoint = 'md';
+        } else if (width >= breakpoints['sm']) {
+          currentBreakpoint = 'sm';
+        }
+        
+        breakpointText.textContent = currentBreakpoint;
+        indicator.style.display = 'block';
+      }
+      
+      // Update on load and resize
+      updateBreakpoint();
+      window.addEventListener('resize', updateBreakpoint);
+    })();
+  </script>
+)}
