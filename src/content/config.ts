@@ -1,4 +1,5 @@
 import { defineCollection, z } from 'astro:content';
+import { glob, file } from 'astro/loaders';
 
 // Section type definitions
 const heroSection = z.object({
@@ -120,7 +121,13 @@ export const sectionSchema = z.discriminatedUnion('type', [
 
 // Site settings collection
 const siteCollection = defineCollection({
-  type: 'data',
+  loader: file('./src/content/site/settings.json', {
+    parser: (text) => {
+      const settings = JSON.parse(text);
+      // Wrap single object in array with id for compatibility with existing code
+      return [{ id: 'settings', ...settings }];
+    },
+  }),
   schema: z.object({
     brandName: z.string(),
     primaryPhone: z.string(),
@@ -158,10 +165,10 @@ const siteCollection = defineCollection({
 
 // Pages collection
 const pagesCollection = defineCollection({
-  type: 'content',
-  schema: ({ image, slug }) => z.object({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: ({ image }) => z.object({
     title: z.string(),
-    slug: z.string().optional().default(slug),
+    slug: z.string().optional(),
     seoTitle: z.string().optional(),
     seoDescription: z.string().optional(),
     // Optional: Custom layout configuration (e.g., 'two-column' for contact page)
@@ -175,10 +182,10 @@ const pagesCollection = defineCollection({
 
 // Practice areas collection
 const practiceAreasCollection = defineCollection({
-  type: 'content',
-  schema: ({ image, slug }) => z.object({
+  loader: glob({ pattern: '**/*.md', base: './src/content/practiceAreas' }),
+  schema: ({ image }) => z.object({
     title: z.string(),
-    slug: z.string().optional().default(slug),
+    slug: z.string().optional(),
     summary: z.string(),
     seoTitle: z.string().optional(),
     seoDescription: z.string().optional(),

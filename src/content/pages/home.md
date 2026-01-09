@@ -36,6 +36,9 @@ sections:
       - icon: mdi:human-male-female-child
         text: Child Support
         link: /practice/child-support
+      - icon: mdi:handshake
+        text: Mediation Services
+        link: /practice/divorce-mediation-services
     backgroundColor: slate-dark
   - type: richText
     content: |
@@ -60,6 +63,9 @@ sections:
       - title: Child Support
         content: Expert guidance on child support calculations, modifications, and enforcement.
         link: /practice/child-support
+      - title: Mediation Services
+        content: Professional divorce mediation services to help couples reach amicable settlements without going to court. Mediation can be faster, less expensive, and less stressful than traditional litigation.
+        link: /practice/divorce-mediation-services
   - type: ctaBand
     heading: Contact a compassionate Illinois attorney to protect your rights
     text: Rogers Law Office LLC, in Champaign, Illinois, handles family law matters.

@@ -251,16 +251,44 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
   let autoplayTimer = null;
 
   function showSlide(index) {
+    // Helper function to find all focusable elements within a slide
+    function getFocusableElements(container) {
+      const focusableSelectors = [
+        'a[href]',
+        'button:not([disabled])',
+        'input:not([disabled])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        '[tabindex]:not([tabindex="-1"])'
+      ].join(', ');
+      return container.querySelectorAll(focusableSelectors);
+    }
+
     // Update all slides - use opacity for cross-fade effect
     slideElements.forEach((slide, i) => {
+      const focusableElements = getFocusableElements(slide);
+      
       if (i === index) {
         // Activate current slide
         slide.classList.add("active");
         slide.setAttribute("aria-hidden", "false");
+        
+        // Make focusable elements in active slide focusable
+        focusableElements.forEach((element) => {
+          // Remove tabindex if it was set to -1, or remove the attribute entirely
+          if (element.hasAttribute('tabindex') && element.getAttribute('tabindex') === '-1') {
+            element.removeAttribute('tabindex');
+          }
+        });
       } else {
         // Deactivate other slides
         slide.classList.remove("active");
         slide.setAttribute("aria-hidden", "true");
+        
+        // Make focusable elements in hidden slide unfocusable
+        focusableElements.forEach((element) => {
+          element.setAttribute('tabindex', '-1');
+        });
       }
 
       // Update indicators
@@ -366,6 +394,9 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
       }
     }.bind(slider)
   );
+
+  // Initialize slide states (ensures tabindex is set correctly for all slides)
+  showSlide(0);
 
   // Start autoplay
   startAutoplay();

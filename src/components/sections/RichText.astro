@@ -38,7 +38,7 @@ const finalContainerClassName = containerClassName || 'container mx-auto max-w-6
   }
 
   .rich-text-content :global(h3) {
-    color: #A88B4A; /* Golden-brown for subheadings */
+    color: #8C733D; /* Golden-brown for subheadings - darker for WCAG AA contrast */
     font-size: 1rem; /* Mobile-first: 16px */
     font-weight: 700;
     text-transform: uppercase;
@@ -56,6 +56,21 @@ const finalContainerClassName = containerClassName || 'container mx-auto max-w-6
     margin-bottom: 1rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
+  }
+
+  /* Ensure list items and strong text are dark */
+  .rich-text-content :global(ul),
+  .rich-text-content :global(ol) {
+    color: #000000;
+  }
+
+  .rich-text-content :global(li) {
+    color: #000000;
+  }
+
+  .rich-text-content :global(strong) {
+    color: #000000;
+    font-weight: 700;
   }
 
   /* Ensure links wrap */
