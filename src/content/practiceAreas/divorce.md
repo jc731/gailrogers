@@ -2,7 +2,7 @@
 title: Divorce
 slug: divorce
 summary: Experienced divorce attorney helping clients navigate the divorce process in Illinois, including uncontested divorces and marital settlements.
-seoTitle: Divorce Attorney in Champaign, Illinois - Rogers Law Office
+seoTitle: Divorce Attorney in Champaign, Illinois - Rogers Law Office LLC
 seoDescription: Experienced divorce attorney handling uncontested divorces, marital settlements, and divorce litigation in Champaign, Illinois.
 order: 2
 sections:

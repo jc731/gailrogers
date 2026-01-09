@@ -2,7 +2,7 @@
 title: Child Custody
 slug: child-custody
 summary: Experienced child custody attorney helping parents develop parenting plans and protect their rights to share in raising their children.
-seoTitle: Child Custody Attorney in Champaign, Illinois - Rogers Law Office
+seoTitle: Child Custody Attorney in Champaign, Illinois - Rogers Law Office LLC
 seoDescription: Experienced child custody attorney helping parents with parenting plans, custody disputes, and visitation matters in Champaign, Illinois.
 order: 4
 sections:
@@ -30,7 +30,7 @@ sections:
       <p>If the other parent is not complying with a custody order, I can help you enforce your rights through the court system.</p>
 faqs:
   - question: How is child custody determined in Illinois?
-    answer: Illinois uses the "best interests of the child" standard. The court considers factors such as the child's relationship with each parent, each parent's ability to care for the child, the child's adjustment to home, school, and community, and any history of domestic violence.
+    answer: Illinois uses the "best interests of the child" standard. The court considers factors such as the child's relationship with each parent, each parent's ability to care for the child, and the child's adjustment to home, school, and community.
   - question: What is the difference between allocation of parental responsibilities and parenting time?
     answer: Allocation of parental responsibilities refers to decision-making authority (major decisions about the child's education, health, religion, etc.). Parenting time refers to the schedule of when the child is with each parent.
   - question: Can custody orders be modified?

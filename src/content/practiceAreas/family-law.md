@@ -1,9 +1,9 @@
 ---
 title: Family Law
 slug: family-law
-summary: Comprehensive family law services including divorce, child custody, spousal support, and domestic violence matters.
-seoTitle: Family Law Attorney in Champaign, Illinois - Rogers Law Office
-seoDescription: Experienced family law attorney handling divorce, child custody, support, and domestic violence cases in Champaign, Illinois.
+summary: Comprehensive family law services including divorce, child custody, and spousal support.
+seoTitle: Family Law Attorney in Champaign, Illinois - Rogers Law Office LLC
+seoDescription: Experienced family law attorney handling divorce, child custody, and support cases in Champaign, Illinois.
 order: 1
 sections:
   - type: hero

@@ -2,7 +2,7 @@
 title: Child Support
 slug: child-support
 summary: Expert guidance on child support calculations, modifications, and enforcement in Illinois.
-seoTitle: Child Support Attorney in Champaign, Illinois - Rogers Law Office
+seoTitle: Child Support Attorney in Champaign, Illinois - Rogers Law Office LLC
 seoDescription: Experienced attorney handling child support matters, modifications, and enforcement in Champaign, Illinois.
 order: 2
 sections:

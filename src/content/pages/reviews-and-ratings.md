@@ -1,8 +1,8 @@
 ---
 title: Reviews and Ratings
 slug: reviews-and-ratings
-seoTitle: Client Reviews and Ratings - Rogers Law Office
-seoDescription: Read client reviews and ratings for Rogers Law Office. See what clients say about our family law and real estate legal services.
+seoTitle: Client Reviews and Ratings - Rogers Law Office LLC
+seoDescription: Read client reviews and ratings for Rogers Law Office LLC. See what clients say about our family law legal services.
 sections:
   - type: hero
     heading: Reviews and Ratings

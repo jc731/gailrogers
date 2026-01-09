@@ -1,16 +1,16 @@
 ---
 title: Practice Areas
 slug: practice
-seoTitle: Practice Areas - Family Law and Real Estate Attorney in Champaign, Illinois
-seoDescription: Comprehensive legal services including family law, divorce, child custody, child support, real estate, and mediation services in Champaign, Illinois.
+seoTitle: Practice Areas - Family Law Attorney in Champaign, Illinois
+seoDescription: Comprehensive legal services including family law, divorce, child custody, child support, and mediation services in Champaign, Illinois.
 sections:
   - type: hero
     heading: Practice Areas
-    subheading: Comprehensive legal services for your family and real estate needs
+    subheading: Comprehensive legal services for your family law needs
   - type: richText
     content: |
       <h2>Experienced Legal Representation</h2>
-      <p>At Rogers Law Office, I provide comprehensive legal services in family law and real estate matters. With extensive experience serving clients in Champaign, Illinois, and surrounding counties since 1996, I am committed to helping you achieve the best possible outcome for your legal needs.</p>
+      <p>At Rogers Law Office LLC, I provide comprehensive legal services in family law matters. With extensive experience serving clients in Champaign, Illinois, and surrounding counties since 1996, I am committed to helping you achieve the best possible outcome for your legal needs.</p>
       <h3>Personalized Attention</h3>
       <p>I understand that legal matters, especially those involving family, can be stressful and emotionally challenging. That's why I work closely with each client to develop customized legal strategies that address your specific concerns and goals.</p>
       <h3>Cost-Effective Solutions</h3>
@@ -19,7 +19,7 @@ sections:
     title: Our Legal Services
     cards:
       - title: Family Law
-        content: Comprehensive family law services including divorce, child custody, spousal support, and domestic violence matters. Where the law touches on family relationships, the legal process becomes very personal.
+        content: Comprehensive family law services including divorce, child custody, and spousal support. Where the law touches on family relationships, the legal process becomes very personal.
         link: /practice/family-law
       - title: Divorce
         content: Experienced divorce attorney helping clients navigate the divorce process in Illinois, including uncontested divorces, marital settlements, and divorce litigation when necessary.
@@ -42,16 +42,10 @@ sections:
       - title: Mediation Representation
         content: Legal representation during mediation proceedings to ensure your interests are protected while working toward amicable solutions. I work with you to negotiate fair agreements while protecting your rights.
         link: /practice/mediation-representation
-      - title: Domestic Violence
-        content: Compassionate and experienced representation for victims of domestic violence, including orders of protection and related family law matters. I provide the support and legal representation you need during this difficult time.
-        link: /practice/domestic-violence
-      - title: Real Estate
-        content: Accomplished real estate lawyer with a track record of success. For more than 20 years, clients have trusted me with buying and selling properties, title clearance, and real estate transactions.
-        link: /practice/real-estate
     columns: 3
   - type: ctaBand
     heading: Ready to discuss your legal needs?
-    text: Contact Rogers Law Office for a confidential consultation.
+    text: Contact Rogers Law Office LLC for a confidential consultation.
     primaryCTA:
       text: Call 217-318-0677
       link: tel:217-318-0677
@@ -60,11 +54,13 @@ sections:
       link: /contact
   - type: richText
     content: |
-      <h2>Why Choose Rogers Law Office?</h2>
-      <p>When you choose Rogers Law Office, you're choosing an attorney who personally manages every aspect of your case. I don't delegate your important legal matters to junior associates—you work directly with me throughout the entire process.</p>
+      <h2>Why Choose Rogers Law Office LLC?</h2>
+      <p>When you choose Rogers Law Office LLC, you're choosing an attorney who personally manages every aspect of your case. I don't delegate your important legal matters to junior associates—you work directly with me throughout the entire process.</p>
       <h3>Extensive Experience</h3>
-      <p>Since 1996, I have been serving clients throughout Champaign, Illinois, and surrounding counties. My experience spans all areas of family law and real estate, giving you confidence that your case is in capable hands.</p>
+      <p>Since 1996, I have been serving clients throughout Champaign, Illinois, and surrounding counties. My experience spans all areas of family law, giving you confidence that your case is in capable hands.</p>
       <h3>Results-Oriented Approach</h3>
       <p>I am prepared to work tirelessly for the results you deserve. Whether through negotiation, mediation, or litigation, I will advocate strongly for your interests while working to achieve the best possible outcome.</p>
+      <h3>Responsive Service</h3>
+      <p>My clients consistently appreciate how quickly I respond to their questions and concerns. I understand that legal matters require timely attention, and I make it a priority to provide prompt, clear communication. You'll find me easy to work with and accessible when you need answers.</p>
 ---
 

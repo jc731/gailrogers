@@ -2,7 +2,7 @@
 title: Divorce Mediation Services
 slug: divorce-mediation-services
 summary: Professional divorce mediation services to help couples reach amicable settlements without going to court.
-seoTitle: Divorce Mediation Services in Champaign, Illinois - Rogers Law Office
+seoTitle: Divorce Mediation Services in Champaign, Illinois - Rogers Law Office LLC
 seoDescription: Professional divorce mediator helping couples resolve divorce issues amicably and cost-effectively in Champaign, Illinois.
 order: 6
 sections:

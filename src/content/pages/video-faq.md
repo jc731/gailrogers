@@ -1,7 +1,7 @@
 ---
 title: Video FAQ
 slug: video-faq
-seoTitle: Video FAQ - Frequently Asked Questions - Rogers Law Office
+seoTitle: Video FAQ - Frequently Asked Questions - Rogers Law Office LLC
 seoDescription: Watch video answers to frequently asked questions about divorce, family law, and legal matters in Illinois.
 sections:
   - type: hero

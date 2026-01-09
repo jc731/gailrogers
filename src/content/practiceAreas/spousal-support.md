@@ -2,7 +2,7 @@
 title: Spousal Support
 slug: spousal-support
 summary: Expert representation for spousal support (alimony) matters, whether you are seeking support or defending against a support claim.
-seoTitle: Spousal Support Attorney in Champaign, Illinois - Rogers Law Office
+seoTitle: Spousal Support Attorney in Champaign, Illinois - Rogers Law Office LLC
 seoDescription: Experienced attorney handling spousal support and alimony matters in Champaign, Illinois. Representation for both payers and recipients.
 order: 3
 sections:

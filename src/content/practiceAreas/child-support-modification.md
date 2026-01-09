@@ -2,7 +2,7 @@
 title: Child Support Modification
 slug: child-support-modification
 summary: Expert assistance with modifying child support orders when there has been a substantial change in circumstances.
-seoTitle: Child Support Modification Attorney in Champaign, Illinois - Rogers Law Office
+seoTitle: Child Support Modification Attorney in Champaign, Illinois - Rogers Law Office LLC
 seoDescription: Experienced attorney handling child support modification requests in Champaign, Illinois. Help with increasing or decreasing child support.
 order: 5
 sections:

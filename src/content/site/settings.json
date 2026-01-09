@@ -1,5 +1,5 @@
 {
-  "brandName": "Rogers Law Office",
+  "brandName": "Rogers Law Office LLC",
   "primaryPhone": "217-318-0677",
   "phones": ["217-318-0677", "217-531-1124"],
   "address": {
@@ -62,14 +62,6 @@
         {
           "label": "Mediation Representation",
           "href": "/practice/mediation-representation"
-        },
-        {
-          "label": "Domestic Violence",
-          "href": "/practice/domestic-violence"
-        },
-        {
-          "label": "Real Estate",
-          "href": "/practice/real-estate"
         }
       ]
     },

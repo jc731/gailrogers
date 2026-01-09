@@ -2,7 +2,7 @@
 title: Mediation Representation
 slug: mediation-representation
 summary: Legal representation during mediation proceedings to ensure your interests are protected while working toward amicable solutions.
-seoTitle: Mediation Representation Attorney in Champaign, Illinois - Rogers Law Office
+seoTitle: Mediation Representation Attorney in Champaign, Illinois - Rogers Law Office LLC
 seoDescription: Experienced attorney providing representation during mediation proceedings for divorce and family law matters in Champaign, Illinois.
 order: 7
 sections:

@@ -1,8 +1,8 @@
 ---
 title: Contact Us
 slug: contact
-seoTitle: Contact Rogers Law Office - Champaign, Illinois
-seoDescription: Contact Rogers Law Office for a confidential consultation. Located in Champaign, Illinois.
+seoTitle: Contact Rogers Law Office LLC - Champaign, Illinois
+seoDescription: Contact Rogers Law Office LLC for a confidential consultation. Located in Champaign, Illinois.
 layoutConfig:
   type: two-column
 sections:
