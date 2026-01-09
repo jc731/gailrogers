@@ -25,7 +25,7 @@ sections:
         ctaLink: tel:217-318-0677
         alt: Rogers Law Office - Experienced Family Law and Real Estate Attorney
     autoplay: true
-    autoplayInterval: 5000
+    autoplayInterval: 6250
     showIndicators: true
     showControls: true
   - type: iconBanner
@@ -74,5 +74,23 @@ sections:
     secondaryCTA:
       text: Contact Us Online
       link: /contact
+  - type: richText
+    content: |
+      <h2>Serving Champaign, Urbana, and Surrounding Illinois Communities</h2>
+      <p>Rogers Law Office proudly serves clients throughout Champaign County and the surrounding Illinois communities. Whether you are dealing with a family law matter in Champaign, need real estate assistance in Urbana, or require legal services in the broader central Illinois area, I am here to help.</p>
+      <h3>Dedicated to your success</h3>
+      <p>My practice focuses exclusively on family law and real estate matters, allowing me to provide specialized knowledge and expertise in these areas. I understand that legal issues can be overwhelming, and I am committed to providing clear guidance and effective representation throughout your case.</p>
+      <p>When you choose Rogers Law Office, you receive dedicated, personalized legal service tailored to your unique situation. I take the time to understand your goals and work diligently to help you achieve the best possible outcome.</p>
+  - type: faq
+    title: Frequently Asked Questions
+    items:
+      - question: What areas of law do you practice?
+        answer: I focus exclusively on family law and real estate matters, including divorce, child custody, child support, spousal support, domestic violence, real estate transactions, and property disputes.
+      - question: How long have you been practicing law?
+        answer: I have been practicing law since 1996, providing legal services to clients in the Champaign and Springfield areas for more than 20 years.
+      - question: Do you offer consultations?
+        answer: Yes, I offer consultations to discuss your legal matter and how I can help. Please call 217-318-0677 to schedule a consultation.
+      - question: What areas do you serve?
+        answer: I serve clients in Champaign, Springfield, and surrounding counties in central Illinois, including Champaign County and Sangamon County.
 ---
 

@@ -1,0 +1,98 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'white' | 'outline-white' | 'heading-subheading';
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  focusRing?: 'light' | 'dark';
+  rounded?: 'md' | 'lg';
+  fullWidth?: boolean;
+  // Additional props for <a> tags
+  target?: string;
+  rel?: string;
+  // Additional props for <button> tags
+  type?: 'button' | 'submit' | 'reset';
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  className = '',
+  focusRing = 'light',
+  rounded = 'lg',
+  fullWidth = false,
+  target,
+  rel,
+  type = 'button',
+} = Astro.props;
+
+// Base classes shared by all buttons (no padding - handled by size)
+const baseClasses = 'font-semibold transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center';
+
+// Size classes (includes padding)
+const sizeClasses = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3',
+  lg: 'px-8 py-4 text-lg',
+};
+
+// Variant classes
+const variantClasses = {
+  primary: 'bg-brand-primary text-white hover:bg-brand-primaryDark',
+  secondary: 'bg-brand-primaryLight text-white hover:bg-brand-primary',
+  outline: 'bg-transparent border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white',
+  white: 'bg-white text-brand-primary hover:bg-brand-light',
+  'outline-white': 'bg-transparent border-2 border-white text-white hover:bg-white/10',
+  'heading-subheading': 'bg-heading-subheading text-white hover:bg-opacity-90',
+};
+
+// Focus ring classes
+const focusRingClasses = {
+  light: 'focus-ring',
+  dark: 'focus-ring-dark',
+};
+
+// Rounded classes
+const roundedClasses = {
+  md: 'rounded-md',
+  lg: 'rounded-lg',
+};
+
+// Build class string
+const sizeClass = sizeClasses[size];
+const variantClass = variantClasses[variant];
+const focusRingClass = focusRingClasses[focusRing];
+const roundedClass = roundedClasses[rounded];
+const widthClass = fullWidth ? 'w-full md:w-auto' : '';
+const finalClasses = [
+  baseClasses,
+  sizeClass,
+  variantClass,
+  focusRingClass,
+  roundedClass,
+  widthClass,
+  className,
+].filter(Boolean).join(' ');
+
+// Determine if this should be a link or button
+const isLink = href !== undefined;
+---
+
+{isLink ? (
+  <a
+    href={href}
+    class={finalClasses}
+    target={target}
+    rel={rel}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    class={finalClasses}
+  >
+    <slot />
+  </button>
+)}

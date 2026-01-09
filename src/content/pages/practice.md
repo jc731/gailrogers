@@ -49,14 +49,6 @@ sections:
         content: Accomplished real estate lawyer with a track record of success. For more than 20 years, clients have trusted me with buying and selling properties, title clearance, and real estate transactions.
         link: /practice/real-estate
     columns: 3
-  - type: richText
-    content: |
-      <h2>Why Choose Rogers Law Office?</h2>
-      <p>When you choose Rogers Law Office, you're choosing an attorney who personally manages every aspect of your case. I don't delegate your important legal matters to junior associates—you work directly with me throughout the entire process.</p>
-      <h3>Extensive Experience</h3>
-      <p>Since 1996, I have been serving clients throughout Champaign, Illinois, and surrounding counties. My experience spans all areas of family law and real estate, giving you confidence that your case is in capable hands.</p>
-      <h3>Results-Oriented Approach</h3>
-      <p>I am prepared to work tirelessly for the results you deserve. Whether through negotiation, mediation, or litigation, I will advocate strongly for your interests while working to achieve the best possible outcome.</p>
   - type: ctaBand
     heading: Ready to discuss your legal needs?
     text: Contact Rogers Law Office for a confidential consultation.
@@ -66,5 +58,13 @@ sections:
     secondaryCTA:
       text: Contact Us Online
       link: /contact
+  - type: richText
+    content: |
+      <h2>Why Choose Rogers Law Office?</h2>
+      <p>When you choose Rogers Law Office, you're choosing an attorney who personally manages every aspect of your case. I don't delegate your important legal matters to junior associates—you work directly with me throughout the entire process.</p>
+      <h3>Extensive Experience</h3>
+      <p>Since 1996, I have been serving clients throughout Champaign, Illinois, and surrounding counties. My experience spans all areas of family law and real estate, giving you confidence that your case is in capable hands.</p>
+      <h3>Results-Oriented Approach</h3>
+      <p>I am prepared to work tirelessly for the results you deserve. Whether through negotiation, mediation, or litigation, I will advocate strongly for your interests while working to achieve the best possible outcome.</p>
 ---
 

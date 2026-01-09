@@ -12,19 +12,19 @@ All brand colors are defined in `tailwind.config.mjs` in the `theme.extend.color
 
 The theme uses two color systems:
 
-1. **Maroon Palette** (`maroon-*`): Full color scale from 50 (lightest) to 950 (darkest)
+1. **Maroon/Burgundy Palette** (`maroon-*`): Full color scale from 50 (lightest) to 950 (darkest), based on the logo color #6b2b1f
 2. **Brand Colors** (`brand-*`): Semantic color names for easy customization
 
 ### Brand Colors
 
 ```javascript
 brand: {
-  primary: '#7f1d1d',      // Main brand color (maroon-900)
-  primaryDark: '#991b1b',   // Darker variant (maroon-800)
-  primaryLight: '#b91c1c',  // Lighter variant (maroon-700)
-  accent: '#dc2626',        // Accent color (maroon-600)
-  hover: '#991b1b',         // Hover state (maroon-800)
-  light: '#fecaca',         // Light background (maroon-200)
+  primary: '#6b2b1f',      // Main brand color - logo burgundy/maroon
+  primaryDark: '#451a13',  // Darkest variant for depth
+  primaryLight: '#a6412a', // Lighter burgundy variant
+  accent: '#c75133',       // Medium burgundy for accents
+  hover: '#8a3626',        // Darker hover state
+  light: '#f6d1c7',        // Light burgundy for backgrounds
 }
 ```
 
@@ -109,12 +109,13 @@ maroon: {
 
 ## Color Palette Reference
 
-The maroon palette provides a full range of shades:
+The maroon/burgundy palette provides a full range of shades based on the logo color #6b2b1f:
 
 - `maroon-50` to `maroon-200`: Light backgrounds, subtle accents
 - `maroon-300` to `maroon-500`: Medium tones
-- `maroon-600` to `maroon-800`: Primary brand colors
-- `maroon-900` to `maroon-950`: Dark accents, text
+- `maroon-600` to `maroon-700`: Lighter burgundy variants
+- `maroon-800` to `maroon-900`: Primary brand colors (logo color #6b2b1f is maroon-900)
+- `maroon-950`: Darkest variant for depth
 
 ## Best Practices
 

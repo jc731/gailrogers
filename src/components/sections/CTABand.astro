@@ -1,4 +1,8 @@
 ---
+import Section from '../Section.astro';
+import { PADDING_COMPACT } from '../../utils/spacing';
+import Button from '../Button.astro';
+
 interface Props {
   heading: string;
   text?: string;
@@ -13,33 +17,41 @@ interface Props {
   className?: string;
 }
 
-const { heading, text, primaryCTA, secondaryCTA, className = '' } = Astro.props;
+const { heading, text, primaryCTA, secondaryCTA, className = "" } = Astro.props;
 ---
 
-<section class={`bg-brand-primary text-white py-12 px-4 md:px-6 lg:px-8 ${className}`}>
-  <div class="container mx-auto max-w-4xl text-center">
-    <h2 class="text-2xl sm:text-3xl font-bold mb-4 break-words">{heading}</h2>
-    {text && (
+<Section 
+  className={`${PADDING_COMPACT} bg-slate-dark text-white ${className}`.trim()}
+  containerClassName="container mx-auto max-w-4xl text-center"
+>
+  <h2 class="text-2xl sm:text-3xl font-bold mb-4 break-words">{heading}</h2>
+  {
+    text && (
       <p class="text-base sm:text-lg md:text-xl mb-8 break-words">{text}</p>
-    )}
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      {primaryCTA && (
-        <a 
+    )
+  }
+  <div class="flex flex-col sm:flex-row gap-4 justify-center">
+    {
+      primaryCTA && (
+        <Button
           href={primaryCTA.link}
-          class="inline-block bg-white text-brand-primary px-6 py-3 rounded-lg font-semibold hover:bg-brand-light focus-ring-dark min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors"
+          variant="white"
+          focusRing="dark"
         >
           {primaryCTA.text}
-        </a>
-      )}
-      {secondaryCTA && (
-        <a 
+        </Button>
+      )
+    }
+    {
+      secondaryCTA && (
+        <Button
           href={secondaryCTA.link}
-          class="inline-block bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 focus-ring-dark min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors"
+          variant="outline-white"
+          focusRing="dark"
         >
           {secondaryCTA.text}
-        </a>
-      )}
-    </div>
+        </Button>
+      )
+    }
   </div>
-</section>
-
+</Section>

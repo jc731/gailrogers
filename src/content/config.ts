@@ -98,6 +98,13 @@ const contactFormSection = z.object({
   className: z.string().optional(),
 });
 
+const mapEmbedSection = z.object({
+  type: z.literal('mapEmbed'),
+  embedUrl: z.string(),
+  height: z.string().optional().default('450'),
+  className: z.string().optional(),
+});
+
 export const sectionSchema = z.discriminatedUnion('type', [
   heroSection,
   richTextSection,
@@ -108,6 +115,7 @@ export const sectionSchema = z.discriminatedUnion('type', [
   linkButtonsSection,
   iconBannerSection,
   contactFormSection,
+  mapEmbedSection,
 ]);
 
 // Site settings collection

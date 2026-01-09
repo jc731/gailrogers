@@ -1,4 +1,8 @@
 ---
+import Section from "../Section.astro";
+import { PADDING_STANDARD_COMPACT_X } from "../../utils/spacing";
+import Button from "../Button.astro";
+
 interface Props {
   heading: string;
   subheading?: string;
@@ -8,28 +12,35 @@ interface Props {
 }
 
 const { heading, subheading, ctaText, ctaLink, backgroundImage } = Astro.props;
+
+const backgroundStyle = backgroundImage
+  ? `background-image: url(${backgroundImage}); background-size: cover; background-position: center;`
+  : "";
 ---
 
-<section 
-  class="relative bg-gradient-to-r from-brand-primary to-brand-primaryDark text-white py-20 px-4 md:px-6 lg:px-8"
-  style={backgroundImage ? `background-image: url(${backgroundImage}); background-size: cover; background-position: center;` : ''}
+<Section
+  className={`${PADDING_STANDARD_COMPACT_X} bg-brand-primaryDark text-white relative flex items-center`}
+  containerClassName="container mx-auto max-w-6xl"
+  style={backgroundStyle}
 >
-  {backgroundImage && (
-    <div class="absolute inset-0 bg-brand-primary/70"></div>
-  )}
-  <div class="container mx-auto max-w-4xl relative z-10">
-    <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-words">{heading}</h1>
-    {subheading && (
-      <p class="text-lg sm:text-xl md:text-2xl mb-8 break-words">{subheading}</p>
-    )}
-    {ctaText && ctaLink && (
-      <a 
-        href={ctaLink}
-        class="inline-block bg-white text-brand-primary px-6 py-3 rounded-lg font-semibold hover:bg-brand-light focus-ring min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors"
-      >
-        {ctaText}
-      </a>
-    )}
+  {backgroundImage && <div class="absolute inset-0 bg-brand-primary/70" />}
+  <div class="relative z-10">
+    <h1
+      class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-words"
+    >
+      {heading}
+    </h1>
+    {
+      subheading && (
+        <p class="text-lg sm:text-xl md:text-2xl break-words">{subheading}</p>
+      )
+    }
+    {
+      ctaText && ctaLink && (
+        <Button href={ctaLink} variant="white">
+          {ctaText}
+        </Button>
+      )
+    }
   </div>
-</section>
-
+</Section>

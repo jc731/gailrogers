@@ -18,10 +18,6 @@ sections:
         <li><strong>Personalized attention</strong> — I will work closely with you, so you are always aware of the status of your case and of our next steps.</li>
         <li><strong>Cost-effective rates</strong> — I believe that you should not have to choose between your financial security and having competent help with your legal problem. I offer reasonable rates to make this assistance affordable.</li>
       </ul>
-      <h3>Practice Areas</h3>
-      <p>I specialize in family law and real estate matters, providing comprehensive legal services to clients throughout Champaign County and surrounding areas.</p>
-      <h3>Professional Commitment</h3>
-      <p>Family law matters are often stressful, and real estate issues may be complex, but having a capable attorney by your side can give you the peace of mind to move forward confidently. I am committed to working tirelessly for the results you deserve.</p>
   - type: ctaBand
     heading: Ready to work with an experienced attorney?
     text: Contact me today to discuss your legal needs.
@@ -31,6 +27,12 @@ sections:
     secondaryCTA:
       text: Contact Us Online
       link: /contact
+  - type: richText
+    content: |
+      <h3>Practice Areas</h3>
+      <p>I specialize in family law and real estate matters, providing comprehensive legal services to clients throughout Champaign County and surrounding areas.</p>
+      <h3>Professional Commitment</h3>
+      <p>Family law matters are often stressful, and real estate issues may be complex, but having a capable attorney by your side can give you the peace of mind to move forward confidently. I am committed to working tirelessly for the results you deserve.</p>
 ---
 
 

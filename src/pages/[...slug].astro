@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionRenderer from '../components/SectionRenderer.astro';
+import RichText from '../components/sections/RichText.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { getSlugFromEntry } from '../utils/content';
 
@@ -65,12 +66,17 @@ const { Content } = await page.render();
 const title = page.data.seoTitle || page.data.title;
 const description = page.data.seoDescription || '';
 
+// Get current path for navigation highlighting
+const currentPath = Astro.url.pathname;
+const isAttorneyProfile = currentPath === '/attorney-profile';
+
 // Check if page uses two-column layout (configurable via frontmatter)
 const usesTwoColumnLayout = page.data.layoutConfig?.type === 'two-column';
 
-// For two-column layout, find contactForm and richText sections
+// For two-column layout, find contactForm, richText, and mapEmbed sections
 let contactFormSection: PageEntry['data']['sections'][number] | null = null;
 let officeLocationSection: PageEntry['data']['sections'][number] | null = null;
+let mapEmbedSection: PageEntry['data']['sections'][number] | null = null;
 let otherSections: PageEntry['data']['sections'] = [];
 
 if (usesTwoColumnLayout && type === 'page') {
@@ -79,6 +85,8 @@ if (usesTwoColumnLayout && type === 'page') {
       contactFormSection = section;
     } else if (section.type === 'richText' && section.content?.includes('Office Location')) {
       officeLocationSection = section;
+    } else if (section.type === 'mapEmbed') {
+      mapEmbedSection = section;
     } else {
       otherSections.push(section);
     }
@@ -88,33 +96,40 @@ if (usesTwoColumnLayout && type === 'page') {
 }
 ---
 
-<BaseLayout title={title} description={description}>
-  {usesTwoColumnLayout && contactFormSection && officeLocationSection ? (
-    <>
-      {/* Render other sections (hero, ctaBand, etc.) */}
-      {otherSections.map((section) => (
-        <SectionRenderer section={section} />
-      ))}
-      
-      {/* 2-column layout for contact form and office location on lg+ screens */}
-      <div class="container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          <div class="lg:sticky lg:top-8 lg:self-start">
-            <SectionRenderer section={contactFormSection} />
-          </div>
-          <div class="py-8 lg:py-0">
-            <SectionRenderer section={officeLocationSection} />
+<BaseLayout title={title} description={description} currentPath={currentPath}>
+  <div class={isAttorneyProfile ? 'attorney-profile-page' : ''}>
+    {usesTwoColumnLayout && contactFormSection && officeLocationSection ? (
+      <>
+        {/* Render other sections (hero, ctaBand, etc.) */}
+        {otherSections.map((section) => (
+          <SectionRenderer section={section} />
+        ))}
+        
+        {/* 2-column layout for contact form and office location on lg+ screens */}
+        <div class="container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-8">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <div class="lg:sticky lg:top-8 lg:self-start">
+              <SectionRenderer section={contactFormSection} />
+            </div>
+            <div class="space-y-8">
+              <RichText 
+                content={officeLocationSection.content} 
+                sectionClassName="prose prose-lg max-w-none"
+                containerClassName=""
+              />
+              {mapEmbedSection && <SectionRenderer section={mapEmbedSection} />}
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  ) : (
-    <>
-      {page.data.sections.map((section) => (
-        <SectionRenderer section={section} />
-      ))}
-    </>
-  )}
+      </>
+    ) : (
+      <>
+        {page.data.sections.map((section) => (
+          <SectionRenderer section={section} />
+        ))}
+      </>
+    )}
+  </div>
   
   {/* Render MDX content if present */}
   {Content && (
@@ -135,3 +150,39 @@ if (usesTwoColumnLayout && type === 'page') {
   )}
 </BaseLayout>
 
+{isAttorneyProfile && (
+  <style>
+    /* Reduce padding and margin on attorney profile page by half */
+    .attorney-profile-page :global(section) {
+      padding-top: 1.5rem !important; /* py-12 (3rem) → py-6 (1.5rem) */
+      padding-bottom: 1.5rem !important;
+      padding-left: 0.5rem !important; /* px-4 (1rem) → px-2 (0.5rem) */
+      padding-right: 0.5rem !important;
+    }
+
+    @media (min-width: 768px) {
+      .attorney-profile-page :global(section) {
+        padding-left: 0.75rem !important; /* md:px-6 (1.5rem) → md:px-3 (0.75rem) */
+        padding-right: 0.75rem !important;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .attorney-profile-page :global(section) {
+        padding-left: 1rem !important; /* lg:px-8 (2rem) → lg:px-4 (1rem) */
+        padding-right: 1rem !important;
+      }
+    }
+
+    /* Hero section: reduce py-20 to py-10 */
+    .attorney-profile-page :global(section.py-20) {
+      padding-top: 2.5rem !important; /* py-20 (5rem) → py-10 (2.5rem) */
+      padding-bottom: 2.5rem !important;
+    }
+
+    /* Reduce h2 margin-top for "About Gail Rogers" - target first h2 in richText content */
+    .attorney-profile-page :global(.rich-text-content h2:first-of-type) {
+      margin-top: 0.5rem !important; /* 2rem → 0.5rem */
+    }
+  </style>
+)}

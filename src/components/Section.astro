@@ -1,0 +1,27 @@
+---
+interface Props {
+  // Content
+  children: any;
+  
+  // Styling
+  className?: string;
+  containerClassName?: string;
+  style?: string;
+}
+
+const {
+  className = '',
+  containerClassName,
+  style,
+} = Astro.props;
+---
+
+<section class={className || undefined} style={style}>
+  {containerClassName ? (
+    <div class={containerClassName}>
+      <slot />
+    </div>
+  ) : (
+    <slot />
+  )}
+</section>

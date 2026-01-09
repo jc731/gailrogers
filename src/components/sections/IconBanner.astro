@@ -1,5 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
+import Section from '../Section.astro';
+import { PADDING_STANDARD } from '../../utils/spacing';
 
 interface Props {
   items: Array<{
@@ -31,44 +33,43 @@ const bgColorStyle = backgroundColor.startsWith('#')
   : '';
 ---
 
-<section 
-  class={`py-12 px-4 md:px-6 lg:px-8 ${bgColorClass} ${className}`}
+<Section 
+  className={`${PADDING_STANDARD} ${bgColorClass} ${className}`.trim()}
+  containerClassName="container mx-auto max-w-6xl"
   style={bgColorStyle}
 >
-  <div class="container mx-auto max-w-6xl">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {items.map((item) => {
-        // Ensure icon name has mdi: prefix if not already present
-        const iconName = item.icon.startsWith('mdi:') ? item.icon : `mdi:${item.icon}`;
-        
-        const content = (
-          <div class="flex flex-col items-center text-center text-white">
-            <div class="mb-4">
-              <Icon 
-                name={iconName}
-                class="w-16 h-16 text-white"
-                aria-hidden="true"
-              />
-            </div>
-            <h3 class="text-xl font-semibold">{item.text}</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    {items.map((item) => {
+      // Ensure icon name has mdi: prefix if not already present
+      const iconName = item.icon.startsWith('mdi:') ? item.icon : `mdi:${item.icon}`;
+      
+      const content = (
+        <div class="flex flex-col items-center text-center text-white">
+          <div class="mb-4">
+            <Icon 
+              name={iconName}
+              class="w-16 h-16 text-white"
+              aria-hidden="true"
+            />
           </div>
-        );
+          <h3 class="text-xl font-semibold">{item.text}</h3>
+        </div>
+      );
 
-        return item.link ? (
-          <a 
-            href={item.link}
-            class="block hover:opacity-80 focus-ring-dark min-h-[44px] transition-opacity"
-            aria-label={`${item.text} - Learn more`}
-          >
-            {content}
-          </a>
-        ) : (
-          <div>
-            {content}
-          </div>
-        );
-      })}
-    </div>
+      return item.link ? (
+        <a 
+          href={item.link}
+          class="block hover:opacity-80 focus-ring-dark min-h-[44px] transition-opacity"
+          aria-label={`${item.text} - Learn more`}
+        >
+          {content}
+        </a>
+      ) : (
+        <div>
+          {content}
+        </div>
+      );
+    })}
   </div>
-</section>
+</Section>
 

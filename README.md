@@ -24,7 +24,7 @@ This project uses Astro with Content Collections to manage all page content in M
 ### Prerequisites
 
 - Node.js 18+ 
-- pnpm (package manager)
+- pnpm (package manager) - **Important: Use pnpm, NOT npm**
 
 ### Installation
 

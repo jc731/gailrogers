@@ -97,6 +97,7 @@ Use `org_review_patch` MCP tool for code reviews:
 - Ensure accessibility (WCAG compliance)
 - Use Tailwind CSS for styling
 - Minimal JavaScript (prefer server-side rendering)
+- **Always fix warnings, never suppress them** - Warnings indicate real issues that should be addressed. Suppressing warnings is never an option. Fix the root cause of any warning, regardless of severity level.
 
 ### Testing
 - Acceptance criteria must be testable

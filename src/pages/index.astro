@@ -14,9 +14,12 @@ if (!homePage) {
 const { Content } = await homePage.render();
 const title = homePage.data.seoTitle || homePage.data.title;
 const description = homePage.data.seoDescription || '';
+
+// Get current path for navigation highlighting
+const currentPath = Astro.url.pathname;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} currentPath={currentPath}>
   {homePage.data.sections.map((section) => (
     <SectionRenderer section={section} />
   ))}

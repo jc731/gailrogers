@@ -8,6 +8,7 @@ import Slider from './sections/Slider.astro';
 import LinkButtons from './sections/LinkButtons.astro';
 import IconBanner from './sections/IconBanner.astro';
 import ContactForm from './forms/ContactForm.astro';
+import MapEmbed from './sections/MapEmbed.astro';
 import type { z } from 'zod';
 import type { sectionSchema } from '../../content/config';
 
@@ -98,3 +99,10 @@ const { section } = Astro.props;
   />
 )}
 
+{section.type === 'mapEmbed' && (
+  <MapEmbed 
+    embedUrl={section.embedUrl}
+    height={section.height}
+    className={section.className}
+  />
+)}
