@@ -64,7 +64,7 @@ sections:
         content: Expert guidance on child support calculations, modifications, and enforcement.
         link: /practice/child-support
       - title: Mediation Services
-        content: Professional divorce mediation services to help couples reach amicable settlements without going to court. Mediation can be faster, less expensive, and less stressful than traditional litigation.
+        content: Professional divorce mediation services to help couples reach amicable settlements efficiently.
         link: /practice/divorce-mediation-services
   - type: ctaBand
     heading: Contact a compassionate Illinois attorney to protect your rights
