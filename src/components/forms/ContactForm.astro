@@ -32,11 +32,20 @@ const {
 
     <form
       id="contact-form"
+      name="contact"
       method="POST"
       action="#"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
       class="space-y-6"
       novalidate
     >
+      <!-- Honeypot field for spam protection -->
+      <p class="hidden">
+        <label>
+          Don't fill this out if you're human: <input name="bot-field" />
+        </label>
+      </p>
       <FormInput
         id="contact-name"
         name="name"
@@ -91,5 +100,9 @@ const {
 
   .contact-form-section .border-heading-subheading {
     border-color: #8c733d;
+  }
+
+  .hidden {
+    display: none;
   }
 </style>
