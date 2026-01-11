@@ -1,5 +1,6 @@
 ---
 import Button from '../Button.astro';
+import { generateSrcset } from '../../utils/images';
 
 interface Props {
   slides: Array<{
@@ -45,9 +46,11 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
             <div class="relative bg-gradient-to-r from-brand-primary to-brand-primaryDark text-white">
               <img
                 src={slide.image}
+                srcset={generateSrcset(slide.image)}
                 alt={slide.alt || slide.heading}
                 class="w-full h-[400px] sm:h-[500px] md:h-[600px] object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
+                sizes="(max-width: 640px) 640px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, 1920px"
               />
               <div class="absolute inset-0 bg-brand-primaryDark/70" />
               <div class="absolute inset-0 flex items-center justify-center">
