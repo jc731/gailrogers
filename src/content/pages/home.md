@@ -36,9 +36,6 @@ sections:
       - icon: mdi:human-male-female-child
         text: Child Support
         link: /practice/child-support
-      - icon: mdi:handshake
-        text: Mediation Services
-        link: /practice/divorce-mediation-services
     backgroundColor: slate-dark
   - type: richText
     content: |
@@ -56,6 +53,7 @@ sections:
       <p>Family law matters are often stressful, but having a capable attorney by your side who responds quickly and communicates clearly can give you the peace of mind to move forward confidently.</p>
   - type: cardGrid
     title: Practice Areas
+    columns: 2
     cards:
       - title: Family Law
         content: Comprehensive family law services including divorce, child custody, and support matters.
@@ -63,9 +61,6 @@ sections:
       - title: Child Support
         content: Expert guidance on child support calculations, modifications, and enforcement.
         link: /practice/child-support
-      - title: Mediation Services
-        content: Professional divorce mediation helping couples reach amicable settlements.
-        link: /practice/divorce-mediation-services
   - type: ctaBand
     heading: Contact a compassionate Illinois attorney to protect your rights
     text: Rogers Law Office LLC, in Champaign, Illinois, handles family law matters.

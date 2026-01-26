@@ -31,7 +31,7 @@ sections:
       - question: How long does a divorce take?
         answer: The timeline depends on whether the divorce is contested or uncontested. An uncontested divorce can often be completed in a few months, while a contested divorce may take a year or longer depending on the complexity of the issues.
       - question: What is the difference between contested and uncontested divorce?
-        answer: An uncontested divorce occurs when both spouses agree on all issues. A contested divorce means the parties cannot agree and the court must decide. Mediation can help resolve contested issues.
+        answer: An uncontested divorce occurs when both spouses agree on all issues. A contested divorce means the parties cannot agree and the court must decide.
 ---
 
 

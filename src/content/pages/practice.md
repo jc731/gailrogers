@@ -2,7 +2,7 @@
 title: Practice Areas
 slug: practice
 seoTitle: Practice Areas - Family Law Attorney in Champaign, Illinois
-seoDescription: Comprehensive legal services including family law, divorce, child custody, child support, and mediation services in Champaign, Illinois.
+seoDescription: Comprehensive legal services including family law, divorce, child custody, and child support in Champaign, Illinois.
 sections:
   - type: hero
     heading: Practice Areas
@@ -36,12 +36,6 @@ sections:
       - title: Spousal Support
         content: Expert representation for spousal support (alimony) matters, whether you are seeking support or defending against a support claim. I gather all relevant facts to make a compelling case for fair and adequate support.
         link: /practice/spousal-support
-      - title: Divorce Mediation Services
-        content: Professional divorce mediation services to help couples reach amicable settlements without going to court. Mediation can be faster, less expensive, and less stressful than traditional litigation.
-        link: /practice/divorce-mediation-services
-      - title: Mediation Representation
-        content: Legal representation during mediation proceedings to ensure your interests are protected while working toward amicable solutions. I work with you to negotiate fair agreements while protecting your rights.
-        link: /practice/mediation-representation
     columns: 3
   - type: ctaBand
     heading: Ready to discuss your legal needs?
@@ -59,7 +53,7 @@ sections:
       <h3>Extensive Experience</h3>
       <p>Since 1996, I have been serving clients throughout Champaign, Illinois, and surrounding counties. My experience spans all areas of family law, giving you confidence that your case is in capable hands.</p>
       <h3>Results-Oriented Approach</h3>
-      <p>I am prepared to work tirelessly for the results you deserve. Whether through negotiation, mediation, or litigation, I will advocate strongly for your interests while working to achieve the best possible outcome.</p>
+      <p>I am prepared to work tirelessly for the results you deserve. Whether through negotiation or litigation, I will advocate strongly for your interests while working to achieve the best possible outcome.</p>
       <h3>Responsive Service</h3>
       <p>My clients consistently appreciate how quickly I respond to their questions and concerns. I understand that legal matters require timely attention, and I make it a priority to provide prompt, clear communication. You'll find me easy to work with and accessible when you need answers.</p>
 ---

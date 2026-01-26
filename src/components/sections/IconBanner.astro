@@ -38,7 +38,7 @@ const bgColorStyle = backgroundColor.startsWith('#')
   containerClassName="container mx-auto max-w-6xl"
   style={bgColorStyle}
 >
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  <div class={`grid grid-cols-1 ${items.length === 2 ? 'md:grid-cols-2' : items.length === 1 ? 'md:grid-cols-1' : 'md:grid-cols-3'} gap-8`}>
     {items.map((item) => {
       // Ensure icon name has mdi: prefix if not already present
       const iconName = item.icon.startsWith('mdi:') ? item.icon : `mdi:${item.icon}`;
