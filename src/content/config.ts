@@ -106,6 +106,14 @@ const mapEmbedSection = z.object({
   className: z.string().optional(),
 });
 
+const richTextWithFormSection = z.object({
+  type: z.literal('richTextWithForm'),
+  content: z.string(),
+  formTitle: z.string().optional(),
+  formIntroText: z.string().optional(),
+  className: z.string().optional(),
+});
+
 export const sectionSchema = z.discriminatedUnion('type', [
   heroSection,
   richTextSection,
@@ -117,6 +125,7 @@ export const sectionSchema = z.discriminatedUnion('type', [
   iconBannerSection,
   contactFormSection,
   mapEmbedSection,
+  richTextWithFormSection,
 ]);
 
 // Site settings collection

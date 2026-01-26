@@ -3,6 +3,9 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      maxWidth: {
+        '8xl': '88rem', // 1408px - wider than 7xl (1280px)
+      },
       colors: {
         // Custom burgundy/maroon color palette based on logo color #6b2b1f
         // This is the single source of truth for brand colors

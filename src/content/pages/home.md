@@ -37,7 +37,7 @@ sections:
         text: Child Support
         link: /practice/child-support
     backgroundColor: slate-dark
-  - type: richText
+  - type: richTextWithForm
     content: |
       <h2>Experienced Champaign Family Law Attorney</h2>
       <h3>Illinois firm provides valuable legal advice and solutions</h3>
@@ -51,6 +51,8 @@ sections:
         <li><strong>Responsive communication</strong> — Clients consistently appreciate how quickly I respond to calls and emails. You'll receive prompt, clear communication so you're never left wondering about your case.</li>
       </ul>
       <p>Family law matters are often stressful, but having a capable attorney by your side who responds quickly and communicates clearly can give you the peace of mind to move forward confidently.</p>
+    formTitle: "Contact us"
+    formIntroText: "Please fill out the form below and I will contact you."
   - type: cardGrid
     title: Practice Areas
     columns: 2

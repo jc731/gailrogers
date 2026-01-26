@@ -1,6 +1,7 @@
 ---
 import Hero from './sections/Hero.astro';
 import RichText from './sections/RichText.astro';
+import RichTextWithForm from './sections/RichTextWithForm.astro';
 import FAQ from './sections/FAQ.astro';
 import CTABand from './sections/CTABand.astro';
 import CardGrid from './sections/CardGrid.astro';
@@ -35,6 +36,15 @@ const { section } = Astro.props;
 {section.type === 'richText' && (
   <RichText 
     content={section.content}
+    className={section.className}
+  />
+)}
+
+{section.type === 'richTextWithForm' && (
+  <RichTextWithForm 
+    content={section.content}
+    formTitle={section.formTitle}
+    formIntroText={section.formIntroText}
     className={section.className}
   />
 )}

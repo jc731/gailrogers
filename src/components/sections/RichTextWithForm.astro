@@ -1,0 +1,192 @@
+---
+import Section from '../Section.astro';
+import FormInput from '../forms/FormInput.astro';
+import FormTextarea from '../forms/FormTextarea.astro';
+import Button from '../Button.astro';
+import { PADDING_COMPACT } from '../../utils/spacing';
+
+interface Props {
+  content: string;
+  formTitle?: string;
+  formIntroText?: string;
+  className?: string;
+}
+
+const {
+  content,
+  formTitle = "Contact us",
+  formIntroText = "Please fill out the form below and I will contact you.",
+  className = '',
+} = Astro.props;
+
+const defaultSectionClassName = `${PADDING_COMPACT} ${className}`.trim();
+const finalContainerClassName = 'container mx-auto max-w-8xl';
+---
+
+<Section className={defaultSectionClassName} containerClassName={finalContainerClassName}>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+    <!-- Rich Text Content -->
+    <div class="prose prose-lg max-w-none rich-text-content break-words">
+      <div 
+        set:html={content}
+        class="break-words"
+      />
+    </div>
+
+    <!-- Contact Form -->
+    <div class="bg-white border-l-4 border-r-4 border-heading-subheading px-4 sm:px-6 py-8 shadow-sm">
+      <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 break-words">
+        {formTitle}
+      </h2>
+      {formIntroText && <p class="text-gray-700 mb-6 break-words">{formIntroText}</p>}
+
+      <form
+        id="contact-form"
+        name="contact"
+        method="POST"
+        action="#"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="space-y-6"
+        novalidate
+      >
+        <!-- Honeypot field for spam protection -->
+        <p class="hidden">
+          <label>
+            Don't fill this out if you're human: <input name="bot-field" />
+          </label>
+        </p>
+        <FormInput
+          id="contact-name"
+          name="name"
+          label="Full Name"
+          type="text"
+          required={true}
+        />
+
+        <FormInput
+          id="contact-email"
+          name="email"
+          label="Email Address"
+          type="email"
+          required={true}
+        />
+
+        <FormInput
+          id="contact-phone"
+          name="phone"
+          label="Phone Number"
+          type="tel"
+          required={true}
+        />
+
+        <FormTextarea
+          id="contact-message"
+          name="message"
+          label="Message"
+          rows={6}
+          required={true}
+        />
+
+        <div class="pt-4">
+          <Button
+            type="submit"
+            variant="heading-subheading"
+            size="lg"
+            rounded="md"
+            focusRing="dark"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </div>
+  </div>
+</Section>
+
+<style>
+  /* Custom heading styles matching original design */
+  .rich-text-content :global(h2) {
+    color: #6B2B1F; /* Reddish-brown for main headlines */
+    font-size: 1.5rem; /* Mobile-first: 24px */
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .rich-text-content :global(h3) {
+    color: #8C733D; /* Golden-brown for subheadings - darker for WCAG AA contrast */
+    font-size: 1rem; /* Mobile-first: 16px */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Ensure body text remains black */
+  .rich-text-content :global(p) {
+    color: #000000;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Ensure list items and strong text are dark */
+  .rich-text-content :global(ul),
+  .rich-text-content :global(ol) {
+    color: #000000;
+  }
+
+  .rich-text-content :global(li) {
+    color: #000000;
+  }
+
+  .rich-text-content :global(strong) {
+    color: #000000;
+    font-weight: 700;
+  }
+
+  /* Ensure links wrap */
+  .rich-text-content :global(a) {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Responsive adjustments */
+  @media (min-width: 640px) {
+    .rich-text-content :global(h2) {
+      font-size: 2rem; /* 32px on sm+ */
+    }
+    
+    .rich-text-content :global(h3) {
+      font-size: 1.125rem; /* 18px on sm+ */
+    }
+  }
+
+  @media (min-width: 768px) {
+    .rich-text-content :global(h2) {
+      font-size: 2.5rem; /* 40px on md+ */
+    }
+    
+    .rich-text-content :global(h3) {
+      font-size: 1.25rem; /* 20px on md+ */
+    }
+  }
+
+  .border-heading-subheading {
+    border-color: #8c733d;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
