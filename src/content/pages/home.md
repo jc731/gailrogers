@@ -1,25 +1,25 @@
 ---
 title: Home
 slug: home
-seoTitle: Experienced Champaign Family Law Attorney
+seoTitle: Experienced Local Family Law Attorney
 seoDescription: Illinois firm provides valuable legal advice and solutions for divorce, child custody, and family law matters.
 sections:
   - type: slider
     slides:
       - heading: Accomplished. Experienced. Knowledgeable.
-        subheading: Family Law Attorney Serving Champaign, Illinois, including surrounding counties
+        subheading: Serving the Champaign area
         image: /images/home-banner-slide-1.webp
         ctaText: Call For Consultation
         ctaLink: tel:217-318-0677
         alt: Rogers Law Office LLC - Experienced Family Law Attorney
       - heading: Accomplished. Experienced. Knowledgeable.
-        subheading: Family Law Attorney Serving Champaign, Illinois, including surrounding counties
+        subheading: Serving the Champaign area
         image: /images/home-banner-slide-2.webp
         ctaText: Call For Consultation
         ctaLink: tel:217-318-0677
         alt: Rogers Law Office LLC - Experienced Family Law Attorney
       - heading: Accomplished. Experienced. Knowledgeable.
-        subheading: Family Law Attorney Serving Champaign, Illinois, including surrounding counties
+        subheading: Serving the Champaign area
         image: /images/home-banner-slide-3.webp
         ctaText: Call For Consultation
         ctaLink: tel:217-318-0677
@@ -39,7 +39,7 @@ sections:
     backgroundColor: slate-dark
   - type: richTextWithForm
     content: |
-      <h2>Experienced Champaign Family Law Attorney</h2>
+      <h2>Experienced Local Family Law Attorney</h2>
       <h3>Illinois firm provides valuable legal advice and solutions</h3>
       <p>At Rogers Law Office LLC, I have helped clients in the Champaign area since 1996 with obtaining a divorce, pursuing child custody and other family law matters. I can use my extensive experience to assist you in achieving your objectives in these practice areas.</p>
       <h3>Knowledgeable attorney develops long-term solutions</h3>
