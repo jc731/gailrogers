@@ -32,7 +32,11 @@
       const breakpointWidth = document.getElementById('breakpoint-width');
       
       if (!indicator || !breakpointText || !breakpointWidth) return;
-      
+
+      const ind = indicator;
+      const textEl = breakpointText;
+      const widthEl = breakpointWidth;
+
       // Tailwind default breakpoints (matches tailwind.config.mjs)
       const breakpoints = {
         'xs': 0,
@@ -42,11 +46,11 @@
         'xl': 1280,
         '2xl': 1536,
       };
-      
+
       function updateBreakpoint() {
         const width = window.innerWidth;
-        breakpointWidth.textContent = width.toString();
-        
+        widthEl.textContent = width.toString();
+
         // Determine current breakpoint
         let currentBreakpoint = 'xs';
         if (width >= breakpoints['2xl']) {
@@ -60,9 +64,9 @@
         } else if (width >= breakpoints['sm']) {
           currentBreakpoint = 'sm';
         }
-        
-        breakpointText.textContent = currentBreakpoint;
-        indicator.style.display = 'block';
+
+        textEl.textContent = currentBreakpoint;
+        ind.style.display = 'block';
       }
       
       // Update on load and resize

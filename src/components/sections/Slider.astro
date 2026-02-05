@@ -1,5 +1,5 @@
 ---
-import Button from '../Button.astro';
+import Button from "../Button.astro";
 
 interface Props {
   slides: Array<{
@@ -237,8 +237,12 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
   }
 </style>
 
-<script is:inline define:vars={{ sliderId, autoplay, autoplayInterval }}>
-  const slider = document.querySelector(`[data-slider-id="${sliderId}"]`);
+<script is:inline define:vars={{ autoplay, autoplayInterval }}>
+  const section = document.currentScript?.closest("[data-slider-id]");
+  const sliderId = section?.getAttribute("data-slider-id");
+  const slider = sliderId
+    ? document.querySelector(`[data-slider-id="${sliderId}"]`)
+    : null;
   if (!slider) return;
 
   const container = slider.querySelector(".slider-container");
@@ -254,40 +258,43 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
     // Helper function to find all focusable elements within a slide
     function getFocusableElements(container) {
       const focusableSelectors = [
-        'a[href]',
-        'button:not([disabled])',
-        'input:not([disabled])',
-        'select:not([disabled])',
-        'textarea:not([disabled])',
-        '[tabindex]:not([tabindex="-1"])'
-      ].join(', ');
+        "a[href]",
+        "button:not([disabled])",
+        "input:not([disabled])",
+        "select:not([disabled])",
+        "textarea:not([disabled])",
+        '[tabindex]:not([tabindex="-1"])',
+      ].join(", ");
       return container.querySelectorAll(focusableSelectors);
     }
 
     // Update all slides - use opacity for cross-fade effect
     slideElements.forEach((slide, i) => {
       const focusableElements = getFocusableElements(slide);
-      
+
       if (i === index) {
         // Activate current slide
         slide.classList.add("active");
         slide.setAttribute("aria-hidden", "false");
-        
+
         // Make focusable elements in active slide focusable
         focusableElements.forEach((element) => {
           // Remove tabindex if it was set to -1, or remove the attribute entirely
-          if (element.hasAttribute('tabindex') && element.getAttribute('tabindex') === '-1') {
-            element.removeAttribute('tabindex');
+          if (
+            element.hasAttribute("tabindex") &&
+            element.getAttribute("tabindex") === "-1"
+          ) {
+            element.removeAttribute("tabindex");
           }
         });
       } else {
         // Deactivate other slides
         slide.classList.remove("active");
         slide.setAttribute("aria-hidden", "true");
-        
+
         // Make focusable elements in hidden slide unfocusable
         focusableElements.forEach((element) => {
-          element.setAttribute('tabindex', '-1');
+          element.setAttribute("tabindex", "-1");
         });
       }
 

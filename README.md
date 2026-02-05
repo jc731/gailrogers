@@ -255,8 +255,6 @@ Each section type has specific fields. Here's a complete reference:
 │   │       ├── child-custody.md
 │   │       ├── child-support.md
 │   │       ├── child-support-modification.md
-│   │       ├── divorce-mediation-services.md
-│   │       ├── mediation-representation.md
 │   │       ├── domestic-violence.md
 │   │       └── real-estate.md
 │   ├── layouts/

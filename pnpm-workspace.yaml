@@ -1,0 +1,9 @@
+onlyBuiltDependencies:
+  - a
+  - b
+  - e
+  - esbuild
+  - p
+  - s
+  - sharp
+  - u

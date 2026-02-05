@@ -174,37 +174,45 @@ const siteCollection = defineCollection({
 
 // Pages collection
 const pagesCollection = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
-  schema: ({ image }) => z.object({
-    title: z.string(),
-    slug: z.string().optional(),
-    seoTitle: z.string().optional(),
-    seoDescription: z.string().optional(),
-    // Optional: Custom layout configuration (e.g., 'two-column' for contact page)
-    layoutConfig: z.object({
-      type: z.enum(['default', 'two-column']).optional().default('default'),
-      // Additional layout-specific options can be added here
-    }).optional(),
-    sections: z.array(sectionSchema),
-  }),
+  loader: glob({ pattern: "**/*.md", base: "./src/content/pages" }),
+  schema: () =>
+    z.object({
+      title: z.string(),
+      slug: z.string().optional(),
+      seoTitle: z.string().optional(),
+      seoDescription: z.string().optional(),
+      // Optional: Custom layout configuration (e.g., 'two-column' for contact page)
+      layoutConfig: z
+        .object({
+          type: z.enum(["default", "two-column"]).optional().default("default"),
+          // Additional layout-specific options can be added here
+        })
+        .optional(),
+      sections: z.array(sectionSchema),
+    }),
 });
 
 // Practice areas collection
 const practiceAreasCollection = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/practiceAreas' }),
-  schema: ({ image }) => z.object({
-    title: z.string(),
-    slug: z.string().optional(),
-    summary: z.string(),
-    seoTitle: z.string().optional(),
-    seoDescription: z.string().optional(),
-    order: z.number().optional().default(0),
-    sections: z.array(sectionSchema),
-    faqs: z.array(z.object({
-      question: z.string(),
-      answer: z.string(),
-    })).optional(),
-  }),
+  loader: glob({ pattern: "**/*.md", base: "./src/content/practiceAreas" }),
+  schema: () =>
+    z.object({
+      title: z.string(),
+      slug: z.string().optional(),
+      summary: z.string(),
+      seoTitle: z.string().optional(),
+      seoDescription: z.string().optional(),
+      order: z.number().optional().default(0),
+      sections: z.array(sectionSchema),
+      faqs: z
+        .array(
+          z.object({
+            question: z.string(),
+            answer: z.string(),
+          })
+        )
+        .optional(),
+    }),
 });
 
 export const collections = {

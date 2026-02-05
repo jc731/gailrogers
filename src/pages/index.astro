@@ -1,34 +1,37 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionRenderer from '../components/SectionRenderer.astro';
-import { getCollection, type CollectionEntry, render } from 'astro:content';
-import { getSlugFromEntry, findPageBySlug } from '../utils/content';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionRenderer from "../components/SectionRenderer.astro";
+import { getCollection, render } from "astro:content";
+import { findPageBySlug } from "../utils/content";
 
-const pages = await getCollection('pages');
-const homePage = findPageBySlug(pages, 'home');
+const pages = await getCollection("pages");
+const homePage = findPageBySlug(pages, "home");
 
 if (!homePage) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 
 const { Content } = await render(homePage);
 const title = homePage.data.seoTitle || homePage.data.title;
-const description = homePage.data.seoDescription || '';
+const description = homePage.data.seoDescription || "";
 
 // Get current path for navigation highlighting
 const currentPath = Astro.url.pathname;
 ---
 
 <BaseLayout title={title} description={description} currentPath={currentPath}>
-  {homePage.data.sections.map((section) => (
-    <SectionRenderer section={section} />
-  ))}
-  
-  {/* Render MDX content if present */}
-  {Content && (
-    <div class="container mx-auto max-w-4xl px-4 md:px-6 lg:px-8 py-8">
-      <Content />
-    </div>
-  )}
-</BaseLayout>
+  {
+    homePage.data.sections.map((section) => (
+      <SectionRenderer section={section} />
+    ))
+  }
 
+  {/* Render MDX content if present */}
+  {
+    Content && (
+      <div class="container mx-auto max-w-4xl px-4 md:px-6 lg:px-8 py-8">
+        <Content />
+      </div>
+    )
+  }
+</BaseLayout>

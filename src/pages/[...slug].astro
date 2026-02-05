@@ -71,7 +71,7 @@ const currentPath = Astro.url.pathname;
 const isAttorneyProfile = currentPath === '/attorney-profile';
 
 // Check if page uses two-column layout (configurable via frontmatter)
-const usesTwoColumnLayout = page.data.layoutConfig?.type === 'two-column';
+const usesTwoColumnLayout = (page.data as { layoutConfig?: { type?: string } }).layoutConfig?.type === 'two-column';
 
 // For two-column layout, find contactForm, richText, and mapEmbed sections
 let contactFormSection: PageEntry['data']['sections'][number] | null = null;

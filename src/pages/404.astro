@@ -1,37 +1,35 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { getSiteSettings } from '../utils/content';
-import Button from '../components/Button.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
 
-// Load site settings for fallback
-const siteEntries = await getCollection('site');
-const siteSettings = getSiteSettings(siteEntries);
-const siteTitle = siteSettings?.brandName || 'Site';
-
-const title = 'Page Not Found';
-const description = 'The page you are looking for could not be found.';
+const title = "Page Not Found";
+const description = "The page you are looking for could not be found.";
 
 // Get current path for navigation highlighting
 const currentPath = Astro.url.pathname;
 ---
+
 <BaseLayout title={title} description={description} currentPath={currentPath}>
   <section class="py-20 px-4 md:px-6 lg:px-8">
     <div class="container mx-auto max-w-2xl text-center">
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-primary mb-4 break-words">404</h1>
-      <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4 break-words">Page Not Found</h2>
+      <h1
+        class="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-primary mb-4 break-words"
+      >
+        404
+      </h1>
+      <h2
+        class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4 break-words"
+      >
+        Page Not Found
+      </h2>
       <p class="text-lg text-gray-700 mb-8">
-        The page you are looking for could not be found. It may have been moved, deleted, or the URL may be incorrect.
+        The page you are looking for could not be found. It may have been moved,
+        deleted, or the URL may be incorrect.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button href="/" variant="primary">
-          Go to Homepage
-        </Button>
-        <Button href="/contact" variant="outline">
-          Contact Us
-        </Button>
+        <Button href="/" variant="primary"> Go to Homepage </Button>
+        <Button href="/contact" variant="outline"> Contact Us </Button>
       </div>
     </div>
   </section>
 </BaseLayout>
-

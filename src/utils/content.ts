@@ -19,10 +19,11 @@ import type { CollectionEntry } from 'astro:content';
  * // Returns: "contact" from "contact.md" or entry with slug: "contact"
  * ```
  */
-export function getSlugFromEntry<T extends CollectionEntry<any>>(
-  entry: T
-): string {
-  return entry.data.slug || entry.id.replace(/\.mdx?$/, '');
+export function getSlugFromEntry(entry: {
+  id: string;
+  data: { slug?: string };
+}): string {
+  return entry.data.slug || entry.id.replace(/\.mdx?$/, "");
 }
 
 /**

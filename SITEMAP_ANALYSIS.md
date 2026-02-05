@@ -12,7 +12,7 @@
 3. **Reviews and Ratings** - Missing
 4. **Map & Directions** - Missing
 
-### Practice Areas (Current: 3, Needed: 10)
+### Practice Areas (Current: 3, Needed: 8)
 
 **Current:**
 - Family Law ✅
@@ -24,9 +24,7 @@
 2. **Spousal Support** - Separate page (under Family Law)
 3. **Child Custody** - Separate page (under Family Law)
 4. **Child Support Modification** - Separate page
-5. **Divorce Mediation Services** - Separate page
-6. **Mediation Representation** - Separate page
-7. **Domestic Violence** - Separate page (under Family Law)
+5. **Domestic Violence** - Separate page (under Family Law)
 
 ### Special Content
 1. **Video FAQ** - Missing section/page
@@ -45,9 +43,7 @@ Practice Areas
   │   └── Divorce
   ├── Child Support
   ├── Real Estate
-  ├── Child Support Modification
-  ├── Divorce Mediation Services
-  └── Mediation Representation
+  └── Child Support Modification
 Blog
 Contact Us
 Map & Directions
@@ -59,7 +55,7 @@ Video FAQ
 ## Implementation Plan
 
 1. Create missing main pages (Attorney Profile, Blog, Reviews, Map & Directions)
-2. Create missing practice area pages (7 pages)
+2. Create missing practice area pages (5 pages)
 3. Add Video FAQ section (could be a page or section on relevant pages)
 4. Update navigation structure to match sitemap hierarchy
 5. Ensure all content is markdown-based

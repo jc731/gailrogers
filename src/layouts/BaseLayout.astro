@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import Logo from "../components/Logo.astro";
 import DropdownIndicator from "../components/DropdownIndicator.astro";
 import MobileMenu from "../components/MobileMenu.astro";
@@ -188,8 +188,9 @@ const footerNavigation = siteSettings?.footerNavigation || [];
 
                 // Keyboard navigation: ArrowDown opens menu and focuses first item
                 link.addEventListener("keydown", (e) => {
-                  if (e.key === "ArrowDown") {
-                    e.preventDefault();
+                  const ev = e as KeyboardEvent;
+                  if (ev.key === "ArrowDown") {
+                    ev.preventDefault();
                     link.setAttribute("aria-expanded", "true");
                     menu.classList.remove("opacity-0", "invisible");
                     if (menuItems.length > 0) {
@@ -201,22 +202,23 @@ const footerNavigation = siteSettings?.footerNavigation || [];
                 // Keyboard navigation within menu
                 menuItems.forEach((item, index) => {
                   item.addEventListener("keydown", (e) => {
-                    if (e.key === "ArrowDown") {
-                      e.preventDefault();
+                    const ev = e as KeyboardEvent;
+                    if (ev.key === "ArrowDown") {
+                      ev.preventDefault();
                       const next =
                         index < menuItems.length - 1
                           ? menuItems[index + 1]
                           : menuItems[0];
                       (next as HTMLElement).focus();
-                    } else if (e.key === "ArrowUp") {
-                      e.preventDefault();
+                    } else if (ev.key === "ArrowUp") {
+                      ev.preventDefault();
                       const prev =
                         index > 0
                           ? menuItems[index - 1]
                           : menuItems[menuItems.length - 1];
                       (prev as HTMLElement).focus();
-                    } else if (e.key === "Escape") {
-                      e.preventDefault();
+                    } else if (ev.key === "Escape") {
+                      ev.preventDefault();
                       link.setAttribute("aria-expanded", "false");
                       menu.classList.add("opacity-0", "invisible");
                       (link as HTMLElement).focus();
@@ -226,7 +228,7 @@ const footerNavigation = siteSettings?.footerNavigation || [];
 
                 // Close menu when focus leaves
                 const navItem = link.closest("[data-nav-item]");
-                navItem?.addEventListener("focusout", (e) => {
+                navItem?.addEventListener("focusout", () => {
                   // Only close if focus is moving outside the menu
                   setTimeout(() => {
                     if (!navItem?.contains(document.activeElement)) {
@@ -359,15 +361,15 @@ const footerNavigation = siteSettings?.footerNavigation || [];
 
     <!-- Service Worker Registration -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
           navigator.serviceWorker
-            .register('/service-worker.js')
+            .register("/service-worker.js")
             .then((registration) => {
-              console.log('Service Worker registered:', registration.scope);
+              console.log("Service Worker registered:", registration.scope);
             })
             .catch((error) => {
-              console.log('Service Worker registration failed:', error);
+              console.log("Service Worker registration failed:", error);
             });
         });
       }
