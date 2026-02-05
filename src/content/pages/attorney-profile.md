@@ -10,9 +10,9 @@ sections:
   - type: richText
     content: |
       <h2>About Gail Rogers</h2>
-      <p>I have been helping clients in the Champaign area since 1996 with family law matters, including divorce, child custody, and support issues.</p>
+      <p>I have been helping clients with family law matters since 1996, including divorce, child custody, and support issues. I practiced in the Springfield area from 1996 to 2006 and in the Champaign area from 2006 to present.</p>
       <h3>Experience and Approach</h3>
-      <p>For more than 20 years, Champaign area residents have chosen my services because I offer:</p>
+      <p>For more than 20 years, clients in the Springfield area (1996–2006) and the Champaign area (2006–present) have chosen my services because I offer:</p>
       <ul>
         <li><strong>Customized legal strategies</strong> — I use my extensive experience to develop a plan that addresses your specific concerns rather than employing a cookie-cutter approach.</li>
         <li><strong>Personalized attention</strong> — I will work closely with you, so you are always aware of the status of your case and of our next steps.</li>

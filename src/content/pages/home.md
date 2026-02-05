@@ -74,8 +74,8 @@ sections:
       link: /contact
   - type: richText
     content: |
-      <h2>Serving Champaign, Urbana, and Surrounding Illinois Communities</h2>
-      <p>Rogers Law Office LLC proudly serves clients throughout Champaign County and the surrounding Illinois communities. Whether you are dealing with a family law matter in Champaign, Urbana, or require legal services in the broader central Illinois area, I am here to help.</p>
+      <h2>Serving Champaign, Urbana, and Surrounding Communities</h2>
+      <p>Rogers Law Office LLC proudly serves clients throughout Champaign County and the surrounding communities. Whether you are dealing with a family law matter in Champaign, Urbana, or the surrounding area, I am here to help.</p>
       <h3>Dedicated to your success</h3>
       <p>My practice focuses exclusively on family law matters, allowing me to provide specialized knowledge and expertise in these areas. I understand that legal issues can be overwhelming, and I am committed to providing clear guidance and effective representation throughout your case.</p>
       <p>When you choose Rogers Law Office LLC, you receive dedicated, personalized legal service tailored to your unique situation. I take the time to understand your goals and work diligently to help you achieve the best possible outcome.</p>
@@ -89,6 +89,6 @@ sections:
       - question: Do you offer consultations?
         answer: Yes, I offer consultations to discuss your legal matter and how I can help. Please call 217-318-0677 to schedule a consultation.
       - question: What areas do you serve?
-        answer: I serve clients in Champaign and surrounding counties in central Illinois, including Champaign County.
+        answer: I serve clients in Champaign, Champaign County, and surrounding communities.
 ---
 
