@@ -31,6 +31,7 @@ export default {
           accent: '#c75133',      // Medium burgundy for accents
           hover: '#8a3626',        // Darker hover state
           light: '#f6d1c7',        // Light burgundy for backgrounds
+          navy: '#2B3461',         // Logo text / navy for Rogers wordmark
         },
         // Heading colors matching original design
         heading: {

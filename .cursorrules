@@ -1,6 +1,6 @@
 # Org-Control Workflow Rules
 
-This project follows an MCP-driven organizational workflow system that coordinates work through well-defined teams with explicit acceptance criteria, escalation rules, and recorded decisions.
+This project follows an AI/Claude-guided organizational workflow system. We generally use native Claude performance for planning and review. The Astro MCP server is optional and can still be used when it is helpful, but it is not required.
 
 ## Workflow Principles
 
@@ -36,7 +36,7 @@ Work progresses through these teams in order:
 - Create decision records in `docs/decisions/` or `docs/adr/` (Architecture Decision Records)
 - Document: context, decision, rationale, alternatives considered, consequences
 - Reference decisions in code comments or documentation when relevant
-- The MCP tracks that a decision was made, but the actual record lives in the project
+- Workflow tooling may track that a decision was made, but the actual record lives in the project
 
 ### 5. Artifacts from Each Phase
 
@@ -64,20 +64,20 @@ Work progresses through these teams in order:
 ## Using Org-Control Tools
 
 ### Starting Work
-Use `org_run` MCP tool to initiate work:
+Use `org_run` helper tool when available to initiate work:
 - Provide request type (feature, bugfix, refactor, question)
 - Include clear title and details
 - **MUST include explicit acceptance criteria**
 - Set preferences (strictness level, ask_before items)
 
 ### Documentation
-Use `org_run_docs` MCP tool after Dev + QA sign-off:
+Use `org_run_docs` helper tool when available after Dev + QA sign-off:
 - Mode: "post_dev_qa" for new features/bugfixes
 - Mode: "audit" for documentation reviews
 - Provide context about what changed
 
 ### Code Review
-Use `org_review_patch` MCP tool for code reviews:
+Use `org_review_patch` helper tool when available for code reviews:
 - Provide git diff
 - Specify intent (feature, bugfix, refactor)
 - Set strictness level
@@ -162,7 +162,7 @@ When creating decision records in `docs/decisions/`:
 
 ## Remember
 
-- The MCP provides structure and coordination
+- The workflow tools provide structure and coordination
 - You (and the AI) interpret the output and execute the work
 - Decision records live in the project repository, not in the MCP server
 - Always prioritize explicit acceptance criteria and clear communication

@@ -106,6 +106,15 @@ const mapEmbedSection = z.object({
   className: z.string().optional(),
 });
 
+const richTextWithImageSection = z.object({
+  type: z.literal('richTextWithImage'),
+  content: z.string(),
+  image: z.string(),
+  imageAlt: z.string().optional(),
+  imagePosition: z.enum(['left', 'right']).optional().default('right'),
+  className: z.string().optional(),
+});
+
 const richTextWithFormSection = z.object({
   type: z.literal('richTextWithForm'),
   content: z.string(),
@@ -117,6 +126,7 @@ const richTextWithFormSection = z.object({
 export const sectionSchema = z.discriminatedUnion('type', [
   heroSection,
   richTextSection,
+  richTextWithImageSection,
   faqSection,
   ctaBandSection,
   cardGridSection,
@@ -181,11 +191,9 @@ const pagesCollection = defineCollection({
       slug: z.string().optional(),
       seoTitle: z.string().optional(),
       seoDescription: z.string().optional(),
-      // Optional: Custom layout configuration (e.g., 'two-column' for contact page)
       layoutConfig: z
         .object({
           type: z.enum(["default", "two-column"]).optional().default("default"),
-          // Additional layout-specific options can be added here
         })
         .optional(),
       sections: z.array(sectionSchema),
@@ -220,4 +228,3 @@ export const collections = {
   pages: pagesCollection,
   practiceAreas: practiceAreasCollection,
 };
-

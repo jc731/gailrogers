@@ -1,0 +1,79 @@
+---
+import Section from '../Section.astro';
+import { PADDING_COMPACT } from '../../utils/spacing';
+
+interface Props {
+  content: string;
+  image: string;
+  imageAlt?: string;
+  imagePosition?: 'left' | 'right';
+  className?: string;
+}
+
+const {
+  content,
+  image,
+  imageAlt = '',
+  imagePosition = 'right',
+  className = '',
+} = Astro.props;
+
+const defaultSectionClassName = `${PADDING_COMPACT} ${className}`.trim();
+const finalContainerClassName = 'container mx-auto max-w-8xl';
+---
+
+<Section className={defaultSectionClassName} containerClassName={finalContainerClassName}>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 items-start">
+
+    <!-- Image: full width on mobile, 1/3 on md+ -->
+    <div class={imagePosition === 'right' ? 'md:order-last md:col-span-1' : 'md:order-first md:col-span-1'}>
+      <div class="w-full overflow-hidden rounded-lg shadow-md" style="aspect-ratio: 5/7;">
+        <img
+          src={image}
+          alt={imageAlt}
+          class="w-full h-full object-cover object-top"
+        />
+      </div>
+    </div>
+
+    <!-- Text: full width on mobile, 2/3 on md+ -->
+    <div class={`rich-text-content break-words ${imagePosition === 'right' ? 'md:order-first md:col-span-2' : 'md:order-last md:col-span-2'}`}>
+      <div set:html={content} class="break-words" />
+    </div>
+
+  </div>
+</Section>
+
+<style>
+  .rich-text-content :global(h2) {
+    @apply text-brand-primary text-2xl sm:text-3xl md:text-4xl font-semibold leading-snug mt-2 mb-4 font-sans break-words;
+  }
+
+  .rich-text-content :global(h3) {
+    @apply text-heading-subheading text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider mt-6 mb-3 font-sans break-words;
+  }
+
+  .rich-text-content :global(p) {
+    @apply text-black mb-4 break-words;
+  }
+
+  .rich-text-content :global(ul) {
+    @apply text-black list-disc pl-6 mb-4;
+  }
+
+  .rich-text-content :global(ol) {
+    @apply text-black list-decimal pl-6 mb-4;
+  }
+
+  .rich-text-content :global(li) {
+    @apply text-black mb-1.5;
+  }
+
+  .rich-text-content :global(strong) {
+    @apply text-black font-bold;
+  }
+
+  .rich-text-content :global(a) {
+    @apply break-words hyphens-auto;
+  }
+</style>

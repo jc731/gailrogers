@@ -37,22 +37,17 @@ sections:
         text: Child Support
         link: /practice/child-support
     backgroundColor: slate-dark
-  - type: richTextWithForm
+  - type: richTextWithImage
+    image: /images/gail-rogers.jpg
+    imageAlt: Gail Rogers, Family Law Attorney serving Champaign, IL
+    imagePosition: right
     content: |
-      <h2>Experienced Local Family Law Attorney</h2>
-      <h3>Illinois firm provides valuable legal advice and solutions</h3>
-      <p>At Rogers Law Office LLC, I have helped clients in the Champaign area since 1996 with obtaining a divorce, pursuing child custody and other family law matters. I can use my extensive experience to assist you in achieving your objectives in these practice areas.</p>
-      <h3>Knowledgeable attorney develops long-term solutions</h3>
-      <p>For more than 20 years, Champaign area residents have chosen my services because I offer:</p>
-      <ul>
-        <li><strong>Customized legal strategies</strong> — I use my extensive experience to develop a plan that addresses your specific concerns rather than employing a cookie-cutter approach.</li>
-        <li><strong>Personalized attention</strong> — I will work closely with you, so you are always aware of the status of your case and of our next steps.</li>
-        <li><strong>Cost-effective rates</strong> — I believe that you should not have to choose between your financial security and having competent help with your legal problem. I offer reasonable rates to make this assistance affordable.</li>
-        <li><strong>Responsive communication</strong> — Clients consistently appreciate how quickly I respond to calls and emails. You'll receive prompt, clear communication so you're never left wondering about your case.</li>
-      </ul>
-      <p>Family law matters are often stressful, but having a capable attorney by your side who responds quickly and communicates clearly can give you the peace of mind to move forward confidently.</p>
-    formTitle: "Contact us"
-    formIntroText: "Please fill out the form below and I will contact you."
+      <h2>Serving Champaign and Urbana Communities</h2>
+      <p>Rogers Law Office LLC proudly serves clients throughout Champaign County and the surrounding communities. Whether your family law matter is in Champaign, Urbana, Rantoul, or elsewhere in the county, I know the local courts and the process — and I put that familiarity to work for you.</p>
+      <h3>Dedicated to your success</h3>
+      <p>My practice focuses exclusively on family law. That concentration means every client benefits from deep experience in Illinois family court — not a generalist who handles family matters on the side. I understand these cases touch the most important parts of your life: your children, your home, your financial future.</p>
+      <h3>What to expect when you hire me</h3>
+      <p>From your first call through resolution, you'll have direct access to me throughout your case. I take the time to understand your situation, set realistic expectations, and give you a clear picture of your options. Call <a href="tel:217-318-0677">217-318-0677</a> or use the contact form to get started.</p>
   - type: cardGrid
     title: Practice Areas
     columns: 2
@@ -72,13 +67,22 @@ sections:
     secondaryCTA:
       text: Contact Us Online
       link: /contact
-  - type: richText
+  - type: richTextWithForm
     content: |
-      <h2>Serving Champaign, Urbana, and Surrounding Communities</h2>
-      <p>Rogers Law Office LLC proudly serves clients throughout Champaign County and the surrounding communities. Whether you are dealing with a family law matter in Champaign, Urbana, or the surrounding area, I am here to help.</p>
-      <h3>Dedicated to your success</h3>
-      <p>My practice focuses exclusively on family law matters, allowing me to provide specialized knowledge and expertise in these areas. I understand that legal issues can be overwhelming, and I am committed to providing clear guidance and effective representation throughout your case.</p>
-      <p>When you choose Rogers Law Office LLC, you receive dedicated, personalized legal service tailored to your unique situation. I take the time to understand your goals and work diligently to help you achieve the best possible outcome.</p>
+      <h2>Experienced Family Law Attorney</h2>
+      <h3>Valuable and straightforward legal advice</h3>
+      <p>At Rogers Law Office LLC, I have helped clients in the Champaign area since 1996 with divorce, child custody, and other family law matters. I can leverage my extensive experience to help you achieve your objectives in these practice areas.</p>
+      <h3>Developing long-term, practical solutions</h3>
+      <p>For more than 20 years, Champaign area residents have chosen my services because I offer:</p>
+      <ul>
+        <li><strong>Customized legal strategies</strong> — I use my extensive experience to develop a plan that addresses your specific concerns rather than employing a cookie-cutter approach.</li>
+        <li><strong>Personalized attention</strong> — I will work closely with you, so you are always aware of the status of your case and of our next steps.</li>
+        <li><strong>Cost-effective rates</strong> — I believe that you should not have to choose between your financial security and having competent help with your legal problem. I offer reasonable rates to make this assistance affordable.</li>
+        <li><strong>Responsive communication</strong> — Clients consistently appreciate how quickly I respond to calls and emails. You'll receive prompt, clear communication so you're never left wondering about your case.</li>
+      </ul>
+      <p>Family law matters are often stressful, but having a capable attorney by your side who responds quickly and communicates clearly can give you the peace of mind to move forward confidently.</p>
+    formTitle: "Contact us"
+    formIntroText: "Please fill out the form below and I will contact you."
   - type: faq
     title: Frequently Asked Questions
     items:

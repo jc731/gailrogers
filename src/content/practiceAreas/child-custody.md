@@ -12,7 +12,7 @@ sections:
   - type: richText
     content: |
       <h2>Child Custody Representation</h2>
-      <p>I develop unique parenting plans to fit your circumstances. I can also litigate child custody issues if necessary to protect your rights to share in the raising of your children.</p>
+      <p>I develop customized parenting plans tailored to your circumstances. I can also litigate child custody matters, if necessary, to protect your rights to share in raising your children.</p>
       <h3>Parenting Plans</h3>
       <p>I work with you to create a comprehensive parenting plan that addresses:</p>
       <ul>

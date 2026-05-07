@@ -12,9 +12,9 @@ sections:
   - type: richText
     content: |
       <h2>Child Support Services</h2>
-      <p>Illinois has state guidelines for basic child support, but many couples need to customize a support agreement for matters such as health insurance, private school tuition, and enrichment activities. I analyze your finances and make the best case for a result that is fair to you and your children.</p>
+      <p>Illinois has state guidelines for basic child support, but many couples need to customize a support agreement to address health insurance, private school tuition, and enrichment activities. I analyze your finances and make the strongest case for a result that is fair to you and your children.</p>
       <h3>Child Support Modification</h3>
-      <p>If there has been a substantial change in circumstances, such as a significant change in income or the needs of the child, child support can be modified. I can help you navigate the modification process to ensure the support amount reflects current circumstances.</p>
+      <p>If there has been a substantial change in circumstances, such as a significant change in income or the child's needs, child support can be modified. I can help you navigate the modification process to ensure the support amount reflects current circumstances.</p>
       <h3>Child Support Enforcement</h3>
       <p>If you are not receiving the child support you are owed, I can help you enforce the support order through the court system.</p>
 faqs:

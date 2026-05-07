@@ -1,6 +1,7 @@
 ---
 import Hero from "./sections/Hero.astro";
 import RichText from "./sections/RichText.astro";
+import RichTextWithImage from "./sections/RichTextWithImage.astro";
 import RichTextWithForm from "./sections/RichTextWithForm.astro";
 import FAQ from "./sections/FAQ.astro";
 import CTABand from "./sections/CTABand.astro";
@@ -10,7 +11,7 @@ import LinkButtons from "./sections/LinkButtons.astro";
 import IconBanner from "./sections/IconBanner.astro";
 import ContactForm from "./forms/ContactForm.astro";
 import MapEmbed from "./sections/MapEmbed.astro";
-import { sectionSchema } from "../content/config";
+import { sectionSchema } from "../content.config";
 import { z } from "astro:content";
 
 // Infer section type from schema
@@ -38,6 +39,18 @@ const { section } = Astro.props;
 {
   section.type === "richText" && (
     <RichText content={section.content} className={section.className} />
+  )
+}
+
+{
+  section.type === "richTextWithImage" && (
+    <RichTextWithImage
+      content={section.content}
+      image={section.image}
+      imageAlt={section.imageAlt}
+      imagePosition={section.imagePosition}
+      className={section.className}
+    />
   )
 }
 

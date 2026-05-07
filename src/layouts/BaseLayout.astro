@@ -1,9 +1,11 @@
 ---
 import "../styles/global.css";
 import { getCollection } from "astro:content";
+import Head from "../components/Head.astro";
 import Logo from "../components/Logo.astro";
 import DropdownIndicator from "../components/DropdownIndicator.astro";
 import MobileMenu from "../components/MobileMenu.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 // import BreakpointIndicator from '../components/BreakpointIndicator.astro';
 import { getSiteSettings } from "../utils/content";
 
@@ -11,43 +13,28 @@ interface Props {
   title: string;
   description?: string;
   currentPath?: string;
+  noindex?: boolean;
 }
 
-const { title, description, currentPath = "" } = Astro.props;
+const { title, description, currentPath = "", noindex = false } = Astro.props;
 
-// Load site settings (cached by Astro during build)
 const siteEntries = await getCollection("site");
 const siteSettings = getSiteSettings(siteEntries);
 
 const siteTitle = siteSettings?.brandName || "Site";
 const primaryPhone = siteSettings?.primaryPhone || "";
-const phones = siteSettings?.phones || [];
-const address = siteSettings?.address;
-const hours = siteSettings?.hours || "";
-const legalDisclaimer = siteSettings?.legalDisclaimer || "";
 const navigation = siteSettings?.navigation || [];
-const footerNavigation = siteSettings?.footerNavigation || [];
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content={description || ""} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
-
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#A88B4A" />
-
-    <meta name="generator" content={Astro.generator} />
-    <title>{title} | {siteTitle}</title>
+    <Head
+      title={title}
+      siteTitle={siteTitle}
+      description={description}
+      noindex={noindex}
+    />
   </head>
   <body class="bg-white">
     {/* <BreakpointIndicator /> */}
@@ -61,10 +48,10 @@ const footerNavigation = siteSettings?.footerNavigation || [];
     <header class="bg-white shadow-md">
       <nav class="container mx-auto px-4 py-4">
         <div class="flex justify-between items-center">
-          <Logo brandName="ROGERS" tagline="LAW OFFICE" href="/" />
+          <Logo brandName="Rogers" tagline="Law Office LLC" href="/" />
           <div class="flex gap-6 items-center">
             {/* Desktop Navigation */}
-            <div class="hidden md:flex gap-6 items-center">
+            <div class="hidden lg:flex gap-6 items-center">
               {
                 navigation.map((item, index) => {
                   const menuId = `menu-${index}`;
@@ -73,7 +60,7 @@ const footerNavigation = siteSettings?.footerNavigation || [];
                     currentPath === item.href ||
                     (item.children &&
                       item.children.some(
-                        (child) => currentPath === child.href
+                        (child) => currentPath === child.href,
                       ));
                   const linkClasses = isParentActive
                     ? "text-brand-primary font-semibold hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
@@ -172,21 +159,19 @@ const footerNavigation = siteSettings?.footerNavigation || [];
           </div>
 
           <script>
-            // Keyboard navigation for dropdown menus (hover-based, so minimal JS needed)
-            // Dropdowns are shown via CSS :hover, this script handles keyboard navigation within menus
+            // Keyboard navigation for dropdown menus
             document.addEventListener("DOMContentLoaded", () => {
               const navLinks = document.querySelectorAll("[data-nav-link]");
 
               navLinks.forEach((link) => {
                 const linkIndex = link.getAttribute("data-nav-link");
                 const menu = document.querySelector(
-                  `[data-nav-menu="${linkIndex}"]`
+                  `[data-nav-menu="${linkIndex}"]`,
                 );
                 const menuItems = menu?.querySelectorAll("[data-nav-child]");
 
                 if (!menu || !menuItems) return;
 
-                // Keyboard navigation: ArrowDown opens menu and focuses first item
                 link.addEventListener("keydown", (e) => {
                   const ev = e as KeyboardEvent;
                   if (ev.key === "ArrowDown") {
@@ -199,7 +184,6 @@ const footerNavigation = siteSettings?.footerNavigation || [];
                   }
                 });
 
-                // Keyboard navigation within menu
                 menuItems.forEach((item, index) => {
                   item.addEventListener("keydown", (e) => {
                     const ev = e as KeyboardEvent;
@@ -226,10 +210,8 @@ const footerNavigation = siteSettings?.footerNavigation || [];
                   });
                 });
 
-                // Close menu when focus leaves
                 const navItem = link.closest("[data-nav-item]");
                 navItem?.addEventListener("focusout", () => {
-                  // Only close if focus is moving outside the menu
                   setTimeout(() => {
                     if (!navItem?.contains(document.activeElement)) {
                       link.setAttribute("aria-expanded", "false");
@@ -248,119 +230,10 @@ const footerNavigation = siteSettings?.footerNavigation || [];
       <slot />
     </main>
 
-    <footer
-      class="bg-brand-primaryDark text-white py-8 px-4 md:px-6 lg:px-8 mt-16"
-    >
-      <div class="container mx-auto max-w-6xl">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div>
-            <h3 class="text-xl font-bold mb-4">Office Location</h3>
-            {
-              address && (
-                <div class="text-white">
-                  <p class="font-semibold mb-2">{siteTitle}</p>
-                  <p class="mb-2">
-                    {address.street}
-                    <br />
-                    {address.city}, {address.state} {address.zip}
-                  </p>
-                  {hours && <p class="text-sm mt-3 opacity-90">{hours}</p>}
-                </div>
-              )
-            }
-          </div>
-          <div>
-            <h3 class="text-xl font-bold mb-4">Contact</h3>
-            <div class="text-white space-y-2">
-              {
-                phones.length > 0 &&
-                  phones.map((phone) => (
-                    <p>
-                      {phone === primaryPhone ? (
-                        <>
-                          <span class="font-semibold">
-                            Call For Consultation:
-                          </span>
-                          <br />
-                          <a
-                            href={`tel:${phone}`}
-                            class="hover:underline focus-ring-dark transition-colors"
-                          >
-                            {phone}
-                          </a>
-                        </>
-                      ) : (
-                        <>
-                          <span class="font-semibold">Phone:</span>
-                          <br />
-                          <a
-                            href={`tel:${phone}`}
-                            class="hover:underline focus-ring-dark transition-colors"
-                          >
-                            {phone}
-                          </a>
-                        </>
-                      )}
-                    </p>
-                  ))
-              }
-            </div>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-            <ul class="space-y-2 text-white">
-              {
-                navigation.map((item) => {
-                  // Skip items with children (like Practice Areas dropdown) - just show the main link
-                  if (item.children && item.children.length > 0) {
-                    return (
-                      <li>
-                        <a
-                          href={item.href}
-                          class="hover:underline focus-ring-dark transition-colors"
-                        >
-                          {item.label}
-                        </a>
-                      </li>
-                    );
-                  }
-                  return (
-                    <li>
-                      <a
-                        href={item.href}
-                        class="hover:underline focus-ring-dark transition-colors"
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  );
-                })
-              }
-              {
-                footerNavigation.map((item) => (
-                  <li>
-                    <a
-                      href={item.href}
-                      class="hover:underline focus-ring-dark transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-        </div>
-        <div class="border-t border-brand-primaryDark pt-8">
-          <p class="text-base sm:text-sm text-white opacity-90 break-words">
-            {legalDisclaimer}
-          </p>
-        </div>
-      </div>
-    </footer>
+    <SiteFooter />
 
-    <!-- Service Worker Registration -->
-    <script>
+    <!-- Service Worker Registration (disabled) -->
+    <!-- <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker
@@ -373,6 +246,6 @@ const footerNavigation = siteSettings?.footerNavigation || [];
             });
         });
       }
-    </script>
+    </script> -->
   </body>
 </html>

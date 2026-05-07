@@ -10,22 +10,22 @@ sections:
   - type: richText
     content: |
       <h2>Experienced Legal Representation</h2>
-      <p>At Rogers Law Office LLC, I provide comprehensive legal services in family law matters. With extensive experience serving clients in Champaign, Illinois, and surrounding counties since 1996, I am committed to helping you achieve the best possible outcome for your legal needs.</p>
+      <p>At Rogers Law Office LLC, I provide comprehensive legal services in family law. With extensive experience serving clients in Champaign, Illinois, and surrounding counties since 1996, I am committed to helping you achieve the best possible outcome for your legal needs.</p>
       <h3>Personalized Attention</h3>
-      <p>I understand that legal matters, especially those involving family, can be stressful and emotionally challenging. That's why I work closely with each client to develop customized legal strategies that address your specific concerns and goals.</p>
+      <p>I understand that legal matters, especially those involving family, can be stressful and emotionally challenging. That's why I work closely with each client to develop customized legal strategies that address their specific concerns and goals.</p>
       <h3>Cost-Effective Solutions</h3>
-      <p>I believe that quality legal representation should be accessible. I offer reasonable rates and work efficiently to provide cost-effective solutions without compromising on the quality of service.</p>
+      <p>I believe quality legal representation should be accessible. I offer reasonable rates and work efficiently to provide cost-effective solutions without compromising the quality of service.</p>
   - type: cardGrid
     title: Our Legal Services
     cards:
       - title: Family Law
-        content: Comprehensive family law services including divorce, child custody, and spousal support. Where the law touches on family relationships, the legal process becomes very personal.
+        content: Comprehensive family law services, including divorce, child custody, and spousal support. When the law touches family relationships, the legal process becomes deeply personal.
         link: /practice/family-law
       - title: Divorce
         content: Experienced divorce attorney helping clients navigate the divorce process in Illinois, including uncontested divorces, marital settlements, and divorce litigation when necessary.
         link: /practice/divorce
       - title: Child Custody
-        content: Experienced child custody attorney helping parents develop unique parenting plans to fit your circumstances and protect your rights to share in raising your children.
+        content: Experienced child custody attorney helping parents develop parenting plans tailored to your circumstances and designed to protect your rights to share in raising your children.
         link: /practice/child-custody
       - title: Child Support
         content: Expert guidance on child support calculations, modifications, and enforcement. Illinois has state guidelines for basic child support, but many couples need to customize agreements for health insurance, tuition, and enrichment activities.

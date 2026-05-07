@@ -26,9 +26,9 @@ sections:
       <h3>Seeking an Increase in Child Support</h3>
       <p>If you are the custodial parent and your circumstances have changed, or the non-custodial parent's income has increased, you may be entitled to an increase in child support. I will help you gather the necessary documentation and present a compelling case for modification.</p>
       <h3>Seeking a Decrease in Child Support</h3>
-      <p>If you are the paying parent and your income has decreased or your circumstances have changed, you may be able to seek a reduction in your child support obligation. I will help you demonstrate the substantial change in circumstances and work to obtain a fair modification.</p>
+      <p>If you are the paying parent and your income has decreased or your circumstances have changed, you may be able to seek a reduction in your child support obligation. I will help you demonstrate a substantial change in circumstances and work to obtain a fair modification.</p>
       <h3>The Modification Process</h3>
-      <p>The modification process involves filing a petition with the court, providing evidence of the changed circumstances, and potentially appearing at a hearing. I will guide you through each step of the process.</p>
+      <p>The modification process involves filing a petition with the court, providing evidence of the changed circumstances, and potentially appearing at a hearing. I will guide you through each step.</p>
 faqs:
   - question: How much does income need to change to modify child support?
     answer: There is no specific percentage, but the change must be "substantial." Generally, a change of 20% or more in income is considered substantial, but the court looks at the overall circumstances.
