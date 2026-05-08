@@ -4,30 +4,12 @@ slug: home
 seoTitle: Experienced Local Family Law Attorney
 seoDescription: Illinois firm provides valuable legal advice and solutions for divorce, child custody, and family law matters.
 sections:
-  - type: slider
-    slides:
-      - heading: Accomplished. Experienced. Knowledgeable.
-        subheading: Serving the Champaign area
-        image: /images/home-banner-slide-1.webp
-        ctaText: Call For Consultation
-        ctaLink: tel:217-318-0677
-        alt: Rogers Law Office LLC - Experienced Family Law Attorney
-      - heading: Accomplished. Experienced. Knowledgeable.
-        subheading: Serving the Champaign area
-        image: /images/home-banner-slide-2.webp
-        ctaText: Call For Consultation
-        ctaLink: tel:217-318-0677
-        alt: Rogers Law Office LLC - Experienced Family Law Attorney
-      - heading: Accomplished. Experienced. Knowledgeable.
-        subheading: Serving the Champaign area
-        image: /images/home-banner-slide-3.webp
-        ctaText: Call For Consultation
-        ctaLink: tel:217-318-0677
-        alt: Rogers Law Office LLC - Experienced Family Law Attorney
-    autoplay: true
-    autoplayInterval: 6250
-    showIndicators: true
-    showControls: true
+  - type: hero
+    heading: Accomplished. Experienced. Knowledgeable.
+    subheading: Serving the Champaign area
+    backgroundImage: /images/home-banner-slide-1.webp
+    ctaText: Call For Consultation
+    ctaLink: tel:217-318-0677
   - type: iconBanner
     items:
       - icon: mdi:family

@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+
 interface Props {
   title: string;
   siteTitle: string;
@@ -53,6 +55,8 @@ const ogImageAbsolute = new URL(ogImage, Astro.url.origin).href;
 <meta name="theme-color" content="#A88B4A" />
 <meta name="generator" content={Astro.generator} />
 <title>{fullTitle}</title>
+
+<ClientRouter />
 
 <!-- Google Fonts: Cinzel (logo primary) + Libre Baskerville (logo subtext) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />

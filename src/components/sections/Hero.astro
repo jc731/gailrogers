@@ -19,12 +19,12 @@ const backgroundStyle = backgroundImage
 ---
 
 <Section
-  className={`${PADDING_STANDARD_COMPACT_X} bg-brand-primaryDark text-white relative flex items-center`}
+  className={`${PADDING_STANDARD_COMPACT_X} bg-brand-primaryDark text-white relative flex items-center min-h-[600px]`}
   containerClassName="container mx-auto max-w-6xl"
   style={backgroundStyle}
 >
   {backgroundImage && <div class="absolute inset-0 bg-brand-primary/70" />}
-  <div class="relative z-10">
+  <div class="relative z-10 w-full text-center">
     <h1
       class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-words"
     >
@@ -32,7 +32,9 @@ const backgroundStyle = backgroundImage
     </h1>
     {
       subheading && (
-        <p class="text-lg sm:text-xl md:text-2xl break-words">{subheading}</p>
+        <p class="text-lg sm:text-xl md:text-2xl mb-8 break-words">
+          {subheading}
+        </p>
       )
     }
     {

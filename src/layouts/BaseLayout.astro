@@ -48,7 +48,9 @@ const navigation = siteSettings?.navigation || [];
     <header class="bg-white shadow-md">
       <nav class="container mx-auto px-4 py-4">
         <div class="flex justify-between items-center">
-          <Logo brandName="Rogers" tagline="Law Office LLC" href="/" />
+          <div data-header-logo style="transition: opacity 0.2s ease;">
+            <Logo brandName="Rogers" tagline="Law Office LLC" href="/" />
+          </div>
           <div class="flex gap-6 items-center">
             {/* Desktop Navigation */}
             <div class="hidden lg:flex gap-6 items-center">
@@ -63,8 +65,8 @@ const navigation = siteSettings?.navigation || [];
                         (child) => currentPath === child.href,
                       ));
                   const linkClasses = isParentActive
-                    ? "text-brand-primary font-semibold hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
-                    : "text-gray-700 hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center";
+                    ? "text-lg text-brand-primary font-semibold hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
+                    : "text-lg text-gray-700 hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center";
 
                   return (
                     <div class="relative group" data-nav-item={index}>
@@ -127,8 +129,8 @@ const navigation = siteSettings?.navigation || [];
                           href={item.href}
                           class={
                             currentPath === item.href
-                              ? "text-brand-primary font-semibold hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
-                              : "text-gray-700 hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
+                              ? "text-lg text-brand-primary font-semibold hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
+                              : "text-lg text-gray-700 hover:text-brand-primary focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
                           }
                         >
                           {item.label}
@@ -142,7 +144,7 @@ const navigation = siteSettings?.navigation || [];
                 primaryPhone && (
                   <a
                     href={`tel:${primaryPhone}`}
-                    class="text-brand-primary font-semibold focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
+                    class="text-lg text-brand-primary font-semibold focus-ring px-2 py-1 rounded min-h-[44px] flex items-center"
                   >
                     {primaryPhone}
                   </a>

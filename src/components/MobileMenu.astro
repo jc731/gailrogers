@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import DropdownIndicator from './DropdownIndicator.astro';
+import Logo from './Logo.astro';
 
 interface Props {
   navigation: Array<{
@@ -20,38 +21,48 @@ const menuId = 'mobile-menu';
 const buttonId = 'mobile-menu-button';
 ---
 
+<!-- Hamburger button (open only — close is handled by button inside the panel) -->
 <button
   id={buttonId}
   type="button"
   aria-expanded="false"
   aria-controls={menuId}
-  aria-label="Toggle navigation menu"
+  aria-label="Open navigation menu"
   class="lg:hidden focus-ring p-2 rounded min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
   data-mobile-menu-button
 >
-  <Icon 
+  <Icon
     name="mdi:menu"
-    class="w-6 h-6 menu-icon-open"
-    aria-hidden="true"
-  />
-  <Icon 
-    name="mdi:close"
-    class="w-6 h-6 menu-icon-close hidden"
+    class="w-6 h-6"
     aria-hidden="true"
   />
 </button>
 
+<!-- Full-screen menu panel -->
 <div
   id={menuId}
-  class="lg:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto"
+  class="lg:hidden fixed top-0 left-0 right-0 bottom-0 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto"
   data-mobile-menu
 >
+  <!-- Panel header: logo + close button (mirrors the topbar layout) -->
+  <div class="flex justify-between items-center px-4 py-4 shadow-sm">
+    <Logo brandName="Rogers" tagline="Law Office LLC" href="/" />
+    <button
+      type="button"
+      aria-label="Close navigation menu"
+      class="focus-ring p-2 rounded min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
+      data-mobile-menu-close
+    >
+      <Icon name="mdi:close" class="w-6 h-6" aria-hidden="true" />
+    </button>
+  </div>
+
   <nav class="container mx-auto px-4 py-6">
     <ul class="space-y-2">
       {navigation.map((item, index) => {
         const submenuId = `mobile-submenu-${index}`;
         const submenuButtonId = `mobile-submenu-button-${index}`;
-        
+
         return (
           <li>
             {item.children && item.children.length > 0 ? (
@@ -62,7 +73,7 @@ const buttonId = 'mobile-menu-button';
                     ? "flex-1 text-left text-brand-primary font-semibold hover:text-brand-primary focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
                     : "flex-1 text-left text-gray-700 hover:text-brand-primary focus-ring px-4 py-3 rounded min-h-[44px] flex items-center";
                   const buttonClasses = "flex items-center justify-center min-h-[44px] min-w-[44px] focus-ring px-2 rounded";
-                  
+
                   return (
                     <>
                       <div class="flex items-center">
@@ -95,7 +106,7 @@ const buttonId = 'mobile-menu-button';
                           const childClasses = isChildActive
                             ? "block text-brand-primary font-semibold bg-brand-light focus-ring px-4 py-2 rounded min-h-[44px] flex items-center"
                             : "block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-2 rounded min-h-[44px] flex items-center";
-                          
+
                           return (
                             <li>
                               <a
@@ -145,81 +156,71 @@ const buttonId = 'mobile-menu-button';
 <script is:inline>
   document.addEventListener('DOMContentLoaded', function() {
     const menuButton = document.querySelector('[data-mobile-menu-button]');
+    const closeButton = document.querySelector('[data-mobile-menu-close]');
     const mobileMenu = document.querySelector('[data-mobile-menu]');
-    const menuIconOpen = menuButton ? menuButton.querySelector('.menu-icon-open') : null;
-    const menuIconClose = menuButton ? menuButton.querySelector('.menu-icon-close') : null;
+    const headerLogo = document.querySelector('[data-header-logo]');
     const submenuButtons = document.querySelectorAll('[data-mobile-submenu-button]');
     const menuLinks = document.querySelectorAll('[data-mobile-menu-link]');
-    
+
     if (!menuButton || !mobileMenu) return;
-    
+
     let isOpen = false;
-    
+
     function openMenu() {
       isOpen = true;
       menuButton.setAttribute('aria-expanded', 'true');
       mobileMenu.classList.remove('translate-x-full');
-      if (menuIconOpen) menuIconOpen.classList.add('hidden');
-      if (menuIconClose) menuIconClose.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
+      if (headerLogo) {
+        headerLogo.style.opacity = '0';
+        headerLogo.style.pointerEvents = 'none';
+      }
     }
-    
+
     function closeMenu() {
       isOpen = false;
       menuButton.setAttribute('aria-expanded', 'false');
       mobileMenu.classList.add('translate-x-full');
-      if (menuIconOpen) menuIconOpen.classList.remove('hidden');
-      if (menuIconClose) menuIconClose.classList.add('hidden');
       document.body.style.overflow = '';
-      
-      // Close all submenus
+      if (headerLogo) {
+        headerLogo.style.opacity = '';
+        headerLogo.style.pointerEvents = '';
+      }
+
       document.querySelectorAll('[data-mobile-submenu]').forEach(function(submenu) {
         submenu.classList.add('hidden');
         const button = document.querySelector('[aria-controls="' + submenu.id + '"]');
         if (button) button.setAttribute('aria-expanded', 'false');
       });
     }
-    
-    function toggleMenu() {
-      if (isOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
+
+    menuButton.addEventListener('click', openMenu);
+
+    if (closeButton) {
+      closeButton.addEventListener('click', closeMenu);
     }
-    
-    // Toggle menu on button click
-    menuButton.addEventListener('click', toggleMenu);
-    
-    // Keyboard support for menu button
+
     menuButton.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        toggleMenu();
+        if (isOpen) { closeMenu(); } else { openMenu(); }
       } else if (e.key === 'Escape' && isOpen) {
         e.preventDefault();
         closeMenu();
       }
     });
-    
-    // Handle submenu toggles
+
     submenuButtons.forEach(function(button) {
       button.addEventListener('click', function() {
         const buttonIndex = button.getAttribute('data-mobile-submenu-button');
         const submenu = document.querySelector('[data-mobile-submenu="' + buttonIndex + '"]');
         const isExpanded = button.getAttribute('aria-expanded') === 'true';
-        
         if (submenu) {
-          if (isExpanded) {
-            submenu.classList.add('hidden');
-            button.setAttribute('aria-expanded', 'false');
-          } else {
-            submenu.classList.remove('hidden');
-            button.setAttribute('aria-expanded', 'true');
-          }
+          submenu.classList.toggle('hidden', isExpanded);
+          button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
         }
       });
-      
+
       button.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -227,28 +228,18 @@ const buttonId = 'mobile-menu-button';
         }
       });
     });
-    
-    // Close menu when clicking a link
+
     menuLinks.forEach(function(link) {
       link.addEventListener('click', closeMenu);
     });
-    
-    // Close menu on Escape key
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && isOpen) {
         closeMenu();
         menuButton.focus();
       }
     });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (isOpen && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
-        closeMenu();
-      }
-    });
-    
-    // Handle window resize - close menu if switching to desktop
+
     window.addEventListener('resize', function() {
       if (window.innerWidth >= 1024 && isOpen) {
         closeMenu();
@@ -256,12 +247,3 @@ const buttonId = 'mobile-menu-button';
     });
   });
 </script>
-
-<style>
-  /* Smooth icon transition */
-  .menu-icon-open,
-  .menu-icon-close {
-    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-  }
-</style>
-

@@ -27,7 +27,7 @@ const {
 const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
 ---
 
-<section class="relative w-full" data-slider-id={sliderId} tabindex="0">
+<section class="relative w-full" data-slider-id={sliderId} data-autoplay={String(autoplay)} data-autoplay-interval={String(autoplayInterval)} tabindex="0">
   <div class="relative overflow-hidden">
     <div
       class="slider-container"
@@ -237,179 +237,87 @@ const sliderId = `slider-${Math.random().toString(36).substring(7)}`;
   }
 </style>
 
-<script is:inline define:vars={{ autoplay, autoplayInterval }}>
-  const section = document.currentScript?.closest("[data-slider-id]");
-  const sliderId = section?.getAttribute("data-slider-id");
-  const slider = sliderId
-    ? document.querySelector(`[data-slider-id="${sliderId}"]`)
-    : null;
-  if (!slider) return;
+<script>
+  function initSlider(slider: HTMLElement) {
+    if (slider.dataset.initialized) return;
+    slider.dataset.initialized = 'true';
 
-  const container = slider.querySelector(".slider-container");
-  const slideElements = container.querySelectorAll(".slide");
-  const prevBtns = slider.querySelectorAll("[data-slider-prev]");
-  const nextBtns = slider.querySelectorAll("[data-slider-next]");
-  const indicators = slider.querySelectorAll(".slider-indicator");
+    const autoplay = slider.dataset.autoplay === 'true';
+    const autoplayInterval = parseInt(slider.dataset.autoplayInterval || '5000', 10);
 
-  let currentSlide = 0;
-  let autoplayTimer = null;
+    const container = slider.querySelector('.slider-container') as HTMLElement;
+    const slideElements = container.querySelectorAll('.slide');
+    const prevBtns = slider.querySelectorAll('[data-slider-prev]');
+    const nextBtns = slider.querySelectorAll('[data-slider-next]');
+    const indicators = slider.querySelectorAll('.slider-indicator');
 
-  function showSlide(index) {
-    // Helper function to find all focusable elements within a slide
-    function getFocusableElements(container) {
-      const focusableSelectors = [
-        "a[href]",
-        "button:not([disabled])",
-        "input:not([disabled])",
-        "select:not([disabled])",
-        "textarea:not([disabled])",
-        '[tabindex]:not([tabindex="-1"])',
-      ].join(", ");
-      return container.querySelectorAll(focusableSelectors);
-    }
+    let currentSlide = 0;
+    let autoplayTimer: ReturnType<typeof setInterval> | null = null;
 
-    // Update all slides - use opacity for cross-fade effect
-    slideElements.forEach((slide, i) => {
-      const focusableElements = getFocusableElements(slide);
+    const focusableSelectors = [
+      'a[href]', 'button:not([disabled])', 'input:not([disabled])',
+      'select:not([disabled])', 'textarea:not([disabled])', '[tabindex]:not([tabindex="-1"])',
+    ].join(', ');
 
-      if (i === index) {
-        // Activate current slide
-        slide.classList.add("active");
-        slide.setAttribute("aria-hidden", "false");
-
-        // Make focusable elements in active slide focusable
-        focusableElements.forEach((element) => {
-          // Remove tabindex if it was set to -1, or remove the attribute entirely
-          if (
-            element.hasAttribute("tabindex") &&
-            element.getAttribute("tabindex") === "-1"
-          ) {
-            element.removeAttribute("tabindex");
-          }
-        });
-      } else {
-        // Deactivate other slides
-        slide.classList.remove("active");
-        slide.setAttribute("aria-hidden", "true");
-
-        // Make focusable elements in hidden slide unfocusable
-        focusableElements.forEach((element) => {
-          element.setAttribute("tabindex", "-1");
-        });
-      }
-
-      // Update indicators
-      if (indicators[i]) {
+    function showSlide(index: number) {
+      slideElements.forEach((slide, i) => {
+        const focusable = slide.querySelectorAll(focusableSelectors);
         if (i === index) {
-          indicators[i].classList.remove("bg-white/50");
-          indicators[i].classList.add("bg-white");
-          indicators[i].setAttribute("aria-selected", "true");
+          slide.classList.add('active');
+          slide.setAttribute('aria-hidden', 'false');
+          focusable.forEach(el => { if (el.getAttribute('tabindex') === '-1') el.removeAttribute('tabindex'); });
         } else {
-          indicators[i].classList.remove("bg-white");
-          indicators[i].classList.add("bg-white/50");
-          indicators[i].setAttribute("aria-selected", "false");
+          slide.classList.remove('active');
+          slide.setAttribute('aria-hidden', 'true');
+          focusable.forEach(el => el.setAttribute('tabindex', '-1'));
         }
+        if (indicators[i]) {
+          indicators[i].classList.toggle('bg-white', i === index);
+          indicators[i].classList.toggle('bg-white/50', i !== index);
+          indicators[i].setAttribute('aria-selected', String(i === index));
+        }
+      });
+      currentSlide = index;
+    }
+
+    function nextSlide() { showSlide((currentSlide + 1) % slideElements.length); }
+    function prevSlide() { showSlide((currentSlide - 1 + slideElements.length) % slideElements.length); }
+
+    function startAutoplay() {
+      if (autoplay && slideElements.length > 1) autoplayTimer = setInterval(nextSlide, autoplayInterval);
+    }
+    function stopAutoplay() {
+      if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
+    }
+
+    nextBtns.forEach(btn => btn.addEventListener('click', () => { stopAutoplay(); nextSlide(); startAutoplay(); }));
+    prevBtns.forEach(btn => btn.addEventListener('click', () => { stopAutoplay(); prevSlide(); startAutoplay(); }));
+    indicators.forEach((ind, i) => ind.addEventListener('click', () => { stopAutoplay(); showSlide(i); startAutoplay(); }));
+
+    slider.addEventListener('mouseenter', stopAutoplay);
+    slider.addEventListener('mouseleave', startAutoplay);
+
+    slider.addEventListener('keydown', (e: Event) => {
+      const ev = e as KeyboardEvent;
+      if (document.activeElement === slider || container.contains(document.activeElement)) {
+        if (ev.key === 'ArrowLeft')  { ev.preventDefault(); stopAutoplay(); prevSlide(); startAutoplay(); }
+        if (ev.key === 'ArrowRight') { ev.preventDefault(); stopAutoplay(); nextSlide(); startAutoplay(); }
+        if (ev.key === 'Home')       { ev.preventDefault(); stopAutoplay(); showSlide(0); startAutoplay(); }
+        if (ev.key === 'End')        { ev.preventDefault(); stopAutoplay(); showSlide(slideElements.length - 1); startAutoplay(); }
       }
     });
 
-    currentSlide = index;
+    showSlide(0);
+    startAutoplay();
+    document.addEventListener('astro:before-swap', stopAutoplay, { once: true });
   }
 
-  function nextSlide() {
-    const next = (currentSlide + 1) % slideElements.length;
-    showSlide(next);
+  function initAllSliders() {
+    document.querySelectorAll<HTMLElement>('[data-slider-id]').forEach(initSlider);
   }
 
-  function prevSlide() {
-    const prev =
-      (currentSlide - 1 + slideElements.length) % slideElements.length;
-    showSlide(prev);
-  }
-
-  function startAutoplay() {
-    if (autoplay && slideElements.length > 1) {
-      autoplayTimer = setInterval(nextSlide, autoplayInterval);
-    }
-  }
-
-  function stopAutoplay() {
-    if (autoplayTimer) {
-      clearInterval(autoplayTimer);
-      autoplayTimer = null;
-    }
-  }
-
-  // Event listeners - handle both mobile and desktop buttons
-  nextBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      stopAutoplay();
-      nextSlide();
-      startAutoplay();
-    });
-  });
-
-  prevBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      stopAutoplay();
-      prevSlide();
-      startAutoplay();
-    });
-  });
-
-  indicators.forEach((indicator, index) => {
-    indicator.addEventListener("click", () => {
-      stopAutoplay();
-      showSlide(index);
-      startAutoplay();
-    });
-  });
-
-  // Pause autoplay on hover
-  slider.addEventListener("mouseenter", stopAutoplay);
-  slider.addEventListener("mouseleave", startAutoplay);
-
-  // Keyboard navigation - only when slider is focused
-  slider.addEventListener(
-    "keydown",
-    function (e) {
-      // Only handle if slider container is focused (not a child element)
-      if (
-        document.activeElement === slider ||
-        container.contains(document.activeElement)
-      ) {
-        if (e.key === "ArrowLeft") {
-          e.preventDefault();
-          stopAutoplay();
-          prevSlide();
-          startAutoplay();
-        } else if (e.key === "ArrowRight") {
-          e.preventDefault();
-          stopAutoplay();
-          nextSlide();
-          startAutoplay();
-        } else if (e.key === "Home") {
-          e.preventDefault();
-          stopAutoplay();
-          showSlide(0);
-          startAutoplay();
-        } else if (e.key === "End") {
-          e.preventDefault();
-          stopAutoplay();
-          showSlide(slideElements.length - 1);
-          startAutoplay();
-        }
-      }
-    }.bind(slider)
-  );
-
-  // Initialize slide states (ensures tabindex is set correctly for all slides)
-  showSlide(0);
-
-  // Start autoplay
-  startAutoplay();
-
-  // Cleanup on component unmount
-  document.addEventListener("astro:before-swap", () => {
-    stopAutoplay();
-  });
+  // astro:page-load fires on every navigation (including initial load) when ClientRouter is active
+  document.addEventListener('astro:page-load', initAllSliders);
+  // Fallback for full page loads without View Transitions
+  document.addEventListener('DOMContentLoaded', initAllSliders);
 </script>
