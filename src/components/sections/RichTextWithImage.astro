@@ -1,5 +1,6 @@
 ---
 import Section from '../Section.astro';
+import { Image } from 'astro:assets';
 import { PADDING_COMPACT } from '../../utils/spacing';
 
 interface Props {
@@ -7,6 +8,8 @@ interface Props {
   image: string;
   imageAlt?: string;
   imagePosition?: 'left' | 'right';
+  imageWidth?: number;
+  imageHeight?: number;
   className?: string;
 }
 
@@ -15,6 +18,8 @@ const {
   image,
   imageAlt = '',
   imagePosition = 'right',
+  imageWidth = 600,
+  imageHeight = 840,
   className = '',
 } = Astro.props;
 
@@ -28,9 +33,11 @@ const finalContainerClassName = 'container mx-auto max-w-8xl';
     <!-- Image: full width on mobile, 1/3 on md+ -->
     <div class={imagePosition === 'right' ? 'md:order-last md:col-span-1' : 'md:order-first md:col-span-1'}>
       <div class="w-full overflow-hidden rounded-lg shadow-md" style="aspect-ratio: 5/7;">
-        <img
+        <Image
           src={image}
           alt={imageAlt}
+          width={imageWidth}
+          height={imageHeight}
           class="w-full h-full object-cover object-top"
         />
       </div>

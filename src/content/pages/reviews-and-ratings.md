@@ -10,7 +10,7 @@ sections:
   - type: richText
     content: |
       <h2>Client Testimonials</h2>
-      <p>We value the feedback from our clients and are proud of the relationships we've built over more than 20 years of practice.</p>
+      <p>We value the feedback from our clients and are proud of the relationships we've built over more than 30 years of practice.</p>
       <h3>See Our Profile</h3>
       <p>View our profile and read client reviews at:</p>
       <ul>

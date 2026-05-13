@@ -13,14 +13,14 @@ sections:
     imagePosition: left
     content: |
       <h2>About Gail Rogers</h2>
-      <p>I have been helping clients with family law matters since 1996, including divorce, child custody, and support issues. I practiced in the Springfield area from 1996 to 2006 and in the Champaign area from 2006 to the present.</p>
+      <p>I have been helping clients with family law matters since 1996, including divorce, child custody, and support issues. I practiced in the Springfield area from 1996 to 2006 and in the Champaign area from 2006 to the present. Throughout my career I have worked directly with the State's Attorney's office in both Sangamon and Champaign counties, giving my clients a meaningful advantage in support enforcement and contested proceedings.</p>
       <h3>Experience and Approach</h3>
-      <p>For more than 20 years, clients in the Springfield area (1996–2006) and the Champaign area (2006–present) have chosen my services because I offer:</p>
+      <p>For more than 30 years, clients in the Springfield area (1996–2006) and the Champaign area (2006–present) have chosen my services because I offer:</p>
       <ul>
-        <li><strong>Customized legal strategies</strong> — I use my extensive experience to develop a plan tailored to your specific concerns rather than using a cookie-cutter approach.</li>
-        <li><strong>Personalized attention</strong> — I will work closely with you so you are always aware of your case's status and our next steps.</li>
-        <li><strong>Cost-effective rates</strong> — I believe you should not have to choose between your financial security and competent help with your legal problem. I offer reasonable rates to make this assistance affordable.</li>
-        <li><strong>Responsive communication</strong> — Clients consistently appreciate how quickly I respond to calls and emails. You'll receive prompt, clear communication so you're never left wondering about your case.</li>
+        <li><strong>Customized legal strategies</strong>: I use my extensive experience to develop a plan tailored to your specific concerns rather than using a cookie-cutter approach.</li>
+        <li><strong>Personalized attention</strong>: I will work closely with you so you are always aware of your case's status and our next steps.</li>
+        <li><strong>Cost-effective rates</strong>: I believe you should not have to choose between your financial security and competent help with your legal problem. I offer reasonable rates to make this assistance affordable.</li>
+        <li><strong>Responsive communication</strong>: Clients consistently appreciate how quickly I respond to calls and emails. You'll receive prompt, clear communication so you're never left wondering about your case.</li>
       </ul>
   - type: ctaBand
     heading: Ready to work with an experienced attorney?
