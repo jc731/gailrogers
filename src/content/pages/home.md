@@ -25,7 +25,7 @@ sections:
     imagePosition: right
     content: |
       <h2>Serving Champaign and Urbana Communities</h2>
-      <p>Rogers Law Office LLC proudly serves clients throughout Champaign County and the surrounding communities. Whether your family law matter is in Champaign, Urbana, Rantoul, or elsewhere in the county, I know the local courts and the process, and I put that familiarity to work for you.</p>
+      <p>Rogers Law Office LLC proudly serves clients throughout Champaign and surrounding counties. Whether your family law matter is in Champaign, Urbana, Rantoul, or elsewhere in the county, I know the local courts and the process, and I put that familiarity to work for you.</p>
       <h3>Dedicated to your success</h3>
       <p>My practice focuses exclusively on family law. That concentration means every client benefits from deep experience in Illinois family court, not a generalist who handles family matters on the side. I understand these cases touch the most important parts of your life: your children, your home, your financial future.</p>
       <h3>What to expect when you hire me</h3>
@@ -71,10 +71,10 @@ sections:
       - question: What areas of law do you practice?
         answer: I focus exclusively on family law matters, including divorce, child custody, child support, and spousal support.
       - question: How long have you been practicing law?
-        answer: I have been practicing family law since 1996, more than 30 years in total. I practiced in the Springfield area from 1996 to 2006 and have been serving Champaign County and surrounding communities since 2006.
+        answer: I have been practicing family law since 1996, more than 30 years in total. I practiced in the Springfield area from 1996 to 2006 and have been serving Champaign and nearby counties since 2006.
       - question: Do you offer consultations?
         answer: Yes, I offer consultations to discuss your legal matter and how I can help. Please call 217-318-0677 to schedule a consultation.
       - question: What areas do you serve?
-        answer: I serve clients in Champaign, Champaign County, and surrounding communities.
+        answer: I serve clients throughout central Illinois including Champaign, Urbana, Rantoul, and surrounding communities.
 ---
 
