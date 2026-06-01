@@ -24,8 +24,8 @@ sections:
     imageAlt: Gail Rogers, Family Law Attorney serving Champaign, IL
     imagePosition: right
     content: |
-      <h2>Serving Champaign and Urbana Communities</h2>
-      <p>Rogers Law Office LLC proudly serves clients throughout Champaign and surrounding counties. Whether your family law matter is in Champaign, Urbana, Rantoul, or elsewhere in the area, I know the local courts and the process, and I put that familiarity to work for you.</p>
+      <h2>Serving Champaign and Surrounding Counties</h2>
+      <p>Rogers Law Office LLC proudly serves clients throughout Champaign and surrounding counties. Wherever your family law matter is in the area, I know the local courts and the process, and I put that familiarity to work for you.</p>
       <h3>Dedicated to your success</h3>
       <p>My practice focuses exclusively on family law. That concentration means every client benefits from deep experience in Illinois family court, not a generalist who handles family matters on the side. I understand these cases touch the most important parts of your life: your children, your home, your financial future.</p>
       <h3>What to expect when you hire me</h3>
@@ -75,6 +75,6 @@ sections:
       - question: Do you offer consultations?
         answer: Yes, I offer consultations to discuss your legal matter and how I can help. Please call 217-318-0677 to schedule a consultation.
       - question: What areas do you serve?
-        answer: I serve clients throughout central Illinois including Champaign, Urbana, Rantoul, and surrounding counties.
+        answer: I serve clients throughout central Illinois, including Champaign and surrounding counties.
 ---
 
