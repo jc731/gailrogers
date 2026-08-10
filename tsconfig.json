@@ -1,7 +1,8 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "baseUrl": ".",
+    // No `baseUrl`: `paths` values are `./`-prefixed and resolve relative to this
+    // file, which is the TS 6+ behavior. TS 7 removes `baseUrl` entirely.
     "paths": {
       "@/*": ["./src/*"]
     }
