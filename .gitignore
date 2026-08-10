@@ -5,6 +5,9 @@ dist/
 
 # dependencies
 node_modules/
+# pnpm virtual store - this install uses a root-level store
+# (global pnpm config sets virtual-store-dir=.pnpm), so it must be ignored.
+.pnpm/
 
 # logs
 npm-debug.log*

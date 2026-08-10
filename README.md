@@ -23,8 +23,8 @@ This project uses Astro with Content Collections to manage all page content in M
 
 ### Prerequisites
 
-- Node.js 18+ 
-- pnpm (package manager) - **Important: Use pnpm, NOT npm**
+- Node.js 22.12+ (required by Astro 6; pinned via `engines` and `NODE_VERSION` in `netlify.toml`)
+- pnpm 10+ (package manager) - **Important: Use pnpm, NOT npm**
 
 ### Installation
 
@@ -236,8 +236,8 @@ Each section type has specific fields. Here's a complete reference:
 │   │       ├── CTABand.astro
 │   │       ├── CardGrid.astro
 │   │       └── LinkButtons.astro
+│   ├── content.config.ts            # Content collection schemas (Astro 6 location)
 │   ├── content/
-│   │   ├── config.ts               # Content collection schemas
 │   │   ├── site/
 │   │   │   └── settings.json       # Site-wide settings & navigation
 │   │   ├── pages/                  # Regular pages
@@ -254,9 +254,7 @@ Each section type has specific fields. Here's a complete reference:
 │   │       ├── spousal-support.md
 │   │       ├── child-custody.md
 │   │       ├── child-support.md
-│   │       ├── child-support-modification.md
-│   │       ├── domestic-violence.md
-│   │       └── real-estate.md
+│   │       └── child-support-modification.md
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # Main layout template
 │   ├── pages/
@@ -337,7 +335,41 @@ To use this as a template for another "billboard" website:
 
 5. **Add/Remove Sections**: 
    - Modify section components in `src/components/sections/` as needed
-   - Update `src/content/config.ts` to add new section types
+   - Update `src/content.config.ts` to add new section types
+
+## Dependency Maintenance
+
+### Deferred upgrades
+
+The following are intentionally held back. They were reviewed during the
+pre-launch audit (2026-08-10) and deferred as major-version work that should
+not ride along with the go-live.
+
+| Package | Pinned at | Latest | Why deferred |
+| --- | --- | --- | --- |
+| `astro` | 6.4.8 | 7.2.0 | Major. 6.4.8 already carries the security fixes that mattered (reflected XSS via slot name, fixed in 6.3.3; Host-header SSRF in the prerendered error page, fixed in 6.4.6). Upgrade to 7.x on its own branch. |
+| `tailwindcss` | 3.4.19 | 4.3.3 | Major. Tailwind 4 replaces `tailwind.config.mjs` with CSS-based `@theme` config, so the `brand` color system has to be ported. Coupled to the `@astrojs/tailwind` removal below - do both together. |
+| `@astrojs/mdx` | 5.0.4 | 7.0.5 | Major. Low value here; MDX is barely used. |
+| `typescript` | 5.9.3 | 7.0.2 | Major. Needs a full `astro check` pass afterwards. |
+| `@types/node` | 22.19.17 | 26.2.0 | Major. Should track the Node runtime version (22.x), not the newest release. |
+
+### Known deprecation
+
+`@astrojs/tailwind` is **deprecated** and its declared peer range
+(`astro ^3 || ^4 || ^5`) does not cover the installed Astro 6, so `pnpm install`
+prints a peer-dependency warning. It builds and works correctly today. The
+supported replacement is the `@tailwindcss/vite` plugin, which is only available
+for Tailwind 4 - so this migration is gated on the Tailwind 3 to 4 upgrade above.
+
+### Applying updates
+
+```bash
+pnpm outdated          # review
+pnpm audit             # advisories (most hits are build-time transitives)
+```
+
+Use pnpm only. The lockfile is `lockfileVersion: 9.0` and the pnpm version is
+pinned by the `packageManager` field in `package.json`.
 
 ## Technologies
 
