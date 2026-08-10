@@ -1,18 +1,68 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* `source(none)` disables Tailwind v4's automatic source detection, which would
+ * otherwise scan the whole repo and pull class names out of docs/*.md into the
+ * production bundle. `@source` restores the v3 `content` scope: src/ only. */
+@import "tailwindcss" source(none);
+@source "../../src";
+
+/* ---------------------------------------------------------------------------
+ * Brand theme — single source of truth for colors and custom sizing.
+ *
+ * Tailwind v4 is CSS-first: this block replaces the old `theme.extend` in
+ * tailwind.config.mjs. Naming rules that matter here:
+ *   - dot-nesting collapses to a hyphen: brand.primary -> --color-brand-primary
+ *   - camelCase is preserved verbatim, so `bg-brand-primaryDark` still works
+ *   - maxWidth lives in the `--container-*` namespace, not `--max-width-*`
+ *   - `@theme` is additive, so --color-slate-dark extends the built-in slate
+ *     palette rather than replacing slate-50..950
+ * ------------------------------------------------------------------------- */
+@theme {
+  /* Custom burgundy/maroon palette based on the logo color #6b2b1f. */
+  --color-maroon-50: #fdf4f2;
+  --color-maroon-100: #fbe8e3;
+  --color-maroon-200: #f6d1c7;
+  --color-maroon-300: #efb3a3;
+  --color-maroon-400: #e58d75;
+  --color-maroon-500: #d96b4d;
+  --color-maroon-600: #c75133;
+  --color-maroon-700: #a6412a; /* Base burgundy - close to #6b2b1f */
+  --color-maroon-800: #8a3626; /* Slightly darker */
+  --color-maroon-900: #6b2b1f; /* Logo color - primary brand color */
+  --color-maroon-950: #451a13; /* Darkest variant */
+
+  /* Brand colors - easily customizable for template reuse. */
+  --color-brand-primary: #6b2b1f; /* Logo color - main brand burgundy */
+  --color-brand-primaryDark: #451a13; /* Darkest variant for depth */
+  --color-brand-primaryLight: #a6412a; /* Lighter burgundy variant */
+  --color-brand-accent: #c75133; /* Medium burgundy for accents */
+  --color-brand-hover: #8a3626; /* Darker hover state */
+  --color-brand-light: #f6d1c7; /* Light burgundy for backgrounds */
+  --color-brand-navy: #2b3461; /* Logo text / navy for Rogers wordmark */
+
+  /* Heading colors matching original design. */
+  --color-heading-main: #6b2b1f; /* Reddish-brown for main headlines (h2) */
+  --color-heading-subheading: #8c733d; /* Golden-brown for h3 - darkened for WCAG AA contrast */
+
+  /* Accessible focus colors - high contrast for visibility. */
+  --color-focus-ring: #6b2b1f; /* brand-primary (burgundy) for focus rings */
+  --color-focus-ringLight: #ffffff; /* White for focus rings on dark backgrounds */
+
+  /* Dark slate for icon banners and dark sections. */
+  --color-slate-dark: #1e293b; /* slate-800 - dark slate without blue tones */
+  --color-slate-darker: #0f172a; /* slate-900 - very dark slate */
+
+  /* 1408px - wider than the built-in 7xl (1280px). */
+  --container-8xl: 88rem;
+}
 
 /* Accessibility: Focus ring utility for consistent focus indicators */
-@layer utilities {
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
-    @apply focus:ring-brand-primary focus:ring-offset-white;
-  }
-  
-  .focus-ring-dark {
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
-    @apply focus:ring-white focus:ring-offset-brand-primary;
-  }
+@utility focus-ring {
+  @apply focus:outline-hidden focus:ring-2 focus:ring-offset-2;
+  @apply focus:ring-brand-primary focus:ring-offset-white;
+}
+
+@utility focus-ring-dark {
+  @apply focus:outline-hidden focus:ring-2 focus:ring-offset-2;
+  @apply focus:ring-white focus:ring-offset-brand-primary;
 }
 
 /* Accessibility: Respect user motion preferences */
@@ -26,4 +76,3 @@
     scroll-behavior: auto !important;
   }
 }
-

@@ -28,7 +28,7 @@ const buttonId = 'mobile-menu-button';
   aria-expanded="false"
   aria-controls={menuId}
   aria-label="Open navigation menu"
-  class="lg:hidden focus-ring p-2 rounded min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
+  class="lg:hidden focus-ring p-2 rounded-sm min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
   data-mobile-menu-button
 >
   <Icon
@@ -49,12 +49,12 @@ const buttonId = 'mobile-menu-button';
   aria-hidden="true"
 >
   <!-- Panel header: logo + close button (mirrors the topbar layout) -->
-  <div class="flex justify-between items-center px-4 py-4 shadow-sm">
+  <div class="flex justify-between items-center px-4 py-4 shadow-xs">
     <Logo brandName="Rogers" tagline="Law Office LLC" href="/" />
     <button
       type="button"
       aria-label="Close navigation menu"
-      class="focus-ring p-2 rounded min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
+      class="focus-ring p-2 rounded-sm min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-brand-primary transition-colors"
       data-mobile-menu-close
     >
       <Icon name="mdi:close" class="w-6 h-6" aria-hidden="true" />
@@ -74,9 +74,9 @@ const buttonId = 'mobile-menu-button';
                 {(() => {
                   const isParentActive = currentPath === item.href || item.children?.some(child => currentPath === child.href);
                   const linkClasses = isParentActive
-                    ? "flex-1 text-left text-brand-primary font-semibold hover:text-brand-primary focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
-                    : "flex-1 text-left text-gray-700 hover:text-brand-primary focus-ring px-4 py-3 rounded min-h-[44px] flex items-center";
-                  const buttonClasses = "flex items-center justify-center min-h-[44px] min-w-[44px] focus-ring px-2 rounded";
+                    ? "flex-1 text-left text-brand-primary font-semibold hover:text-brand-primary focus-ring px-4 py-3 rounded-sm min-h-[44px] flex items-center"
+                    : "flex-1 text-left text-gray-700 hover:text-brand-primary focus-ring px-4 py-3 rounded-sm min-h-[44px] flex items-center";
+                  const buttonClasses = "flex items-center justify-center min-h-[44px] min-w-[44px] focus-ring px-2 rounded-sm";
 
                   return (
                     <>
@@ -108,8 +108,8 @@ const buttonId = 'mobile-menu-button';
                         {item.children.map((child) => {
                           const isChildActive = currentPath === child.href;
                           const childClasses = isChildActive
-                            ? "block text-brand-primary font-semibold bg-brand-light focus-ring px-4 py-2 rounded min-h-[44px] flex items-center"
-                            : "block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-2 rounded min-h-[44px] flex items-center";
+                            ? "block text-brand-primary font-semibold bg-brand-light focus-ring px-4 py-2 rounded-sm min-h-[44px] flex items-center"
+                            : "block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-2 rounded-sm min-h-[44px] flex items-center";
 
                           return (
                             <li>
@@ -132,8 +132,8 @@ const buttonId = 'mobile-menu-button';
               <a
                 href={item.href}
                 class={currentPath === item.href
-                  ? "block text-brand-primary font-semibold hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
-                  : "block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"}
+                  ? "block text-brand-primary font-semibold hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-3 rounded-sm min-h-[44px] flex items-center"
+                  : "block text-gray-700 hover:text-brand-primary hover:bg-brand-light focus-ring px-4 py-3 rounded-sm min-h-[44px] flex items-center"}
                 data-mobile-menu-link
               >
                 {item.label}
@@ -146,7 +146,7 @@ const buttonId = 'mobile-menu-button';
         <li class="pt-4 border-t border-gray-200">
           <a
             href={`tel:${primaryPhone}`}
-            class="block text-brand-primary font-semibold focus-ring px-4 py-3 rounded min-h-[44px] flex items-center"
+            class="block text-brand-primary font-semibold focus-ring px-4 py-3 rounded-sm min-h-[44px] flex items-center"
             data-mobile-menu-link
           >
             {primaryPhone}

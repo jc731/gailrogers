@@ -32,7 +32,7 @@ const finalContainerClassName = 'container mx-auto max-w-8xl';
     </div>
 
     <!-- Contact Form -->
-    <div class="bg-white border-l-4 border-r-4 border-heading-subheading px-4 sm:px-6 py-8 shadow-sm">
+    <div class="bg-white border-l-4 border-r-4 border-heading-subheading px-4 sm:px-6 py-8 shadow-xs">
       <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 break-words">
         {formTitle}
       </h2>
@@ -45,6 +45,10 @@ const finalContainerClassName = 'container mx-auto max-w-8xl';
 </Section>
 
 <style>
+  /* Astro compiles scoped <style> blocks separately, so Tailwind v4 needs an
+     explicit reference to the theme before @apply can resolve brand tokens. */
+  @reference "../../styles/global.css";
+
   .rich-text-content :global(h2) {
     @apply text-brand-primary text-2xl sm:text-3xl md:text-4xl font-semibold leading-snug mt-2 mb-4 font-sans break-words;
   }

@@ -19,7 +19,7 @@ const { title, items } = Astro.props;
   )}
   <dl class="space-y-6">
     {items.map((item) => (
-      <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm">
+      <div class="bg-white p-4 sm:p-6 rounded-lg shadow-xs">
         <dt class="text-lg font-semibold mb-2 break-words text-gray-900">{item.question}</dt>
         <dd class="text-gray-700 break-words">{item.answer}</dd>
       </div>
