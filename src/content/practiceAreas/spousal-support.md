@@ -34,9 +34,9 @@ sections:
       <p>Spousal support orders can be modified if there is a substantial change in circumstances. I can help you seek a modification or defend against a modification request.</p>
 faqs:
   - question: How is spousal support calculated in Illinois?
-    answer: Illinois does not have a strict formula for spousal support. The court considers multiple factors including the length of the marriage, each party's income and earning capacity, the standard of living during the marriage, and the needs of each party.
+    answer: There are two steps. First the court decides whether support is appropriate at all, weighing factors such as the length of the marriage, each spouse's income and earning capacity, and the standard of living established during the marriage. If support is awarded, Illinois law provides a guideline formula that calculates the amount from both spouses' incomes. A judge can depart from that guideline where the circumstances call for it.
   - question: How long does spousal support last?
-    answer: The duration of spousal support depends on the circumstances of the case. It can be temporary, for a fixed period, or permanent. The court considers factors such as the length of the marriage and the parties' circumstances.
+    answer: Illinois ties the length of a support award to the length of the marriage, following a statutory scale, so the longer the marriage the longer support generally lasts. After a long marriage the court may order support for a period equal to the length of the marriage, or on an indefinite basis. Temporary support may also be ordered while the divorce is pending.
   - question: Can spousal support be modified?
     answer: Yes, spousal support can be modified if there is a substantial change in circumstances, such as a significant change in income, remarriage of the recipient, or retirement of the payer.
 ---

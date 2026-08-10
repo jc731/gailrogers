@@ -19,7 +19,7 @@ sections:
       <p>If you are not receiving the child support you are owed, I can help you enforce the support order through the court system.</p>
 faqs:
   - question: How is child support calculated in Illinois?
-    answer: Illinois uses a percentage-based formula that considers the number of children and the net income of both parents. The court may deviate from the guidelines in certain circumstances.
+    answer: Illinois uses what is known as the income shares model. The court combines both parents' net incomes, refers to a state schedule to determine what parents at that income level are expected to spend on their children, and then divides that obligation between the parents in proportion to what each one earns. Parenting time can affect the calculation, and a judge may depart from the guideline amount when the circumstances justify it.
   - question: When can child support be modified?
     answer: Child support can be modified when there is a substantial change in circumstances, such as a significant change in income, a change in the child's needs, or a change in custody arrangements.
 ---
