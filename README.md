@@ -388,8 +388,19 @@ range, but it is its own migration (it changes the `types` default to `[]` and f
 
 `astro-icon` (1.1.5) is **unmaintained** - last release 2024-12-26, and it declares no
 `peerDependencies`, so nothing warns when it falls out of support. It was verified
-working under Astro 7 / Vite 8 during the upgrade. If it breaks in future, the fallback
-is Astro's native SVG imports via `astro:assets`, scoped to `IconBanner.astro`.
+working under Astro 7 / Vite 8 during the upgrade, and is used by three components:
+`sections/IconBanner.astro`, `MobileMenu.astro`, and `DropdownIndicator.astro`.
+
+Do **not** "fix" `include: { mdi: ['*'] }` in `astro.config.mjs` by narrowing it. Icon
+names are content data - `content.config.ts` declares `icon: z.string()` and
+`src/content/pages/home.md` sets icons in frontmatter - so `'*'` is what lets a content
+author use any MDI icon without a code change. Narrowing it turns a content edit into a
+build error. The cost is build-time only; nothing extra ships to the browser.
+
+If it ever breaks, the fallback is a local ~40-line `Icon.astro` wrapping `getIconData()`
++ `iconToSVG()` from `@iconify/utils`. Astro's native SVG imports and `@iconify/tailwind4`
+were both evaluated and rejected - they require statically known icon names, which this
+project does not have. See `docs/decisions/2026-08-10-major-dependency-upgrades.md`.
 
 ### Applying updates
 
