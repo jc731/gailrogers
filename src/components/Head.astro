@@ -1,5 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
 import { ClientRouter } from 'astro:transitions';
+import { getSiteSettings } from '../utils/content';
 
 interface Props {
   title: string;
@@ -17,9 +19,47 @@ const {
   ogImage = '/og-image.jpg',
 } = Astro.props;
 
-const fullTitle = `${title} | ${siteTitle}`;
+// Most `seoTitle` values already end in the brand name. Appending it
+// unconditionally produced "... - Rogers Law Office LLC | Rogers Law Office LLC"
+// and blew past the ~60 char SERP limit, so only append when it's absent.
+const fullTitle = title.includes(siteTitle) ? title : `${title} | ${siteTitle}`;
 const canonicalURL = Astro.url.href;
-const ogImageAbsolute = new URL(ogImage, Astro.url.origin).href;
+const ogImageAbsolute = new URL(ogImage, Astro.site ?? Astro.url.origin).href;
+
+const siteEntries = await getCollection('site');
+const siteSettings = getSiteSettings(siteEntries);
+
+// LocalBusiness/LegalService markup. Everything here is sourced from
+// settings.json so the schema can never drift from the rendered footer.
+const structuredData = siteSettings
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'LegalService',
+      name: siteSettings.brandName,
+      url: Astro.site?.href ?? canonicalURL,
+      image: ogImageAbsolute,
+      telephone: siteSettings.phones ?? [siteSettings.primaryPhone],
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: siteSettings.address.street,
+        addressLocality: siteSettings.address.city,
+        addressRegion: siteSettings.address.state,
+        postalCode: siteSettings.address.zip,
+        addressCountry: 'US',
+      },
+      areaServed: {
+        '@type': 'AdministrativeArea',
+        name: 'Champaign County, Illinois',
+      },
+      knowsAbout: [
+        'Family Law',
+        'Divorce',
+        'Child Custody',
+        'Child Support',
+        'Spousal Support',
+      ],
+    }
+  : null;
 ---
 
 <meta charset="UTF-8" />
@@ -52,9 +92,19 @@ const ogImageAbsolute = new URL(ogImage, Astro.url.origin).href;
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
-<meta name="theme-color" content="#A88B4A" />
+<meta name="theme-color" content="#6B2B1F" />
 <meta name="generator" content={Astro.generator} />
 <title>{fullTitle}</title>
+
+{
+  structuredData && (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+  )
+}
 
 <ClientRouter />
 

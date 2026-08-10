@@ -1,21 +1,131 @@
-# example netlify.toml
 [build]
   command = "pnpm run build"
-  functions = "netlify/functions"
   publish = "dist"
 
-  ## Uncomment to use this redirect for Single Page Applications like create-react-app.
-  ## Not needed for static site generators.
-  #[[redirects]]
-  #  from = "/*"
-  #  to = "/index.html"
-  #  status = 200
+[build.environment]
+  # astro@6 requires Node >= 22.12.0; pin so Netlify's default can't drift below it.
+  NODE_VERSION = "22.16.0"
 
-  ## (optional) Settings for Netlify Dev
-  ## https://github.com/netlify/cli/blob/main/docs/netlify-dev.md#project-detection
-  #[dev]
-  #  command = "yarn start" # Command to start your dev server
-  #  port = 3000 # Port that the dev server will be listening on
-  #  publish = "dist" # Folder with the static content for _redirect file
+# ---------------------------------------------------------------------------
+# Legacy URL parity (301)
+#
+# The previous gailrogerslaw.com site used a different URL scheme. These
+# redirects preserve inbound links and search equity on the domain cutover.
+# Netlify matches the first rule that applies, so specific paths must be
+# listed before the /practice-areas/* catch-all at the bottom.
+# ---------------------------------------------------------------------------
 
-  ## more info on configuring this file: https://ntl.fyi/file-based-build-config
+# --- Practice areas that carried over ---
+[[redirects]]
+  from = "/practice-areas/"
+  to = "/practice/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/family-law/"
+  to = "/practice/family-law/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/family-law/divorce/"
+  to = "/practice/divorce/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/family-law/child-custody/"
+  to = "/practice/child-custody/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/family-law/spousal-support/"
+  to = "/practice/spousal-support/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/child-support/"
+  to = "/practice/child-support/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/child-support-modification/"
+  to = "/practice/child-support-modification/"
+  status = 301
+
+# --- Practice areas retired at client request ---
+# No equivalent page exists; send to the practice areas index rather than to an
+# unrelated service page.
+[[redirects]]
+  from = "/practice-areas/real-estate/"
+  to = "/practice/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/mediation-representation/"
+  to = "/practice/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/divorce-mediation-services/"
+  to = "/practice/"
+  status = 301
+
+[[redirects]]
+  from = "/practice-areas/family-law/domestic-violence/"
+  to = "/practice/"
+  status = 301
+
+# --- Top-level pages that were renamed ---
+[[redirects]]
+  from = "/attorney/"
+  to = "/attorney-profile/"
+  status = 301
+
+[[redirects]]
+  from = "/contact-us/"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/directions/"
+  to = "/map-and-directions/"
+  status = 301
+
+[[redirects]]
+  from = "/faqs/"
+  to = "/video-faq/"
+  status = 301
+
+[[redirects]]
+  from = "/faqs/how-do-i-file-for-divorce-in-illinois/"
+  to = "/video-faq/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/hello-world/"
+  to = "/blog/"
+  status = 301
+
+# --- Catch-all for any legacy practice-area URL not enumerated above ---
+[[redirects]]
+  from = "/practice-areas/*"
+  to = "/practice/"
+  status = 301
+
+# ---------------------------------------------------------------------------
+# Headers
+# ---------------------------------------------------------------------------
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+# Astro fingerprints these filenames, so they can be cached indefinitely.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

@@ -14,11 +14,16 @@ export default defineConfig({
         'mdi': ['*'],
       }
     }),
-    sitemap()
+    // /thank-you/ is a noindex form-confirmation page; keep it out of the sitemap.
+    sitemap({
+      filter: (page) => !page.includes('/thank-you'),
+    })
   ],
   output: 'static',
-  // Site URL can be set via environment variable PUBLIC_SITE_URL
-  // Falls back to site settings or localhost for development
-  site: import.meta.env.PUBLIC_SITE_URL || import.meta.env.SITE || 'http://localhost:4321'
+  // Production canonical origin. Drives canonical URLs, og:url and the sitemap.
+  // NOTE: astro.config.mjs runs in Node before Vite, so `import.meta.env` is NOT
+  // populated here - only `process.env` is. Override via PUBLIC_SITE_URL when
+  // building for a preview domain.
+  site: process.env.PUBLIC_SITE_URL || 'https://www.gailrogerslaw.com'
 });
 

@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import { getSiteSettings } from "../utils/content";
+
+// Landing page for a successful Netlify Forms submission. The contact form
+// posts here via its `action`, so this is the only confirmation a visitor
+// gets - keep it unambiguous.
+const siteEntries = await getCollection("site");
+const siteSettings = getSiteSettings(siteEntries);
+const primaryPhone = siteSettings?.primaryPhone || "";
+
+const title = "Thank You";
+const description =
+  "Your message has been sent to Rogers Law Office. We will be in touch shortly.";
+const currentPath = Astro.url.pathname;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  currentPath={currentPath}
+  noindex={true}
+>
+  <section class="py-20 px-4 md:px-6 lg:px-8">
+    <div class="container mx-auto max-w-2xl text-center">
+      <h1
+        class="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-primary mb-6 break-words"
+      >
+        Thank you for reaching out
+      </h1>
+      <p class="text-lg text-gray-700 mb-4">
+        Your message has been sent successfully. I review every inquiry
+        personally and will respond as soon as possible.
+      </p>
+      {
+        primaryPhone && (
+          <p class="text-lg text-gray-700 mb-8">
+            If your matter is time-sensitive, please call{" "}
+            <a
+              href={`tel:${primaryPhone}`}
+              class="text-brand-primary font-semibold underline hover:text-brand-hover focus-ring rounded"
+            >
+              {primaryPhone}
+            </a>
+            .
+          </p>
+        )
+      }
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button href="/" variant="primary">Return to Homepage</Button>
+        <Button href="/practice" variant="outline">Browse Practice Areas</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

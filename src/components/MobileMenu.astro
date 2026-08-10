@@ -39,10 +39,14 @@ const buttonId = 'mobile-menu-button';
 </button>
 
 <!-- Full-screen menu panel -->
+<!-- Starts closed: `inert` keeps the off-screen links out of the tab order and
+     the accessibility tree until the panel is actually opened. -->
 <div
   id={menuId}
   class="lg:hidden fixed top-0 left-0 right-0 bottom-0 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto"
   data-mobile-menu
+  inert
+  aria-hidden="true"
 >
   <!-- Panel header: logo + close button (mirrors the topbar layout) -->
   <div class="flex justify-between items-center px-4 py-4 shadow-sm">
@@ -154,22 +158,35 @@ const buttonId = 'mobile-menu-button';
 </div>
 
 <script is:inline>
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.querySelector('[data-mobile-menu-button]');
-    const closeButton = document.querySelector('[data-mobile-menu-close]');
-    const mobileMenu = document.querySelector('[data-mobile-menu]');
-    const headerLogo = document.querySelector('[data-header-logo]');
-    const submenuButtons = document.querySelectorAll('[data-mobile-submenu-button]');
-    const menuLinks = document.querySelectorAll('[data-mobile-menu-link]');
+  // <ClientRouter /> swaps the <body> on every internal navigation, so the
+  // markup this wires up is replaced each time. Binding on DOMContentLoaded
+  // would only ever work on the first page load and leave the hamburger dead
+  // afterwards - init runs on `astro:page-load` instead, which fires on the
+  // initial load and after every client-side swap.
+  (function () {
+    function currentMenu() {
+      return document.querySelector('[data-mobile-menu]');
+    }
 
-    if (!menuButton || !mobileMenu) return;
+    function currentButton() {
+      return document.querySelector('[data-mobile-menu-button]');
+    }
 
-    let isOpen = false;
+    function isOpen() {
+      const menu = currentMenu();
+      return !!menu && !menu.classList.contains('translate-x-full');
+    }
 
     function openMenu() {
-      isOpen = true;
-      menuButton.setAttribute('aria-expanded', 'true');
-      mobileMenu.classList.remove('translate-x-full');
+      const menu = currentMenu();
+      const button = currentButton();
+      const headerLogo = document.querySelector('[data-header-logo]');
+      if (!menu || !button) return;
+
+      menu.classList.remove('translate-x-full');
+      menu.removeAttribute('inert');
+      menu.removeAttribute('aria-hidden');
+      button.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
       if (headerLogo) {
         headerLogo.style.opacity = '0';
@@ -178,72 +195,95 @@ const buttonId = 'mobile-menu-button';
     }
 
     function closeMenu() {
-      isOpen = false;
-      menuButton.setAttribute('aria-expanded', 'false');
-      mobileMenu.classList.add('translate-x-full');
+      const menu = currentMenu();
+      const button = currentButton();
+      const headerLogo = document.querySelector('[data-header-logo]');
+      if (!menu || !button) return;
+
+      // Move focus out before `inert` applies, otherwise the browser drops it
+      // to <body> and the user loses their place.
+      if (menu.contains(document.activeElement)) {
+        button.focus();
+      }
+
+      menu.classList.add('translate-x-full');
+      menu.setAttribute('inert', '');
+      menu.setAttribute('aria-hidden', 'true');
+      button.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
       if (headerLogo) {
         headerLogo.style.opacity = '';
         headerLogo.style.pointerEvents = '';
       }
 
-      document.querySelectorAll('[data-mobile-submenu]').forEach(function(submenu) {
+      document.querySelectorAll('[data-mobile-submenu]').forEach(function (submenu) {
         submenu.classList.add('hidden');
-        const button = document.querySelector('[aria-controls="' + submenu.id + '"]');
-        if (button) button.setAttribute('aria-expanded', 'false');
+        const submenuButton = document.querySelector('[aria-controls="' + submenu.id + '"]');
+        if (submenuButton) submenuButton.setAttribute('aria-expanded', 'false');
       });
     }
 
-    menuButton.addEventListener('click', openMenu);
+    function init() {
+      const menuButton = currentButton();
+      const menu = currentMenu();
+      if (!menuButton || !menu) return;
 
-    if (closeButton) {
-      closeButton.addEventListener('click', closeMenu);
+      // Idempotent: `astro:page-load` and the direct call below can both reach
+      // this on first load, and only fresh markup should ever be bound.
+      if (menuButton.dataset.menuBound === 'true') return;
+      menuButton.dataset.menuBound = 'true';
+
+      // Every navigation lands with the panel closed.
+      menu.classList.add('translate-x-full');
+      menu.setAttribute('inert', '');
+      menu.setAttribute('aria-hidden', 'true');
+      menuButton.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+
+      // Buttons fire click natively on Enter/Space, so no extra key handling.
+      menuButton.addEventListener('click', function () {
+        if (isOpen()) { closeMenu(); } else { openMenu(); }
+      });
+
+      const closeButton = document.querySelector('[data-mobile-menu-close]');
+      if (closeButton) closeButton.addEventListener('click', closeMenu);
+
+      document.querySelectorAll('[data-mobile-submenu-button]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          const buttonIndex = button.getAttribute('data-mobile-submenu-button');
+          const submenu = document.querySelector('[data-mobile-submenu="' + buttonIndex + '"]');
+          const isExpanded = button.getAttribute('aria-expanded') === 'true';
+          if (submenu) {
+            submenu.classList.toggle('hidden', isExpanded);
+            button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-mobile-menu-link]').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
     }
 
-    menuButton.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (isOpen) { closeMenu(); } else { openMenu(); }
-      } else if (e.key === 'Escape' && isOpen) {
-        e.preventDefault();
-        closeMenu();
-      }
-    });
+    // `document` and `window` survive view transitions, so these bind once.
+    if (!window.__rloMobileMenuBound) {
+      window.__rloMobileMenuBound = true;
 
-    submenuButtons.forEach(function(button) {
-      button.addEventListener('click', function() {
-        const buttonIndex = button.getAttribute('data-mobile-submenu-button');
-        const submenu = document.querySelector('[data-mobile-submenu="' + buttonIndex + '"]');
-        const isExpanded = button.getAttribute('aria-expanded') === 'true';
-        if (submenu) {
-          submenu.classList.toggle('hidden', isExpanded);
-          button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && isOpen()) {
+          closeMenu();
+          const button = currentButton();
+          if (button) button.focus();
         }
       });
 
-      button.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          button.click();
-        }
+      window.addEventListener('resize', function () {
+        if (window.innerWidth >= 1024 && isOpen()) closeMenu();
       });
-    });
 
-    menuLinks.forEach(function(link) {
-      link.addEventListener('click', closeMenu);
-    });
+      document.addEventListener('astro:page-load', init);
+    }
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && isOpen) {
-        closeMenu();
-        menuButton.focus();
-      }
-    });
-
-    window.addEventListener('resize', function() {
-      if (window.innerWidth >= 1024 && isOpen) {
-        closeMenu();
-      }
-    });
-  });
+    init();
+  })();
 </script>

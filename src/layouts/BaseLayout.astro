@@ -161,68 +161,104 @@ const navigation = siteSettings?.navigation || [];
           </div>
 
           <script>
-            // Keyboard navigation for dropdown menus
-            document.addEventListener("DOMContentLoaded", () => {
+            // Keyboard navigation for dropdown menus.
+            // Re-runs on every <ClientRouter /> swap - see MobileMenu.astro.
+            const initNavKeyboard = () => {
               const navLinks = document.querySelectorAll("[data-nav-link]");
 
               navLinks.forEach((link) => {
+                // Fresh markup only; guards against double-binding.
+                if ((link as HTMLElement).dataset.navBound === "true") return;
+                (link as HTMLElement).dataset.navBound = "true";
+
                 const linkIndex = link.getAttribute("data-nav-link");
                 const menu = document.querySelector(
                   `[data-nav-menu="${linkIndex}"]`,
                 );
-                const menuItems = menu?.querySelectorAll("[data-nav-child]");
 
-                if (!menu || !menuItems) return;
+                if (!menu) return;
+
+                // Query the items live on each keypress rather than caching a
+                // NodeList at bind time: this script runs while the document is
+                // still parsing, so a cached list can be empty (which silently
+                // disabled ArrowDown), and a swap can leave it holding detached
+                // nodes.
+                const items = () =>
+                  Array.from(
+                    menu.querySelectorAll("[data-nav-child]"),
+                  ) as HTMLElement[];
+
+                const el = menu as HTMLElement;
+
+                const openMenu = () => {
+                  link.setAttribute("aria-expanded", "true");
+                  // The menu carries `transition-all`, which animates
+                  // `visibility` as well - so for the ~200ms transition the
+                  // element is still not rendered and focus() silently no-ops.
+                  // Suppress the transition for this one commit so the items
+                  // are focusable in the same tick, then restore it.
+                  el.style.transition = "none";
+                  menu.classList.remove("opacity-0", "invisible");
+                  el.style.visibility = "visible";
+                  el.style.opacity = "1";
+                  void el.offsetHeight;
+                  el.style.transition = "";
+                };
+
+                const closeMenu = () => {
+                  link.setAttribute("aria-expanded", "false");
+                  menu.classList.add("opacity-0", "invisible");
+                  el.style.visibility = "";
+                  el.style.opacity = "";
+                };
 
                 link.addEventListener("keydown", (e) => {
                   const ev = e as KeyboardEvent;
                   if (ev.key === "ArrowDown") {
                     ev.preventDefault();
-                    link.setAttribute("aria-expanded", "true");
-                    menu.classList.remove("opacity-0", "invisible");
-                    if (menuItems.length > 0) {
-                      (menuItems[0] as HTMLElement).focus();
-                    }
+                    openMenu();
+                    const list = items();
+                    if (list.length > 0) list[0].focus();
+                  } else if (ev.key === "Escape") {
+                    ev.preventDefault();
+                    closeMenu();
                   }
                 });
 
-                menuItems.forEach((item, index) => {
-                  item.addEventListener("keydown", (e) => {
-                    const ev = e as KeyboardEvent;
-                    if (ev.key === "ArrowDown") {
-                      ev.preventDefault();
-                      const next =
-                        index < menuItems.length - 1
-                          ? menuItems[index + 1]
-                          : menuItems[0];
-                      (next as HTMLElement).focus();
-                    } else if (ev.key === "ArrowUp") {
-                      ev.preventDefault();
-                      const prev =
-                        index > 0
-                          ? menuItems[index - 1]
-                          : menuItems[menuItems.length - 1];
-                      (prev as HTMLElement).focus();
-                    } else if (ev.key === "Escape") {
-                      ev.preventDefault();
-                      link.setAttribute("aria-expanded", "false");
-                      menu.classList.add("opacity-0", "invisible");
-                      (link as HTMLElement).focus();
-                    }
-                  });
+                menu.addEventListener("keydown", (e) => {
+                  const ev = e as KeyboardEvent;
+                  const list = items();
+                  const index = list.indexOf(ev.target as HTMLElement);
+                  if (index === -1 || list.length === 0) return;
+
+                  if (ev.key === "ArrowDown") {
+                    ev.preventDefault();
+                    list[(index + 1) % list.length].focus();
+                  } else if (ev.key === "ArrowUp") {
+                    ev.preventDefault();
+                    list[(index - 1 + list.length) % list.length].focus();
+                  } else if (ev.key === "Escape") {
+                    ev.preventDefault();
+                    closeMenu();
+                    (link as HTMLElement).focus();
+                  }
                 });
 
                 const navItem = link.closest("[data-nav-item]");
                 navItem?.addEventListener("focusout", () => {
                   setTimeout(() => {
                     if (!navItem?.contains(document.activeElement)) {
-                      link.setAttribute("aria-expanded", "false");
-                      menu.classList.add("opacity-0", "invisible");
+                      // Via closeMenu so the inline visibility override set by
+                      // openMenu is cleared too.
+                      closeMenu();
                     }
                   }, 100);
                 });
               });
-            });
+            };
+
+            document.addEventListener("astro:page-load", initNavKeyboard);
+            initNavKeyboard();
           </script>
         </div>
       </nav>
@@ -233,21 +269,5 @@ const navigation = siteSettings?.navigation || [];
     </main>
 
     <SiteFooter />
-
-    <!-- Service Worker Registration (disabled) -->
-    <!-- <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/service-worker.js")
-            .then((registration) => {
-              console.log("Service Worker registered:", registration.scope);
-            })
-            .catch((error) => {
-              console.log("Service Worker registration failed:", error);
-            });
-        });
-      }
-    </script> -->
   </body>
 </html>

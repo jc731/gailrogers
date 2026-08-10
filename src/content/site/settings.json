@@ -74,6 +74,10 @@
     {
       "label": "Map & Directions",
       "href": "/map-and-directions"
+    },
+    {
+      "label": "Video FAQ",
+      "href": "/video-faq"
     }
   ]
 }

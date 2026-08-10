@@ -12,10 +12,12 @@ import IconBanner from "./sections/IconBanner.astro";
 import ContactForm from "./forms/ContactForm.astro";
 import MapEmbed from "./sections/MapEmbed.astro";
 import { sectionSchema } from "../content.config";
-import { z } from "astro:content";
 
-// Infer section type from schema
-type Section = z.infer<typeof sectionSchema>;
+// Section type inferred from the schema. `z.infer<>` is not usable here: the
+// `z` re-exported by astro:content is a value, not a type namespace (and is
+// deprecated in Astro 6), and zod is a transitive dep so it isn't importable
+// directly. Reading the parse signature gets the same type with no import.
+type Section = ReturnType<typeof sectionSchema.parse>;
 
 interface Props {
   section: Section;

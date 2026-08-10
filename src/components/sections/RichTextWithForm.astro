@@ -1,8 +1,6 @@
 ---
 import Section from '../Section.astro';
-import FormInput from '../forms/FormInput.astro';
-import FormTextarea from '../forms/FormTextarea.astro';
-import Button from '../Button.astro';
+import NetlifyContactForm from '../forms/NetlifyContactForm.astro';
 import { PADDING_COMPACT } from '../../utils/spacing';
 
 interface Props {
@@ -40,66 +38,8 @@ const finalContainerClassName = 'container mx-auto max-w-8xl';
       </h2>
       {formIntroText && <p class="text-gray-700 mb-6 break-words">{formIntroText}</p>}
 
-      <form
-        id="contact-form"
-        name="contact"
-        method="POST"
-        action="#"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        class="space-y-6"
-        novalidate
-      >
-        <!-- Honeypot field for spam protection -->
-        <p class="hidden">
-          <label>
-            Don't fill this out if you're human: <input name="bot-field" />
-          </label>
-        </p>
-        <FormInput
-          id="contact-name"
-          name="name"
-          label="Full Name"
-          type="text"
-          required={true}
-        />
-
-        <FormInput
-          id="contact-email"
-          name="email"
-          label="Email Address"
-          type="email"
-          required={true}
-        />
-
-        <FormInput
-          id="contact-phone"
-          name="phone"
-          label="Phone Number"
-          type="tel"
-          required={true}
-        />
-
-        <FormTextarea
-          id="contact-message"
-          name="message"
-          label="Message"
-          rows={6}
-          required={true}
-        />
-
-        <div class="pt-4">
-          <Button
-            type="submit"
-            variant="heading-subheading"
-            size="lg"
-            rounded="md"
-            focusRing="dark"
-          >
-            Submit
-          </Button>
-        </div>
-      </form>
+      {/* Distinct id so a page rendering both form sections keeps ids unique. */}
+      <NetlifyContactForm formId="contact-form-inline" />
     </div>
   </div>
 </Section>

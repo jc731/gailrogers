@@ -1,0 +1,99 @@
+---
+import FormInput from "./FormInput.astro";
+import FormTextarea from "./FormTextarea.astro";
+import Button from "../Button.astro";
+
+interface Props {
+  /**
+   * DOM id for the form and the prefix for every field id. Only override this
+   * when a page renders more than one contact form, so ids stay unique.
+   */
+  formId?: string;
+}
+
+const { formId = "contact-form" } = Astro.props;
+
+// Netlify keys submissions off this name and matches it to the hidden
+// `form-name` input below. Changing it starts a new, empty submission list.
+const FORM_NAME = "contact";
+const SUCCESS_PATH = "/thank-you/";
+---
+
+{/*
+  Netlify Forms notes:
+  - `data-netlify` makes the build bot register the form from the static HTML.
+  - The hidden `form-name` input is what attributes the POST body to that
+    registration. Netlify injects it for forms it detects, but declaring it
+    explicitly keeps the POST valid regardless.
+  - `data-astro-reload` opts this form out of <ClientRouter />. Without it the
+    view-transition router intercepts the submit and swaps the response in
+    instead of letting the browser POST to Netlify, so nothing is recorded.
+  - No `novalidate`: native constraint validation is the only validation here.
+*/}
+<form
+  id={formId}
+  name={FORM_NAME}
+  method="POST"
+  action={SUCCESS_PATH}
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-astro-reload
+  class="space-y-6"
+>
+  <input type="hidden" name="form-name" value={FORM_NAME} />
+
+  {/* Honeypot: hidden from humans, tempting to bots. */}
+  <p class="hidden">
+    <label>
+      Don't fill this out if you're human: <input
+        name="bot-field"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </label>
+  </p>
+
+  <FormInput
+    id={`${formId}-name`}
+    name="name"
+    label="Full Name"
+    type="text"
+    required={true}
+  />
+
+  <FormInput
+    id={`${formId}-email`}
+    name="email"
+    label="Email Address"
+    type="email"
+    required={true}
+  />
+
+  <FormInput
+    id={`${formId}-phone`}
+    name="phone"
+    label="Phone Number"
+    type="tel"
+    required={true}
+  />
+
+  <FormTextarea
+    id={`${formId}-message`}
+    name="message"
+    label="Message"
+    rows={6}
+    required={true}
+  />
+
+  <div class="pt-4">
+    <Button
+      type="submit"
+      variant="heading-subheading"
+      size="lg"
+      rounded="md"
+      focusRing="dark"
+    >
+      Submit
+    </Button>
+  </div>
+</form>
