@@ -1,6 +1,6 @@
 # CLAUDE.md — Rogers Law Office (gailrogers)
 
-Astro 5 + Tailwind 3 + TypeScript markdown-first website for Rogers Law Office. Billboard-style template with content collections.
+Astro 7 + Tailwind 4 + TypeScript markdown-first website for Rogers Law Office. Billboard-style template with content collections.
 
 ## Commands
 
@@ -21,8 +21,8 @@ src/
     forms/          # FormInput, FormTextarea, ContactForm
     Logo.astro
     SectionRenderer.astro
+  content.config.ts              # Zod schemas + glob/file loaders for all content types
   content/
-    config.ts                    # Zod schemas for all content types
     site/settings.json           # Brand, phone, address, nav, global CTAs
     pages/                       # Regular page markdown files
     practiceAreas/               # Practice area markdown files (route: /practice/[slug])
@@ -33,8 +33,8 @@ src/
     404.astro
   utils/content.ts
   config/template.ts             # Template-level config
+  styles/global.css              # Tailwind entry + `@theme` brand tokens + focus-ring utilities
 docs/decisions/                  # Architecture Decision Records (ADRs)
-tailwind.config.mjs              # Brand color theme (brand.primary, accent, etc.)
 ```
 
 ## Content Management
@@ -46,7 +46,12 @@ tailwind.config.mjs              # Brand color theme (brand.primary, accent, etc
 
 ## Theme
 
-Brand colors are defined in `tailwind.config.mjs` under the `brand` key (`primary`, `primaryDark`, `primaryLight`, `accent`, `hover`, `light`). All components use these semantic names — never hardcode hex values in components.
+Brand colors are defined in the `@theme` block of `src/styles/global.css` as `--color-brand-*` custom properties (`primary`, `primaryDark`, `primaryLight`, `accent`, `hover`, `light`, `navy`). All components use these semantic names — never hardcode hex values in components.
+
+Tailwind 4 notes:
+- There is no `tailwind.config.mjs`. Theme tokens are CSS-first; a `--color-x-y` variable produces the `bg-x-y` / `text-x-y` utilities. camelCase is preserved verbatim, so `--color-brand-primaryDark` → `bg-brand-primaryDark`.
+- Source scanning is pinned to `src/` via `@import "tailwindcss" source(none)` + `@source`. Without this, Tailwind scans the whole repo and pulls class names out of `docs/*.md` into the production bundle.
+- Scoped `<style>` blocks compile separately, so any block using `@apply` with brand tokens must start with `@reference "../../styles/global.css";`.
 
 ## Code Standards
 

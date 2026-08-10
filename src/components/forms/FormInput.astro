@@ -27,7 +27,9 @@ const {
 <div class={`form-field ${className}`}>
   <label for={id} class="block text-sm font-medium text-gray-900 mb-1">
     {label}
-    {required && <span class="text-red-600" aria-hidden="true">*</span>}
+    {/* Explicit space: Astro 7's `compressHTML: 'jsx'` default drops the
+        newline between these two expressions, which would render "Name*". */}
+    {required && <>{" "}<span class="text-red-600" aria-hidden="true">*</span></>}
   </label>
   <input
     type={type}

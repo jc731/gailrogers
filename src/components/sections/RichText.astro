@@ -24,6 +24,10 @@ const finalContainerClassName = containerClassName || 'container mx-auto max-w-6
 </Section>
 
 <style>
+  /* Astro compiles scoped <style> blocks separately, so Tailwind v4 needs an
+     explicit reference to the theme before @apply can resolve brand tokens. */
+  @reference "../../styles/global.css";
+
   .rich-text-content :global(h2) {
     @apply text-brand-primary text-2xl sm:text-3xl md:text-4xl font-semibold leading-snug mt-2 mb-4 font-sans break-words;
   }
@@ -54,5 +58,21 @@ const finalContainerClassName = containerClassName || 'container mx-auto max-w-6
 
   .rich-text-content :global(a) {
     @apply break-words hyphens-auto;
+  }
+
+  /* Client testimonials. Reuses the left-accent-border treatment already used
+     by the contact form panels so quotes read as part of the same system.
+     The HTML spec requires quote attribution to sit OUTSIDE <blockquote>, so
+     testimonials are marked up as <figure> > <blockquote> + <figcaption>. */
+  .rich-text-content :global(figure) {
+    @apply border-l-4 border-heading-subheading bg-white px-4 sm:px-6 py-5 my-6 break-words;
+  }
+
+  .rich-text-content :global(blockquote p:last-of-type) {
+    @apply mb-0;
+  }
+
+  .rich-text-content :global(figcaption) {
+    @apply mt-4 text-heading-subheading text-sm font-bold uppercase tracking-wider font-sans;
   }
 </style>

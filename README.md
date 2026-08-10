@@ -23,7 +23,7 @@ This project uses Astro with Content Collections to manage all page content in M
 
 ### Prerequisites
 
-- Node.js 22.12+ (required by Astro 6; pinned via `engines` and `NODE_VERSION` in `netlify.toml`)
+- Node.js 22.12+ (required by Astro 7; pinned via `engines` and `NODE_VERSION` in `netlify.toml`)
 - pnpm 10+ (package manager) - **Important: Use pnpm, NOT npm**
 
 ### Installation
@@ -236,7 +236,7 @@ Each section type has specific fields. Here's a complete reference:
 │   │       ├── CTABand.astro
 │   │       ├── CardGrid.astro
 │   │       └── LinkButtons.astro
-│   ├── content.config.ts            # Content collection schemas (Astro 6 location)
+│   ├── content.config.ts            # Content collection schemas
 │   ├── content/
 │   │   ├── site/
 │   │   │   └── settings.json       # Site-wide settings & navigation
@@ -262,7 +262,7 @@ Each section type has specific fields. Here's a complete reference:
 │   │   ├── [...slug].astro          # Dynamic routing
 │   │   └── 404.astro                # 404 error page
 │   ├── styles/
-│   │   └── global.css                # Global styles + Tailwind + focus utilities
+│   │   └── global.css                # Tailwind entry + @theme brand tokens + focus utilities
 │   ├── utils/
 │   │   └── content.ts                # Content utility functions
 │   ├── config/
@@ -284,8 +284,8 @@ Each section type has specific fields. Here's a complete reference:
 │   ├── ASTRO_CONVENTIONS.md         # Astro conventions and best practices
 │   ├── ASTRO_IMPROVEMENTS_SUMMARY.md # Astro improvements summary
 │   └── decisions/                   # Architecture decision records
-├── astro.config.mjs                 # Astro configuration
-├── tailwind.config.mjs              # Theme configuration
+│       └── 2026-08-10-major-dependency-upgrades.md  # Astro 7 / Tailwind 4 / MDX 7 upgrade
+├── astro.config.mjs                 # Astro configuration (incl. @tailwindcss/vite plugin)
 ├── tsconfig.json                    # TypeScript configuration
 └── package.json
 ```
@@ -294,22 +294,34 @@ Each section type has specific fields. Here's a complete reference:
 
 The project uses a centralized theme system for easy customization. See `docs/THEME.md` for detailed documentation.
 
+Tailwind 4 is CSS-first: there is no `tailwind.config.mjs`. The theme lives in the
+`@theme` block of `src/styles/global.css`.
+
 **Quick Theme Customization:**
 
-1. Open `tailwind.config.mjs`
-2. Update the `brand` color object:
-```javascript
-brand: {
-  primary: '#YOUR_COLOR',      // Main brand color
-  primaryDark: '#YOUR_DARK',   // Darker variant
-  primaryLight: '#YOUR_LIGHT', // Lighter variant
-  accent: '#YOUR_ACCENT',      // Accent color
-  hover: '#YOUR_HOVER',        // Hover state
-  light: '#YOUR_LIGHT_BG',    // Light background
+1. Open `src/styles/global.css`
+2. Update the `--color-brand-*` custom properties in the `@theme` block:
+```css
+@theme {
+  --color-brand-primary: #YOUR_COLOR;      /* Main brand color */
+  --color-brand-primaryDark: #YOUR_DARK;   /* Darker variant */
+  --color-brand-primaryLight: #YOUR_LIGHT; /* Lighter variant */
+  --color-brand-accent: #YOUR_ACCENT;      /* Accent color */
+  --color-brand-hover: #YOUR_HOVER;        /* Hover state */
+  --color-brand-light: #YOUR_LIGHT_BG;     /* Light background */
 }
 ```
 
 3. No component changes needed - all components use semantic color names
+
+**Naming rules that matter:**
+
+- Dot-nesting collapses to a hyphen: `brand.primary` becomes `--color-brand-primary`
+- camelCase is **preserved verbatim**, so `--color-brand-primaryDark` still yields
+  `bg-brand-primaryDark` / `text-brand-primaryDark` - existing markup keeps working
+- `maxWidth` lives in the `--container-*` namespace, not `--max-width-*`
+- `@theme` is additive, so `--color-slate-dark` extends the built-in slate palette
+  rather than replacing `slate-50..950`
 
 ## Customization for Future Projects
 
@@ -321,7 +333,7 @@ To use this as a template for another "billboard" website:
    - Update legal disclaimer
 
 2. **Update Branding**: 
-   - Modify colors in `tailwind.config.mjs` (see Theme System above)
+   - Modify colors in the `@theme` block of `src/styles/global.css` (see Theme System above)
    - Update logo in `src/components/Logo.astro` if needed
    - Replace favicon files in `public/favicons/`
 
@@ -339,27 +351,56 @@ To use this as a template for another "billboard" website:
 
 ## Dependency Maintenance
 
-### Deferred upgrades
+### Completed: Astro 7 / Tailwind 4 / MDX 7 (2026-08-10)
 
-The following are intentionally held back. They were reviewed during the
-pre-launch audit (2026-08-10) and deferred as major-version work that should
-not ride along with the go-live.
+The major upgrades previously listed here as deferred have **landed**. See
+`docs/decisions/2026-08-10-major-dependency-upgrades.md` for the full ADR
+(rationale, alternatives, and the verification performed).
 
-| Package | Pinned at | Latest | Why deferred |
+| Package | From | To | Note |
 | --- | --- | --- | --- |
-| `astro` | 6.4.8 | 7.2.0 | Major. 6.4.8 already carries the security fixes that mattered (reflected XSS via slot name, fixed in 6.3.3; Host-header SSRF in the prerendered error page, fixed in 6.4.6). Upgrade to 7.x on its own branch. |
-| `tailwindcss` | 3.4.19 | 4.3.3 | Major. Tailwind 4 replaces `tailwind.config.mjs` with CSS-based `@theme` config, so the `brand` color system has to be ported. Coupled to the `@astrojs/tailwind` removal below - do both together. |
-| `@astrojs/mdx` | 5.0.4 | 7.0.5 | Major. Low value here; MDX is barely used. |
-| `typescript` | 5.9.3 | 7.0.2 | Major. Needs a full `astro check` pass afterwards. |
-| `@types/node` | 22.19.17 | 26.2.0 | Major. Should track the Node runtime version (22.x), not the newest release. |
+| `astro` | 6.4.8 | 7.2.0 | Major. |
+| `@astrojs/mdx` | 5.0.4 | 7.0.5 | Adds the new required peer `@astrojs/markdown-satteri` (0.3.5) - Astro 7 replaced remark/rehype with Satteri as the default Markdown processor. |
+| `tailwindcss` | 3.4.19 | 4.3.3 | `@astrojs/tailwind` **removed entirely** (deprecated and source-removed upstream), replaced by `@tailwindcss/vite` wired into `vite.plugins` in `astro.config.mjs`. |
+| `tailwind.config.mjs` | - | deleted | Theme moved to the `@theme` block of `src/styles/global.css`. |
+| `@types/node` | 22.19.17 | 22.20.1 | Deliberately stays on the 22.x line - see below. |
 
-### Known deprecation
+Two related changes:
 
-`@astrojs/tailwind` is **deprecated** and its declared peer range
-(`astro ^3 || ^4 || ^5`) does not cover the installed Astro 6, so `pnpm install`
-prints a peer-dependency warning. It builds and works correctly today. The
-supported replacement is the `@tailwindcss/vite` plugin, which is only available
-for Tailwind 4 - so this migration is gated on the Tailwind 3 to 4 upgrade above.
+- `tsconfig.json` no longer sets `baseUrl` (deprecated in TS 6, removed in TS 7).
+  It was already a no-op because the `paths` values are `./`-prefixed.
+- **Browser floor rises to Safari 16.4+ / Chrome 111+ / Firefox 128+.** Tailwind 4
+  emits `oklch()`, `@property`, and cascade layers.
+
+### Still deferred
+
+| Package | Held at | Latest | Why |
+| --- | --- | --- | --- |
+| `typescript` | 5.9.3 | 7.0.2 | TypeScript 7.0 is the native Go port and ships **no compiler API** (the new API is expected in 7.1). `@astrojs/check`, `@astrojs/language-server` and `@astrojs/ts-plugin` embed TypeScript's `LanguageService` programmatically, so `astro check` fails outright - see [withastro/astro#17268](https://github.com/withastro/astro/issues/17268) (open, labeled *unable to fix / upstream*). `@astrojs/check@0.9.10` declares `typescript: ^5.0.0 \|\| ^6.0.0`, deliberately excluding `^7`. |
+| `@types/node` | 22.20.1 | 26.2.0 | Must match the Node runtime major (22.16.0), not track latest. v26 typings would type-check clean and fail at runtime, with no build-time signal. |
+
+**The green light for TypeScript** is `@astrojs/check`'s published peer range gaining
+`^7.0.0` - do not move before that. TypeScript **6** is permitted by the current peer
+range, but it is its own migration (it changes the `types` default to `[]` and flips
+`noUncheckedSideEffectImports` to `true`), so it should be its own branch.
+
+### Watch list
+
+`astro-icon` (1.1.5) is **unmaintained** - last release 2024-12-26, and it declares no
+`peerDependencies`, so nothing warns when it falls out of support. It was verified
+working under Astro 7 / Vite 8 during the upgrade, and is used by three components:
+`sections/IconBanner.astro`, `MobileMenu.astro`, and `DropdownIndicator.astro`.
+
+Do **not** "fix" `include: { mdi: ['*'] }` in `astro.config.mjs` by narrowing it. Icon
+names are content data - `content.config.ts` declares `icon: z.string()` and
+`src/content/pages/home.md` sets icons in frontmatter - so `'*'` is what lets a content
+author use any MDI icon without a code change. Narrowing it turns a content edit into a
+build error. The cost is build-time only; nothing extra ships to the browser.
+
+If it ever breaks, the fallback is a local ~40-line `Icon.astro` wrapping `getIconData()`
++ `iconToSVG()` from `@iconify/utils`. Astro's native SVG imports and `@iconify/tailwind4`
+were both evaluated and rejected - they require statically known icon names, which this
+project does not have. See `docs/decisions/2026-08-10-major-dependency-upgrades.md`.
 
 ### Applying updates
 
@@ -373,9 +414,9 @@ pinned by the `packageManager` field in `package.json`.
 
 ## Technologies
 
-- [Astro](https://astro.build/) - Web framework
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Astro](https://astro.build/) 7.x - Web framework
+- [Tailwind CSS](https://tailwindcss.com/) 4.x - Styling, via `@tailwindcss/vite`
+- [TypeScript](https://www.typescriptlang.org/) 5.9.x - Type safety (held; see Dependency Maintenance)
 - [Zod](https://zod.dev/) - Schema validation (via Astro)
 - [astro-icon](https://github.com/natemoo-re/astro-icon) - Icon integration
 

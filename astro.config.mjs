@@ -1,14 +1,13 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 import icon from 'astro-icon';
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    mdx(), 
-    tailwind(), 
+    mdx(),
     icon({
       include: {
         'mdi': ['*'],
@@ -20,6 +19,11 @@ export default defineConfig({
     })
   ],
   output: 'static',
+  // Tailwind v4 ships as a Vite plugin, not an Astro integration. The
+  // @astrojs/tailwind integration it replaces was v3-only and is deprecated.
+  vite: {
+    plugins: [tailwindcss()],
+  },
   // Production canonical origin. Drives canonical URLs, og:url and the sitemap.
   // NOTE: astro.config.mjs runs in Node before Vite, so `import.meta.env` is NOT
   // populated here - only `process.env` is. Override via PUBLIC_SITE_URL when
